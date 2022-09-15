@@ -4,6 +4,9 @@
  */
 package JFInClinico;
 
+import InClinico.CRUD_DatosExamenes;
+import static InClinico.CRUD_DatosExamenes.listaDatos;
+import static InClinico.CRUD_DatosExamenes.listaDatosExamenes;
 import InClinico.CRUD_Examenes;
 import static InClinico.CRUD_Examenes.listaExamenes;
 import InClinico.Conexion;
@@ -48,6 +51,7 @@ public class JFCrear_Examen extends javax.swing.JFrame {
         TxtPrecioExamen = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        BtnAgregarDatos = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TableExamenes = new javax.swing.JTable();
@@ -84,6 +88,13 @@ public class JFCrear_Examen extends javax.swing.JFrame {
 
         jLabel3.setText("PRECIO");
 
+        BtnAgregarDatos.setText("Agregar Datos");
+        BtnAgregarDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAgregarDatosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -91,9 +102,6 @@ public class JFCrear_Examen extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(TxtPrecioExamen)
-                        .addGap(206, 206, 206))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -105,9 +113,18 @@ public class JFCrear_Examen extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(TxtNombExamen, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(BtnRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(BtnCrearExamen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(BtnRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(18, 18, 18))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(TxtPrecioExamen)
+                                        .addGap(46, 46, 46)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(BtnAgregarDatos)
+                                        .addGap(0, 0, 0))
+                                    .addComponent(BtnCrearExamen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(27, 27, 27))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(63, 63, 63)
@@ -126,7 +143,9 @@ public class JFCrear_Examen extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtPrecioExamen)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtPrecioExamen)
+                    .addComponent(BtnAgregarDatos))
                 .addGap(82, 82, 82)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnCrearExamen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -267,6 +286,7 @@ public class JFCrear_Examen extends javax.swing.JFrame {
 
     private void BtnCrearExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCrearExamenActionPerformed
         // TODO add your handling code here:
+        
         //OBJETO PARA ENTERACTUAR CON LA CONEXION
         Conexion conec = new Conexion();
         //CREA REALIZA LA CONEXION Y CREA LA TABLA SI NO HAY
@@ -274,7 +294,7 @@ public class JFCrear_Examen extends javax.swing.JFrame {
         
         //SE OBTIENES LOS DATOS DE LOS INPUTS
         String NombExamen = TxtNombExamen.getText();
-        Double PrecioExamen = Double.parseDouble(TxtPrecioExamen.getText());
+        Double PrecioExamen = Double.valueOf(TxtPrecioExamen.getText());
         
         CRUD_Examenes Cr = new CRUD_Examenes();
         Cr.Insertar(NombExamen, PrecioExamen);
@@ -353,7 +373,7 @@ public class JFCrear_Examen extends javax.swing.JFrame {
             
             ID = Integer.parseInt((String) TableExamenes.getValueAt(fila, 0).toString());
             String NombExamen = (String) TableExamenes.getValueAt(fila, 1);
-            Double PrecioExamen = Double.parseDouble((String) TableExamenes.getValueAt(fila, 2).toString());
+            Double PrecioExamen = Double.valueOf((String) TableExamenes.getValueAt(fila, 2).toString());
             
             TxtTabNombExamen.setText(NombExamen);
             TxtTabPrecioExamen.setText(""+PrecioExamen);
@@ -362,19 +382,55 @@ public class JFCrear_Examen extends javax.swing.JFrame {
         
     }//GEN-LAST:event_TableExamenesMouseClicked
 
+    private void BtnAgregarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarDatosActionPerformed
+        // TODO add your handling code here
+        
+        String ID_Examen = (String) TableExamenes.getValueAt(fila, 0).toString();
+        String Examen = (String) TableExamenes.getValueAt(fila, 1).toString();
+        fila = TableExamenes.getSelectedRow();
+        //OBJETO PARA INTERACTUAR CON EL JFCrear_InContable
+        if(fila != -1){
+            if((String) TableExamenes.getValueAt(fila, 0).toString() != "--"){
+                JFAgregar_Datos Agregar_Datos = new JFAgregar_Datos(ID_Examen,Examen);
+
+                //SE INDICA QUE SE MUESTRE LA VENTANA
+                Agregar_Datos.setVisible(true);
+                //SE OCULTA LA VENTANA ACTUAL
+                this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(null, "FILA SELECCIONADA NO ES VALIDA");
+            }
+                
+        }else{
+            JOptionPane.showMessageDialog(null, "NO SE A SELECIONADO FILA");
+        }
+     
+    }//GEN-LAST:event_BtnAgregarDatosActionPerformed
+
     public void Llenar(){
         
         //SE LIMPIA LA TABLA
         model.setRowCount(0);
         //OBJETO PARA ENTERACTUAR CON EL CRUD
-        CRUD_Examenes cr = new CRUD_Examenes();
+        CRUD_Examenes CR_Examen = new CRUD_Examenes();
         //SE LLENA EL ARREGLO CON LOS VALORES DE LA TABLA
-        cr.LlenarTabla();
+        CR_Examen.LlenarTabla();
+        
         //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
         for(int PosC = 0; PosC < listaExamenes.size(); PosC++){
 
             model.addRow(new Object[]{listaExamenes.get(PosC).getID()
                     ,listaExamenes.get(PosC).getNombre_Examen(),listaExamenes.get(PosC).getPrecio_Examen()});
+            
+            //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
+            for(int PosD = 0; PosD < listaDatos.size(); PosD++){
+
+                if(listaDatos.get(PosD).getID_Examen() == listaExamenes.get(PosC).getID()){
+                    model.addRow(new Object[]{"--","   -"+listaDatos.get(PosD).getDato()});
+                }
+
+            }
+            
         }
         
     }
@@ -421,6 +477,7 @@ public class JFCrear_Examen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnAgregarDatos;
     private javax.swing.JButton BtnCrearExamen;
     private javax.swing.JButton BtnEliminar;
     private javax.swing.JButton BtnModificar;

@@ -4,6 +4,7 @@
  */
 package InClinico;
 
+import static JFInClinico.JFCrear_InClinico.listaExamenClinicos;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -14,16 +15,15 @@ import javax.swing.JOptionPane;
  *
  * @author ulise
  */
-public class CRUD_Examenes extends Conexion{
+public class CRUD_Recibo extends Conexion {
     
     //LISTA PARA ALMACENAR LOS DATOS OBTENIDOS DE LA BASE DE DATOS
-    public static List<Examenes> listaExamenes = new ArrayList<Examenes>();
+    public static List<Recibo> listaTablaRecibo = new ArrayList<Recibo>();
     
     //LLENA LA TABLA CON LOS DATOS OBTENIDOS DE LA BASE DE DATOS
     public static void LlenarTabla(){
         //SE VACIA LA LISTA
-        listaExamenes.clear();
-        CRUD_DatosExamenes CRDatosExamenes = new CRUD_DatosExamenes();
+        listaTablaRecibo.clear();
         //OBJETO PARA TENER INTERACCION CON LA CLASE Conexion
         Conexion conec = new Conexion();
         //CREA LA CONECION Y VERIFICA LA EXISTENCIA DE LA TABLA
@@ -33,25 +33,24 @@ public class CRUD_Examenes extends Conexion{
         
         try{
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE OBTINIENE LOS DATOS ALMACENADOS)
-            PreparedStatement st = conec.conexion.prepareStatement("select ID, Nombre_Examen, "
-                                                                    + "Precio_Examen from TBL_Examen");
+            PreparedStatement st = conec.conexion.prepareStatement("select * from TBL_Recibo");
             //SE ALMACENA LOS RESULTADOS
             result = st.executeQuery();
             
             //SE RECORRE TODO LO ALMACENADO
             while(result.next()){
-                //OBJETO DEL CONSTRUCTOR
-                Examenes examenes = new Examenes(result.getInt("ID"),result.getString("Nombre_Examen")
-                                            ,result.getDouble("Precio_Examen"));
-                //SE AGREGA EL CONSTRUCTOR AL ARREGLO
-                listaExamenes.add(examenes);
                 
-                //SE LLENA EL ARREGLO CON LOS VALORES DE LA TABLA
-                CRDatosExamenes.LlenarTablaDatos();
-
+                System.out.println(""+result.getInt("ID"));
+                
+                //OBJETO DEL CONSTRUCTOR
+                Recibo recibo = new Recibo(result.getInt("ID"),result.getString("Nombre_Cliente")
+                                            ,result.getDouble("PrecioTotal_Examen"),result.getString("Fecha"));
+                //SE AGREGA EL CONSTRUCTOR AL ARREGLO
+                listaTablaRecibo.add(recibo);
+                
             }
             
-            System.out.println("Se lleno el arreglo con los datos Combo");
+            System.out.println("Se lleno el arreglo con los datos");
             
         }catch(Exception e){
             System.out.println(e + " Error al llenar el arreglo");
@@ -59,7 +58,9 @@ public class CRUD_Examenes extends Conexion{
     }
     
     //INSERTA DATOS A LA TABLA DE LA BASE DE DATOS
-    public static void Insertar(String Nombre_Examen, Double Precio_Examen){
+    public static void Insertar(String Nombre_Cliente, Double PrecioTotal_Examen, String Fecha){
+        //OBJETO PARA ENTERACTUAR CON EL CRUD
+        CRUD_ExamenClinico Cr_ExamenClinico = new CRUD_ExamenClinico();
         int ID;
         
         ID = (int)(Math.random()*9000+1);
@@ -71,10 +72,20 @@ public class CRUD_Examenes extends Conexion{
             
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE ALMACENA LOS DATOS)
             PreparedStatement st = conec.conexion.prepareStatement(
-                    "insert into TBL_Examen(ID, Nombre_Examen, Precio_Examen)\n"
-                    + "values("+ID+",'"+Nombre_Examen+"'," +Precio_Examen+ ");");
+                    "insert into TBL_Recibo(ID, Nombre_Cliente, PrecioTotal_Examen, Fecha)\n"
+                    + "values("+ID+",'"+Nombre_Cliente+"'," +PrecioTotal_Examen+ ",'"+Fecha+"');");
             //EJECUTA LA ACCION
             st.execute();
+
+            //CICLO PARA ALMACENAR LOS VALORES
+            for(int PosC = 0; PosC < listaExamenClinicos.size(); PosC++){   
+
+                System.out.println(listaExamenClinicos.get(PosC).getNombre_Examen());
+                
+                Cr_ExamenClinico.Insertar(ID, listaExamenClinicos.get(PosC).getNombre_Examen()
+                        , listaExamenClinicos.get(PosC).getPrecio_Examen(), PosC);
+
+            }
 
         }catch(Exception e){
             System.out.println(e + " ERROR AL INSERTAR LOS DATOS");
@@ -83,43 +94,23 @@ public class CRUD_Examenes extends Conexion{
     
     //ELIMINA LOS DATOS DEL REGISTRO SELECCIONADO
     public static void Eliminar(int ID){
-        
+        //OBJETO PARA ENTERACTUAR CON EL CRUD
+        CRUD_ExamenClinico Cr_ExamenClinico = new CRUD_ExamenClinico();
         //OBJETO PARA TENER INTERACCION CON LA CLASE Conexion
         Conexion conec = new Conexion();
         
         try{
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE ELIMINA LOS DATOS SEGUN EL ID)
-            PreparedStatement st = conec.conexion.prepareStatement("delete from TBL_Examen where ID="+ID);
+            PreparedStatement st = conec.conexion.prepareStatement("delete from TBL_Recibo where ID="+ID);
             //EJECUTA LA ACCION
             st.execute();
+            
+            Cr_ExamenClinico.Eliminar(ID);
             
             JOptionPane.showMessageDialog(null, "DATOS ELIMINADOS");
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "ERROR AL ELIMINAR LOS DATOS " + e);
-        }
-    }
-    
-    //MODIFICA DATOS A LA TABLA DE LA BASE DE DATOS
-    public static void Modificar(int ID, String Nombre_Examen, Double Precio_Examen){
-
-        //OBJETO PARA TENER INTERACCION CON LA CLASE Conexion
-        Conexion conec = new Conexion();
-        
-        try{
-            
-            String sql = "Update TBL_Examen set ID="+ID+",Nombre_Examen='"+Nombre_Examen+"', "
-                            + "Precio_Examen="+Precio_Examen+" where ID="+ID;
-            
-            //SE INDICA LA ACCION CON LA BASE DE DATOS (SE ALMACENA LOS DATOS)
-            PreparedStatement st = conec.conexion.prepareStatement(sql);
-            //EJECUTA LA ACCION
-            st.execute();
-            
-            JOptionPane.showMessageDialog(null, "DATOS MODIFICADOS");
-            
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "ERROR AL INSERTAR LOS DATOS " + e);
         }
     }
     
