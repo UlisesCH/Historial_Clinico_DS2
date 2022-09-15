@@ -8,19 +8,21 @@ package InClinico;
  *
  * @author ulise
  */
-public class InClinico {
+public class Recibo {
     
     //VARIABLES DE VALORES ALMACENADOS EN LA BASE DE DATOS
     private int ID;
     private String Nombre_Cliente;
-    private String Nombre_Examen;
     private Double PrecioTotal_Examen;
     private String Fecha;
+    
+    public Recibo(){
+        
+    }
 
-    public InClinico(int ID, String Nombre_Cliente, String Nombre_Examen, Double PrecioTotal_Examen, String Fecha) {
+    public Recibo(int ID, String Nombre_Cliente, Double PrecioTotal_Examen, String Fecha) {
         this.ID = ID;
         this.Nombre_Cliente = Nombre_Cliente;
-        this.Nombre_Examen = Nombre_Examen;
         this.PrecioTotal_Examen = PrecioTotal_Examen;
         this.Fecha = Fecha;
     }
@@ -33,10 +35,6 @@ public class InClinico {
         return Nombre_Cliente;
     }
 
-    public String getNombre_Examen() {
-        return Nombre_Examen;
-    }
-
     public Double getPrecioTotal_Examen() {
         return PrecioTotal_Examen;
     }
@@ -44,7 +42,21 @@ public class InClinico {
     public String getFecha() {
         return Fecha;
     }
-    
-    
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public void setNombre_Cliente(String Nombre_Cliente) {
+        this.Nombre_Cliente = Nombre_Cliente;
+    }
+
+    public void setPrecioTotal_Examen(Double PrecioTotal_Examen) {
+        this.PrecioTotal_Examen = PrecioTotal_Examen;
+    }
+
+    public void setFecha(String Fecha) {
+        this.Fecha = Fecha;
+    }
     
 }

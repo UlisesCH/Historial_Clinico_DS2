@@ -25,21 +25,33 @@ public class Conexion {
             + "Nombre_Examen varchar(500),\n"
             + "Precio_Examen Double)";
     
+    static final String TBL_Datos
+            = "CREATE TABLE TBL_Datos(\n"
+            + "ID integer primary key autoincrement,\n"
+            + "ID_Examen integer(500),\n"
+            + "Dato varchar(500))";
+    
     //ESTRUCTURA DE LA TABLA DE INFORMES CLINICOS
+    static final String TBL_Recibo
+            = "CREATE TABLE TBL_Recibo(\n"
+            + "ID integer primary key autoincrement,\n"
+            + "Nombre_Cliente varchar(500),\n"
+            + "PrecioTotal_Examen Double,\n"
+            + "Fecha date)";
+    
     static final String TBL_ExamenClinico
             = "CREATE TABLE TBL_ExamenClinico(\n"
             + "ID integer primary key autoincrement,\n"
-            + "Nombre_Cliente varchar(500),\n"
+            + "ID_Recibo integer,\n"
             + "Nombre_Examen varchar(500),\n"
-            + "PrecioTotal_Examen Double,\n"
-            + "Fecha date)";
+            + "Precio_Examen Double)";
     
     static final String TBL_DatosExamen
             = "CREATE TABLE TBL_DatosExamen(\n"
             + "ID integer primary key autoincrement,\n"
             + "ID_ExamenClinico integer,\n"
             + "Dato varchar(500),\n"
-            + "Valor Double)";
+            + "Valor varchar(500))";
     
     static String url = "jdbc:sqlite:BDHisClinico.db";
     
@@ -60,7 +72,9 @@ public class Conexion {
         try{
             crearConexion();
             stmt = conexion.createStatement();
+            stmt.executeUpdate(TBL_Datos);
             stmt.executeUpdate(TBL_Examen);
+            stmt.executeUpdate(TBL_Recibo);
             stmt.executeUpdate(TBL_ExamenClinico);
             stmt.executeUpdate(TBL_DatosExamen);
             stmt.close();

@@ -4,8 +4,8 @@
  */
 package JFInContable;
 
-import InClinico.CRUD_InClinico;
-import static InClinico.CRUD_InClinico.listaInClinico;
+import InClinico.CRUD_ExamenClinico;
+import static InClinico.CRUD_Recibo.listaTablaRecibo;
 import InContable.Conexion;
 import InContable.CRUD_InContable;
 import static InContable.CRUD_InContable.listaInContable;
@@ -585,14 +585,14 @@ public class JFMostrar_InContable extends javax.swing.JFrame {
         }
         
         //OBJETO PARA ENTERACTUAR CON EL CRUD
-        CRUD_InClinico crC = new CRUD_InClinico();
+        CRUD_ExamenClinico crC = new CRUD_ExamenClinico();
         //SE LLENA EL ARREGLO CON LOS VALORES DE LA TABLA
         crC.LlenarTabla();
         
         //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
-        for(int PosC = 0; PosC < listaInClinico.size(); PosC++){
+        for(int PosC = 0; PosC < listaTablaRecibo.size(); PosC++){
             
-            TotalEx = TotalEx+listaInClinico.get(PosC).getPrecioTotal_Examen();
+            TotalEx = TotalEx+listaTablaRecibo.get(PosC).getPrecioTotal_Examen();
             
         }
         

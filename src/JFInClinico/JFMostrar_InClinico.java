@@ -4,9 +4,9 @@
  */
 package JFInClinico;
 
-import InClinico.CRUD_InClinico;
+import InClinico.CRUD_Recibo;
+import static InClinico.CRUD_Recibo.listaTablaRecibo;
 import InClinico.Conexion;
-import static InClinico.CRUD_InClinico.listaInClinico;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -65,10 +65,8 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         TxtPrecioExamen = new javax.swing.JTextField();
-        TxtNombExamen = new javax.swing.JTextField();
         TxtNombCliente = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -76,7 +74,6 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TableInClinico = new javax.swing.JTable();
-        BtnModificar = new javax.swing.JButton();
         BtnEliminar = new javax.swing.JButton();
         BtnImprimir = new javax.swing.JButton();
         BtnCrear = new javax.swing.JButton();
@@ -94,8 +91,6 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(153, 255, 255));
 
         jLabel1.setText("NOMBRE DE PACIENTE");
-
-        jLabel2.setText("NOMBRE DE EXAMEN");
 
         jLabel3.setText("PRECIO");
 
@@ -116,19 +111,16 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TxtNombCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(TxtNombExamen)
-                                .addGap(10, 10, 10))
+                                .addComponent(TxtNombCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(TxtPrecioExamen, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(TxtPrecioExamen))))
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3)
+                                .addGap(93, 93, 93)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -147,7 +139,6 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -155,7 +146,6 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(TxtPrecioExamen)
-                            .addComponent(TxtNombExamen)
                             .addComponent(TxtNombCliente))
                         .addGap(17, 17, 17))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -170,11 +160,11 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "NomCliente", "NomExamen", "Precio", "Fecha"
+                "ID", "NomCliente", "Precio", "Fecha"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -189,15 +179,8 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
         jScrollPane1.setViewportView(TableInClinico);
         if (TableInClinico.getColumnModel().getColumnCount() > 0) {
             TableInClinico.getColumnModel().getColumn(0).setPreferredWidth(2);
-            TableInClinico.getColumnModel().getColumn(3).setPreferredWidth(5);
+            TableInClinico.getColumnModel().getColumn(2).setPreferredWidth(5);
         }
-
-        BtnModificar.setText("Modificar");
-        BtnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnModificarActionPerformed(evt);
-            }
-        });
 
         BtnEliminar.setText("Eliminar");
         BtnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -259,11 +242,10 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
                 .addComponent(jScrollPane1)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BtnModificar)
                     .addComponent(BtnEliminar)
                     .addComponent(BtnImprimir)
                     .addComponent(BtnCrear))
-                .addGap(10, 10, 10))
+                .addGap(18, 18, 18))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(97, 97, 97)
                 .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -284,8 +266,7 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(BtnModificar)
-                        .addGap(47, 47, 47)
+                        .addGap(69, 69, 69)
                         .addComponent(BtnEliminar)
                         .addGap(68, 68, 68)
                         .addComponent(BtnImprimir)
@@ -303,15 +284,12 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(25, 25, 25))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,48 +304,6 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnModificarActionPerformed
-        // TODO add your handling code here:
-
-        //OBJETO PARA ENTERACTUAR CON LA CONEXION
-        Conexion conec = new Conexion();
-        //CREA REALIZA LA CONEXION Y CREA LA TABLA SI NO HAY
-        conec.CrearTablas();
-        
-        fila = TableInClinico.getSelectedRow();
-        ID = 0;
-        
-        if(fila != -1){
-            
-            ID = Integer.parseInt((String) TableInClinico.getValueAt(fila, 0).toString());
-
-            //SE OBTIENEN LOS DATOS DEL JCALENDAT
-            String dia = Integer.toString(jCFecha.getCalendar().get(Calendar.DAY_OF_MONTH));
-            String mes = Integer.toString(jCFecha.getCalendar().get(Calendar.MONTH)+1);
-            String anio = Integer.toString(jCFecha.getCalendar().get(Calendar.YEAR));
-
-            //SE OBTIENES LOS DATOS DE LOS INPUTS
-            String NombCliente = TxtNombCliente.getText();
-            String NombExamen = TxtNombExamen.getText();
-            Double PrecioExamen = Double.parseDouble(TxtPrecioExamen.getText());
-            //SE ALMACENA LOS VALOR DE LA FECHA
-            String Fecha = dia+ "/" +mes+ "/" +anio;
-
-            //OBJETO PARA ENTERACTUAR CON EL CRUD
-            CRUD_InClinico Cr = new CRUD_InClinico();
-            //SE MANDA LOS VALORES AL INSERTAR
-            Cr.Modificar(ID, NombCliente, NombExamen, PrecioExamen, Fecha);
-
-            model.setRowCount(0);
-            Llenar();
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "NO SE A SELECIONADO FILA");
-
-        }
-
-    }//GEN-LAST:event_BtnModificarActionPerformed
-
     private void TableInClinicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableInClinicoMouseClicked
         // TODO add your handling code here:
         
@@ -380,12 +316,10 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
             try {
                 ID = Integer.parseInt((String) TableInClinico.getValueAt(fila, 0).toString());
                 String NombCliente = (String) TableInClinico.getValueAt(fila, 1);
-                String NombExamen = (String) TableInClinico.getValueAt(fila, 2);
-                Double PrecioExamen = Double.parseDouble((String) TableInClinico.getValueAt(fila, 3).toString());
-                String Fecha = (String) TableInClinico.getValueAt(fila, 4);
+                Double PrecioExamen = Double.parseDouble((String) TableInClinico.getValueAt(fila, 2).toString());
+                String Fecha = (String) TableInClinico.getValueAt(fila, 3);
                 
                 TxtNombCliente.setText(NombCliente);
-                TxtNombExamen.setText(NombExamen);
                 TxtPrecioExamen.setText(""+PrecioExamen);
                 
                 java.util.Date fechaParseada= new SimpleDateFormat("dd/MM/yyyy").parse(Fecha);
@@ -409,8 +343,8 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
         else{
             ID = Integer.parseInt((String) TableInClinico.getValueAt(fila, 0).toString());
             
-            CRUD_InClinico Cr = new CRUD_InClinico();
-            Cr.Eliminar(ID);
+            CRUD_Recibo CrRecibo = new CRUD_Recibo();
+            CrRecibo.Eliminar(ID);
         }
         
         model.setRowCount(0);
@@ -513,17 +447,16 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
         //SE LIMPIA LA TABLA
         model.setRowCount(0);
         //OBJETO PARA ENTERACTUAR CON EL CRUD
-        CRUD_InClinico cr = new CRUD_InClinico();
+        CRUD_Recibo CrRecibo = new CRUD_Recibo();
         //SE LLENA EL ARREGLO CON LOS VALORES DE LA TABLA
-        cr.LlenarTabla();
+        CrRecibo.LlenarTabla();
         //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
-        for(int PosC = 0; PosC < listaInClinico.size(); PosC++){
+        for(int PosC = 0; PosC < listaTablaRecibo.size(); PosC++){
 
-            model.addRow(new Object[]{listaInClinico.get(PosC).getID(),listaInClinico.get(PosC).getNombre_Cliente()
-                    ,listaInClinico.get(PosC).getNombre_Examen(),listaInClinico.get(PosC).getPrecioTotal_Examen()
-                    ,listaInClinico.get(PosC).getFecha()});
+            model.addRow(new Object[]{listaTablaRecibo.get(PosC).getID(),listaTablaRecibo.get(PosC).getNombre_Cliente()
+                    ,listaTablaRecibo.get(PosC).getPrecioTotal_Examen(),listaTablaRecibo.get(PosC).getFecha()});
             
-            Total = Total+listaInClinico.get(PosC).getPrecioTotal_Examen();
+            Total = Total+listaTablaRecibo.get(PosC).getPrecioTotal_Examen();
         }
         
         TxtTotalExamen.setText(""+Total);
@@ -537,18 +470,17 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
         //SE LIMPIA LA TABLA
         model.setRowCount(0);
         //OBJETO PARA ENTERACTUAR CON EL CRUD
-        CRUD_InClinico cr = new CRUD_InClinico();
+        CRUD_Recibo cr = new CRUD_Recibo();
         
-        cr.BuscarEnTabla(buscar);
+        //cr.BuscarEnTabla(buscar);
         
         //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
-        for(int PosC = 0; PosC < listaInClinico.size(); PosC++){
+        for(int PosC = 0; PosC < listaTablaRecibo.size(); PosC++){
 
-            model.addRow(new Object[]{listaInClinico.get(PosC).getID(),listaInClinico.get(PosC).getNombre_Cliente()
-                    ,listaInClinico.get(PosC).getNombre_Examen(),listaInClinico.get(PosC).getPrecioTotal_Examen()
-                    ,listaInClinico.get(PosC).getFecha()});
+            model.addRow(new Object[]{listaTablaRecibo.get(PosC).getID(),listaTablaRecibo.get(PosC).getNombre_Cliente()
+                    ,listaTablaRecibo.get(PosC).getPrecioTotal_Examen(),listaTablaRecibo.get(PosC).getFecha()});
             
-            Total = Total+listaInClinico.get(PosC).getPrecioTotal_Examen();
+            Total = Total+listaTablaRecibo.get(PosC).getPrecioTotal_Examen();
         }
         
         TxtTotalExamen.setText(""+Total);
@@ -602,18 +534,15 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
     private javax.swing.JButton BtnCrear;
     private javax.swing.JButton BtnEliminar;
     private javax.swing.JButton BtnImprimir;
-    private javax.swing.JButton BtnModificar;
     private javax.swing.JButton BtnRellenar;
     private javax.swing.JTable TableInClinico;
     private javax.swing.JTextField TxtBuscar;
     private javax.swing.JTextField TxtNombCliente;
-    private javax.swing.JTextField TxtNombExamen;
     private javax.swing.JTextField TxtPrecioExamen;
     private javax.swing.JLabel TxtTotalExamen;
     private javax.swing.JButton jButton1;
     private com.toedter.calendar.JDateChooser jCFecha;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
