@@ -39,12 +39,13 @@ public class CRUD_Recibo extends Conexion {
             
             //SE RECORRE TODO LO ALMACENADO
             while(result.next()){
-                
-                System.out.println(""+result.getInt("ID"));
-                
+
                 //OBJETO DEL CONSTRUCTOR
-                Recibo recibo = new Recibo(result.getInt("ID"),result.getString("Nombre_Cliente")
-                                            ,result.getDouble("PrecioTotal_Examen"),result.getString("Fecha"));
+                Recibo recibo = new Recibo(result.getInt("ID")
+                                            ,result.getString("Nombre_Cliente")
+                                            ,result.getInt("Edad_Cliente")
+                                            ,result.getDouble("PrecioTotal_Examen")
+                                            ,result.getString("Fecha"));
                 //SE AGREGA EL CONSTRUCTOR AL ARREGLO
                 listaTablaRecibo.add(recibo);
                 
@@ -57,8 +58,47 @@ public class CRUD_Recibo extends Conexion {
         }
     }
     
+    //LLENA LA TABLA CON LOS DATOS OBTENIDOS DE LA BASE DE DATOS
+    public static void BuscarEnTabla(String buscar){
+        //SE VACIA LA LISTA
+        listaTablaRecibo.clear();
+        //OBJETO PARA TENER INTERACCION CON LA CLASE Conexion
+        Conexion conec = new Conexion();
+        //CREA LA CONECION Y VERIFICA LA EXISTENCIA DE LA TABLA
+        conec.CrearTablas();
+        //VARIABLE PARA EL RESULTADO OBTENIDO
+        ResultSet result = null;
+        
+        try{
+            //SE INDICA LA ACCION CON LA BASE DE DATOS (SE OBTINIENE LOS DATOS ALMACENADOS)
+            PreparedStatement st = conec.conexion.prepareStatement("select * from TBL_Recibo "
+                                   + "where Nombre_Cliente LIKE '"+buscar+"'"
+                                   + "OR Fecha LIKE '"+buscar+"'");
+            //SE ALMACENA LOS RESULTADOS
+            result = st.executeQuery();
+            
+            //SE RECORRE TODO LO ALMACENADO
+            while(result.next()){
+                //OBJETO DEL CONSTRUCTOR
+                Recibo recibo = new Recibo(result.getInt("ID")
+                                            ,result.getString("Nombre_Cliente")
+                                            ,result.getInt("Edad_Cliente")
+                                            ,result.getDouble("PrecioTotal_Examen")
+                                            ,result.getString("Fecha"));
+                //SE AGREGA EL CONSTRUCTOR AL ARREGLO
+                listaTablaRecibo.add(recibo);
+
+            }
+            
+            System.out.println("Se lleno el arreglo con los datos");
+            
+        }catch(Exception e){
+            System.out.println(e + " Error al llenar el arreglo");
+        }
+    }
+    
     //INSERTA DATOS A LA TABLA DE LA BASE DE DATOS
-    public static void Insertar(String Nombre_Cliente, Double PrecioTotal_Examen, String Fecha){
+    public static void Insertar(String Nombre_Cliente, int Edad_Cliente, Double PrecioTotal_Examen, String Fecha){
         //OBJETO PARA ENTERACTUAR CON EL CRUD
         CRUD_ExamenClinico Cr_ExamenClinico = new CRUD_ExamenClinico();
         int ID;
@@ -72,15 +112,13 @@ public class CRUD_Recibo extends Conexion {
             
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE ALMACENA LOS DATOS)
             PreparedStatement st = conec.conexion.prepareStatement(
-                    "insert into TBL_Recibo(ID, Nombre_Cliente, PrecioTotal_Examen, Fecha)\n"
-                    + "values("+ID+",'"+Nombre_Cliente+"'," +PrecioTotal_Examen+ ",'"+Fecha+"');");
+                    "insert into TBL_Recibo(ID, Nombre_Cliente, Edad_Cliente, PrecioTotal_Examen, Fecha)\n"
+                    + "values("+ID+",'"+Nombre_Cliente+"'," +Edad_Cliente+ "," +PrecioTotal_Examen+ ",'"+Fecha+"');");
             //EJECUTA LA ACCION
             st.execute();
 
             //CICLO PARA ALMACENAR LOS VALORES
             for(int PosC = 0; PosC < listaExamenClinicos.size(); PosC++){   
-
-                System.out.println(listaExamenClinicos.get(PosC).getNombre_Examen());
                 
                 Cr_ExamenClinico.Insertar(ID, listaExamenClinicos.get(PosC).getNombre_Examen()
                         , listaExamenClinicos.get(PosC).getPrecio_Examen(), PosC);

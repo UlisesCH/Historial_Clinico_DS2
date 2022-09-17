@@ -116,16 +116,13 @@ public class CRUD_ExamenClinico extends Conexion {
             //EJECUTA LA ACCION
             st.execute();
             
-            for(int PosD = 0; PosD < listaDatos.size(); PosD++){
-                
-                 System.out.println(listaDatos.get(PosD).getID_Examen()+" "+listaExamenClinicos.get(PosC).getID());
-                
-                if(listaDatos.get(PosD).getID_Examen() == listaExamenClinicos.get(PosC).getID()){
-                    
-                    System.out.println(ID);
-                    
-                    Cr_DatosExamenes.InsertarValorDatos(ID, listaDatos.get(PosD).getDato(),
-                                                        listaDatosExamenes.get(PosD).getValor());
+            for(int PosD = 0; PosD < listaDatosExamenes.size(); PosD++){
+
+                if(listaDatosExamenes.get(PosD).getID_Examen() == listaExamenClinicos.get(PosC).getID()){
+
+                    Cr_DatosExamenes.InsertarValorDatos(ID, 
+                                    listaDatos.get(PosD).getDato(),
+                                    listaDatosExamenes.get(PosD).getValor());
                     
                 }
                 

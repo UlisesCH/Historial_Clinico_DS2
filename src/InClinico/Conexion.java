@@ -36,6 +36,7 @@ public class Conexion {
             = "CREATE TABLE TBL_Recibo(\n"
             + "ID integer primary key autoincrement,\n"
             + "Nombre_Cliente varchar(500),\n"
+            + "Edad_Cliente integer(500),\n"
             + "PrecioTotal_Examen Double,\n"
             + "Fecha date)";
     

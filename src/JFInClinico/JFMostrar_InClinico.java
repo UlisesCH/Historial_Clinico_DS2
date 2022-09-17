@@ -160,11 +160,11 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "NomCliente", "Precio", "Fecha"
+                "ID", "NomCliente", "Edad", "Precio", "Fecha"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -180,6 +180,7 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
         if (TableInClinico.getColumnModel().getColumnCount() > 0) {
             TableInClinico.getColumnModel().getColumn(0).setPreferredWidth(2);
             TableInClinico.getColumnModel().getColumn(2).setPreferredWidth(5);
+            TableInClinico.getColumnModel().getColumn(3).setPreferredWidth(5);
         }
 
         BtnEliminar.setText("Eliminar");
@@ -316,8 +317,8 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
             try {
                 ID = Integer.parseInt((String) TableInClinico.getValueAt(fila, 0).toString());
                 String NombCliente = (String) TableInClinico.getValueAt(fila, 1);
-                Double PrecioExamen = Double.parseDouble((String) TableInClinico.getValueAt(fila, 2).toString());
-                String Fecha = (String) TableInClinico.getValueAt(fila, 3);
+                Double PrecioExamen = Double.parseDouble((String) TableInClinico.getValueAt(fila, 3).toString());
+                String Fecha = (String) TableInClinico.getValueAt(fila, 4);
                 
                 TxtNombCliente.setText(NombCliente);
                 TxtPrecioExamen.setText(""+PrecioExamen);
@@ -453,7 +454,8 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
         //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
         for(int PosC = 0; PosC < listaTablaRecibo.size(); PosC++){
 
-            model.addRow(new Object[]{listaTablaRecibo.get(PosC).getID(),listaTablaRecibo.get(PosC).getNombre_Cliente()
+            model.addRow(new Object[]{listaTablaRecibo.get(PosC).getID()
+                    ,listaTablaRecibo.get(PosC).getNombre_Cliente(), listaTablaRecibo.get(PosC).getEdad_Cliente()
                     ,listaTablaRecibo.get(PosC).getPrecioTotal_Examen(),listaTablaRecibo.get(PosC).getFecha()});
             
             Total = Total+listaTablaRecibo.get(PosC).getPrecioTotal_Examen();
@@ -472,12 +474,13 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
         //OBJETO PARA ENTERACTUAR CON EL CRUD
         CRUD_Recibo cr = new CRUD_Recibo();
         
-        //cr.BuscarEnTabla(buscar);
+        cr.BuscarEnTabla(buscar);
         
         //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
         for(int PosC = 0; PosC < listaTablaRecibo.size(); PosC++){
 
-            model.addRow(new Object[]{listaTablaRecibo.get(PosC).getID(),listaTablaRecibo.get(PosC).getNombre_Cliente()
+            model.addRow(new Object[]{listaTablaRecibo.get(PosC).getID()
+                    ,listaTablaRecibo.get(PosC).getNombre_Cliente(), listaTablaRecibo.get(PosC).getEdad_Cliente()
                     ,listaTablaRecibo.get(PosC).getPrecioTotal_Examen(),listaTablaRecibo.get(PosC).getFecha()});
             
             Total = Total+listaTablaRecibo.get(PosC).getPrecioTotal_Examen();

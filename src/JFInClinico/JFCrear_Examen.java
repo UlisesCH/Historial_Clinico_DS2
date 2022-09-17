@@ -370,13 +370,16 @@ public class JFCrear_Examen extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "NO SE A SELECIONADO FILA");
         }
         else{
-            
-            ID = Integer.parseInt((String) TableExamenes.getValueAt(fila, 0).toString());
-            String NombExamen = (String) TableExamenes.getValueAt(fila, 1);
-            Double PrecioExamen = Double.valueOf((String) TableExamenes.getValueAt(fila, 2).toString());
-            
-            TxtTabNombExamen.setText(NombExamen);
-            TxtTabPrecioExamen.setText(""+PrecioExamen);
+            if((String) TableExamenes.getValueAt(fila, 0).toString() != "--"){
+                ID = Integer.parseInt((String) TableExamenes.getValueAt(fila, 0).toString());
+                String NombExamen = (String) TableExamenes.getValueAt(fila, 1);
+                Double PrecioExamen = Double.valueOf((String) TableExamenes.getValueAt(fila, 2).toString());
+
+                TxtTabNombExamen.setText(NombExamen);
+                TxtTabPrecioExamen.setText(""+PrecioExamen);
+            }else{
+                JOptionPane.showMessageDialog(null, "FILA SELECCIONADA NO ES VALIDA");
+            }
             
         }
         
