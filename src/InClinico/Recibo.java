@@ -13,6 +13,7 @@ public class Recibo {
     //VARIABLES DE VALORES ALMACENADOS EN LA BASE DE DATOS
     private int ID;
     private String Nombre_Cliente;
+    private int Edad_Cliente;
     private Double PrecioTotal_Examen;
     private String Fecha;
     
@@ -20,9 +21,10 @@ public class Recibo {
         
     }
 
-    public Recibo(int ID, String Nombre_Cliente, Double PrecioTotal_Examen, String Fecha) {
+    public Recibo(int ID, String Nombre_Cliente, int Edad_Cliente, Double PrecioTotal_Examen, String Fecha) {
         this.ID = ID;
         this.Nombre_Cliente = Nombre_Cliente;
+        this.Edad_Cliente = Edad_Cliente;
         this.PrecioTotal_Examen = PrecioTotal_Examen;
         this.Fecha = Fecha;
     }
@@ -35,6 +37,10 @@ public class Recibo {
         return Nombre_Cliente;
     }
 
+    public int getEdad_Cliente() {
+        return Edad_Cliente;
+    }
+
     public Double getPrecioTotal_Examen() {
         return PrecioTotal_Examen;
     }
@@ -42,6 +48,8 @@ public class Recibo {
     public String getFecha() {
         return Fecha;
     }
+    
+    
 
     public void setID(int ID) {
         this.ID = ID;
@@ -51,6 +59,10 @@ public class Recibo {
         this.Nombre_Cliente = Nombre_Cliente;
     }
 
+    public void setEdad_Cliente(int Edad_Cliente) {
+        this.Edad_Cliente = Edad_Cliente;
+    }
+
     public void setPrecioTotal_Examen(Double PrecioTotal_Examen) {
         this.PrecioTotal_Examen = PrecioTotal_Examen;
     }
@@ -58,5 +70,7 @@ public class Recibo {
     public void setFecha(String Fecha) {
         this.Fecha = Fecha;
     }
+    
+    
     
 }

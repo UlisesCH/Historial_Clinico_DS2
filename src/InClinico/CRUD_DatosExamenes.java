@@ -28,6 +28,7 @@ public class CRUD_DatosExamenes extends Conexion{
     public static void LlenarTablaDatos(){
         //SE VACIA LA LISTA
         listaDatos.clear();
+        listaDatosExamenes.clear();
         //OBJETO PARA TENER INTERACCION CON LA CLASE Conexion
         Conexion conec = new Conexion();
         //CREA LA CONECION Y VERIFICA LA EXISTENCIA DE LA TABLA
@@ -49,8 +50,15 @@ public class CRUD_DatosExamenes extends Conexion{
                 Datos datos = new Datos(result.getInt("ID"),
                                             result.getInt("ID_Examen"),
                                                 result.getString("Dato"));
+                
                 //SE AGREGA EL CONSTRUCTOR AL ARREGLO
                 listaDatos.add(datos);
+                
+                DatosExamenes datosExamenes = new DatosExamenes(result.getInt("ID"),
+                                            result.getInt("ID_Examen"),
+                                                result.getString("Dato"),"--");
+                                
+                listaDatosExamenes.add(datosExamenes);
 
             }
             
