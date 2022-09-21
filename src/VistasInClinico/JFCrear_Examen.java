@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package JFInClinico;
+package VistasInClinico;
 
-import InClinico.CRUD_DatosExamenes;
-import static InClinico.CRUD_DatosExamenes.listaDatos;
-import static InClinico.CRUD_DatosExamenes.listaDatosExamenes;
-import InClinico.CRUD_Examenes;
-import static InClinico.CRUD_Examenes.listaExamenes;
-import InClinico.Conexion;
+import InClinico.Modulos.CRUD_DatosExamenes;
+import static InClinico.Modulos.CRUD_DatosExamenes.listaDatos;
+import static InClinico.Modulos.CRUD_DatosExamenes.listaDatosExamenes;
+import InClinico.Modulos.CRUD_Examenes;
+import static InClinico.Modulos.CRUD_Examenes.listaExamenes;
+import InClinico.Controladores.Conexion;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -121,9 +121,7 @@ public class JFCrear_Examen extends javax.swing.JFrame {
                                         .addComponent(TxtPrecioExamen)
                                         .addGap(46, 46, 46)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(BtnAgregarDatos)
-                                        .addGap(0, 0, 0))
+                                    .addComponent(BtnAgregarDatos)
                                     .addComponent(BtnCrearExamen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(27, 27, 27))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()

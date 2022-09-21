@@ -1,8 +1,10 @@
-package InClinico;
+package InClinico.Modulos;
 
-import static InClinico.CRUD_DatosExamenes.listaDatos;
-import static InClinico.CRUD_DatosExamenes.listaDatosExamenes;
-import static JFInClinico.JFCrear_InClinico.listaExamenClinicos;
+import InClinico.Controladores.Conexion;
+import InClinico.Controladores.ExamenClinico;
+import static InClinico.Modulos.CRUD_DatosExamenes.listaDatos;
+import static InClinico.Modulos.CRUD_DatosExamenes.listaDatosExamenes;
+import static VistasInClinico.JFCrear_InClinico.listaExamenClinicos;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;

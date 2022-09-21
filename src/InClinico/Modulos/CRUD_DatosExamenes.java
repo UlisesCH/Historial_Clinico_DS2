@@ -2,10 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package InClinico;
+package InClinico.Modulos;
 
-import static JFInClinico.JFCrear_InClinico.listaExamenClinicos;
-import static JFInClinico.JFCrear_InClinico.listaRecibo;
+import InClinico.Controladores.Conexion;
+import InClinico.Controladores.Datos;
+import InClinico.Controladores.DatosExamenes;
+import static VistasInClinico.JFCrear_InClinico.listaExamenClinicos;
+import static VistasInClinico.JFCrear_InClinico.listaRecibo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;

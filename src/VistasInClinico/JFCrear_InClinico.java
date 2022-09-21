@@ -2,19 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package JFInClinico;
+package VistasInClinico;
 
-import InClinico.CRUD_DatosExamenes;
-import static InClinico.CRUD_DatosExamenes.listaDatos;
-import static InClinico.CRUD_DatosExamenes.listaDatosExamenes;
-import InClinico.CRUD_Examenes;
-import static InClinico.CRUD_Examenes.listaExamenes;
-import InClinico.CRUD_ExamenClinico;
-import InClinico.CRUD_Recibo;
-import InClinico.Conexion;
-import InClinico.DatosExamenes;
-import InClinico.ExamenClinico;
-import InClinico.Recibo;
+import InClinico.Modulos.CRUD_DatosExamenes;
+import static InClinico.Modulos.CRUD_DatosExamenes.listaDatos;
+import static InClinico.Modulos.CRUD_DatosExamenes.listaDatosExamenes;
+import InClinico.Modulos.CRUD_Examenes;
+import static InClinico.Modulos.CRUD_Examenes.listaExamenes;
+import InClinico.Modulos.CRUD_ExamenClinico;
+import InClinico.Modulos.CRUD_Recibo;
+import InClinico.Controladores.Conexion;
+import InClinico.Controladores.DatosExamenes;
+import InClinico.Controladores.ExamenClinico;
+import InClinico.Controladores.Recibo;
 import JFInContable.JFCrear_InContable;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -453,7 +453,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

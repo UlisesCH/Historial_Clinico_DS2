@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package JFInClinico;
+package VistasInClinico;
 
-import InClinico.CRUD_Recibo;
-import static InClinico.CRUD_Recibo.listaTablaRecibo;
-import InClinico.Conexion;
+import InClinico.Modulos.CRUD_Recibo;
+import static InClinico.Modulos.CRUD_Recibo.listaTablaRecibo;
+import InClinico.Controladores.Conexion;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
