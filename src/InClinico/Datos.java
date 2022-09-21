@@ -11,12 +11,12 @@ package InClinico;
 public class Datos {
     
     private int ID;
-    private int ID_Examen;
+    private int IDExamen;
     private String Dato;
 
-    public Datos(int ID, int ID_Examen, String Dato) {
+    public Datos(int ID, int IDExamen, String Dato) {
         this.ID = ID;
-        this.ID_Examen = ID_Examen;
+        this.IDExamen = IDExamen;
         this.Dato = Dato;
     }
 
@@ -25,7 +25,7 @@ public class Datos {
     }
 
     public int getID_Examen() {
-        return ID_Examen;
+        return IDExamen;
     }
 
     public String getDato() {

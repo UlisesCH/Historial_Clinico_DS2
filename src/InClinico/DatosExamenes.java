@@ -11,7 +11,7 @@ package InClinico;
 public class DatosExamenes {
     
     private int ID;
-    private int ID_Examen;
+    private int IDExamen;
     private String Dato;
     private String Valor;
     
@@ -19,9 +19,9 @@ public class DatosExamenes {
         
     }
 
-    public DatosExamenes(int ID, int ID_Examen, String Dato, String Valor) {
+    public DatosExamenes(int ID, int IDExamen, String Dato, String Valor) {
         this.ID = ID;
-        this.ID_Examen = ID_Examen;
+        this.IDExamen = IDExamen;
         this.Dato = Dato;
         this.Valor = Valor;
     }
@@ -31,7 +31,7 @@ public class DatosExamenes {
     }
 
     public int getID_Examen() {
-        return ID_Examen;
+        return IDExamen;
     }
 
     public String getDato() {
@@ -47,7 +47,7 @@ public class DatosExamenes {
     }
 
     public void setID_Examen(int ID_Examen) {
-        this.ID_Examen = ID_Examen;
+        this.IDExamen = ID_Examen;
     }
 
     public void setDato(String Dato) {

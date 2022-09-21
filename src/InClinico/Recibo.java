@@ -12,20 +12,20 @@ public class Recibo {
     
     //VARIABLES DE VALORES ALMACENADOS EN LA BASE DE DATOS
     private int ID;
-    private String Nombre_Cliente;
-    private int Edad_Cliente;
-    private Double PrecioTotal_Examen;
+    private String NombreCliente;
+    private int EdadCliente;
+    private Double PrecioTotalExamen;
     private String Fecha;
     
     public Recibo(){
         
     }
 
-    public Recibo(int ID, String Nombre_Cliente, int Edad_Cliente, Double PrecioTotal_Examen, String Fecha) {
+    public Recibo(int ID, String NombreCliente, int EdadCliente, Double PrecioTotalExamen, String Fecha) {
         this.ID = ID;
-        this.Nombre_Cliente = Nombre_Cliente;
-        this.Edad_Cliente = Edad_Cliente;
-        this.PrecioTotal_Examen = PrecioTotal_Examen;
+        this.NombreCliente = NombreCliente;
+        this.EdadCliente = EdadCliente;
+        this.PrecioTotalExamen = PrecioTotalExamen;
         this.Fecha = Fecha;
     }
 
@@ -34,15 +34,15 @@ public class Recibo {
     }
 
     public String getNombre_Cliente() {
-        return Nombre_Cliente;
+        return NombreCliente;
     }
 
     public int getEdad_Cliente() {
-        return Edad_Cliente;
+        return EdadCliente;
     }
 
     public Double getPrecioTotal_Examen() {
-        return PrecioTotal_Examen;
+        return PrecioTotalExamen;
     }
 
     public String getFecha() {
@@ -56,15 +56,15 @@ public class Recibo {
     }
 
     public void setNombre_Cliente(String Nombre_Cliente) {
-        this.Nombre_Cliente = Nombre_Cliente;
+        this.NombreCliente = Nombre_Cliente;
     }
 
     public void setEdad_Cliente(int Edad_Cliente) {
-        this.Edad_Cliente = Edad_Cliente;
+        this.EdadCliente = Edad_Cliente;
     }
 
     public void setPrecioTotal_Examen(Double PrecioTotal_Examen) {
-        this.PrecioTotal_Examen = PrecioTotal_Examen;
+        this.PrecioTotalExamen = PrecioTotal_Examen;
     }
 
     public void setFecha(String Fecha) {

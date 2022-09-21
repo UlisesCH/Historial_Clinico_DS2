@@ -11,13 +11,13 @@ package InClinico;
 public class Examenes {
     
     private int ID;
-    private String Nombre_Examen;
-    private Double Precio_Examen;
+    private String NombreExamen;
+    private Double PrecioExamen;
 
-    public Examenes(int ID, String Nombre_Examen, Double Precio_Examen) {
+    public Examenes(int ID, String NombreExamen, Double PrecioExamen) {
         this.ID = ID;
-        this.Nombre_Examen = Nombre_Examen;
-        this.Precio_Examen = Precio_Examen;
+        this.NombreExamen = NombreExamen;
+        this.PrecioExamen = PrecioExamen;
     }
 
     public int getID() {
@@ -25,11 +25,11 @@ public class Examenes {
     }
 
     public String getNombre_Examen() {
-        return Nombre_Examen;
+        return NombreExamen;
     }
 
     public Double getPrecio_Examen() {
-        return Precio_Examen;
+        return PrecioExamen;
     }
     
 }

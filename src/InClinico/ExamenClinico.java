@@ -12,19 +12,19 @@ public class ExamenClinico {
     
     //VARIABLES DE VALORES ALMACENADOS EN LA BASE DE DATOS
     private int ID;
-    private int ID_Recibo;
-    private String Nombre_Examen;
-    private Double Precio_Examen;
+    private int IDRecibo;
+    private String NombreExamen;
+    private Double PrecioExamen;
     
     public ExamenClinico(){
         
     }
 
-    public ExamenClinico(int ID, int ID_Recibo, String Nombre_Examen, Double Precio_Examen) {
+    public ExamenClinico(int ID, int IDRecibo, String NombreExamen, Double PrecioExamen) {
         this.ID = ID;
-        this.ID_Recibo = ID_Recibo;
-        this.Nombre_Examen = Nombre_Examen;
-        this.Precio_Examen = Precio_Examen;
+        this.IDRecibo = IDRecibo;
+        this.NombreExamen = NombreExamen;
+        this.PrecioExamen = PrecioExamen;
     }
 
     public int getID() {
@@ -32,15 +32,15 @@ public class ExamenClinico {
     }
 
     public int getID_Recibo() {
-        return ID_Recibo;
+        return IDRecibo;
     }
 
     public String getNombre_Examen() {
-        return Nombre_Examen;
+        return NombreExamen;
     }
 
     public Double getPrecio_Examen() {
-        return Precio_Examen;
+        return PrecioExamen;
     }
 
     public void setID(int ID) {
@@ -48,15 +48,15 @@ public class ExamenClinico {
     }
 
     public void setID_Recibo(int ID_Recibo) {
-        this.ID_Recibo = ID_Recibo;
+        this.IDRecibo = ID_Recibo;
     }
 
     public void setNombre_Examen(String Nombre_Examen) {
-        this.Nombre_Examen = Nombre_Examen;
+        this.NombreExamen = Nombre_Examen;
     }
 
     public void setPrecio_Examen(Double Precio_Examen) {
-        this.Precio_Examen = Precio_Examen;
+        this.PrecioExamen = Precio_Examen;
     }
 
    
