@@ -28,7 +28,6 @@
               <Component id="jPanel1" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="jPanel2" max="32767" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -83,10 +82,7 @@
                                           <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="BtnAgregarDatos" min="-2" max="-2" attributes="0"/>
-                                      <Component id="BtnCrearExamen" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="BtnCrearExamen" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
@@ -112,10 +108,7 @@
                   <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                   <Component id="jLabel3" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="TxtPrecioExamen" alignment="3" max="32767" attributes="0"/>
-                      <Component id="BtnAgregarDatos" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="TxtPrecioExamen" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="BtnCrearExamen" alignment="3" max="32767" attributes="0"/>
@@ -165,14 +158,6 @@
             <Property name="text" type="java.lang.String" value="PRECIO"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="BtnAgregarDatos">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Agregar Datos"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnAgregarDatosActionPerformed"/>
-          </Events>
-        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel2">
@@ -193,30 +178,35 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel4" max="32767" attributes="0"/>
-                          <EmptySpace min="101" pref="101" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="TxtTabNombExamen" alignment="0" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="TxtTabPrecioExamen" max="32767" attributes="0"/>
+                          <Component id="BtnModificar" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="BtnAgregarDatos" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                          <Component id="BtnEliminar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="jLabel5" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel4" max="32767" attributes="0"/>
+                                  <EmptySpace min="101" pref="101" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="TxtTabNombExamen" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="TxtTabPrecioExamen" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel5" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                   </Group>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
-                  <Component id="BtnModificar" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
-                  <Component id="BtnEliminar" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -237,6 +227,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="BtnModificar" alignment="3" max="32767" attributes="0"/>
                       <Component id="BtnEliminar" alignment="3" max="32767" attributes="0"/>
+                      <Component id="BtnAgregarDatos" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
@@ -322,6 +313,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnEliminarActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="BtnAgregarDatos">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Agregar Prueba"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnAgregarDatosActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

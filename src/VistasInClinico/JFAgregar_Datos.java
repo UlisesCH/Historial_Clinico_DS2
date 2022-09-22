@@ -53,6 +53,8 @@ public class JFAgregar_Datos extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         BtnRegresar = new javax.swing.JButton();
         BtnEliminar = new javax.swing.JButton();
+        TxtUnidad = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 255));
@@ -72,13 +74,13 @@ public class JFAgregar_Datos extends javax.swing.JFrame {
 
         TableDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "ID", "Dato"
+                "ID", "Prueba", "Unidad"
             }
         ));
         jScrollPane1.setViewportView(TableDatos);
@@ -102,6 +104,8 @@ public class JFAgregar_Datos extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Unidad");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -111,15 +115,21 @@ public class JFAgregar_Datos extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(TxtDatoExamen, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                        .addComponent(BtnAgregarDato))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addGap(29, 29, 29)
-                        .addComponent(LabelNombreExamen)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TxtDatoExamen, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2)
+                                .addGap(29, 29, 29)
+                                .addComponent(LabelNombreExamen))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(TxtUnidad, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                                .addGap(26, 26, 26)
+                                .addComponent(BtnAgregarDato)))))
                 .addGap(10, 10, 10))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
@@ -135,11 +145,13 @@ public class JFAgregar_Datos extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(LabelNombreExamen)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TxtDatoExamen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnAgregarDato))
+                    .addComponent(BtnAgregarDato)
+                    .addComponent(TxtUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -166,7 +178,8 @@ public class JFAgregar_Datos extends javax.swing.JFrame {
     private void BtnAgregarDatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarDatoActionPerformed
         // TODO add your handling code here:
        
-        CRDatosExamenes.InsertarDatos(Integer.valueOf(ID_ExamenDato), TxtDatoExamen.getText());
+        CRDatosExamenes.InsertarDatos(Integer.valueOf(ID_ExamenDato), 
+                TxtDatoExamen.getText(), TxtUnidad.getText());
         
         Llenar(ID_ExamenDato);
         
@@ -214,7 +227,9 @@ public class JFAgregar_Datos extends javax.swing.JFrame {
         for(int PosC = 0; PosC < listaDatos.size(); PosC++){
             
             if(listaDatos.get(PosC).getID_Examen() == Integer.valueOf(ID_ExamenDato)){
-                model.addRow(new Object[]{listaDatos.get(PosC).getID(),listaDatos.get(PosC).getDato()});
+                model.addRow(new Object[]{listaDatos.get(PosC).getID(),
+                                            listaDatos.get(PosC).getDato(),
+                                            listaDatos.get(PosC).getUnidad()});
             }
             
         }
@@ -267,8 +282,10 @@ public class JFAgregar_Datos extends javax.swing.JFrame {
     private javax.swing.JLabel LabelNombreExamen;
     private javax.swing.JTable TableDatos;
     private javax.swing.JTextField TxtDatoExamen;
+    private javax.swing.JTextField TxtUnidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
