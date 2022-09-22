@@ -13,11 +13,13 @@ public class Datos {
     private int ID;
     private int IDExamen;
     private String Dato;
+    private String Unidad;
 
-    public Datos(int ID, int IDExamen, String Dato) {
+    public Datos(int ID, int IDExamen, String Dato, String Unidad) {
         this.ID = ID;
         this.IDExamen = IDExamen;
         this.Dato = Dato;
+        this.Unidad = Unidad;
     }
 
     public int getID() {
@@ -30,6 +32,10 @@ public class Datos {
 
     public String getDato() {
         return Dato;
+    }
+
+    public String getUnidad() {
+        return Unidad;
     }
     
     

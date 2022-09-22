@@ -41,7 +41,7 @@ public class CRUD_DatosExamenes extends Conexion{
         
         try{
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE OBTINIENE LOS DATOS ALMACENADOS)
-            PreparedStatement st = conec.conexion.prepareStatement("select * from TBL_Datos");
+            PreparedStatement st = conec.conexion.prepareStatement("select * from TBL_Prueba");
                                                                     
             //SE ALMACENA LOS RESULTADOS
             result = st.executeQuery();
@@ -51,15 +51,17 @@ public class CRUD_DatosExamenes extends Conexion{
                 
                 //OBJETO DEL CONSTRUCTOR
                 Datos datos = new Datos(result.getInt("ID"),
-                                            result.getInt("ID_Examen"),
-                                                result.getString("Dato"));
+                                        result.getInt("ID_Examen"),
+                                        result.getString("Prueba"),
+                                        result.getString("Unidad"));
                 
                 //SE AGREGA EL CONSTRUCTOR AL ARREGLO
                 listaDatos.add(datos);
                 
                 DatosExamenes datosExamenes = new DatosExamenes(result.getInt("ID"),
                                             result.getInt("ID_Examen"),
-                                                result.getString("Dato"),"--");
+                                            result.getString("Prueba"),"--",
+                                            result.getString("Unidad"));
                                 
                 listaDatosExamenes.add(datosExamenes);
 
@@ -85,7 +87,7 @@ public class CRUD_DatosExamenes extends Conexion{
         
         try{
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE OBTINIENE LOS DATOS ALMACENADOS)
-            PreparedStatement st = conec.conexion.prepareStatement("select * from TBL_DatosExamen");
+            PreparedStatement st = conec.conexion.prepareStatement("select * from TBL_PruebasExamen");
             //SE ALMACENA LOS RESULTADOS
             result = st.executeQuery();
             
@@ -94,8 +96,9 @@ public class CRUD_DatosExamenes extends Conexion{
                 //OBJETO DEL CONSTRUCTOR
                 DatosExamenes datosExamen = new DatosExamenes(result.getInt("ID"),
                                                 result.getInt("ID_Examen"),
-                                                result.getString("Dato"),
-                                                result.getString("Valor"));
+                                                result.getString("Prueba"),
+                                                result.getString("Valor"),
+                                                result.getString("Unidad"));
                 //SE AGREGA EL CONSTRUCTOR AL ARREGLO
                 listaDatosExamenes.add(datosExamen);
 
@@ -109,7 +112,7 @@ public class CRUD_DatosExamenes extends Conexion{
     }
     
     //INSERTA DATOS A LA TABLA DE LA BASE DE DATOS
-    public static void InsertarDatos(int ID_Examen, String Dato){
+    public static void InsertarDatos(int ID_Examen, String Dato, String Unidad){
         int ID;
         
         ID = (int)(Math.random()*9000+1);
@@ -121,8 +124,8 @@ public class CRUD_DatosExamenes extends Conexion{
             
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE ALMACENA LOS DATOS)
             PreparedStatement st = conec.conexion.prepareStatement(
-                    "insert into TBL_Datos(ID, ID_Examen, Dato)\n"
-                    + "values("+ID+",'"+ID_Examen+"','"+Dato+"');");
+                    "insert into TBL_Prueba(ID, ID_Examen, Prueba, Unidad)\n"
+                    + "values("+ID+",'"+ID_Examen+"','"+Dato+"','"+Unidad+"');");
             //EJECUTA LA ACCION
             st.execute();
             System.out.println(" se inserto");
@@ -133,7 +136,7 @@ public class CRUD_DatosExamenes extends Conexion{
     }
     
     //INSERTA DATOS A LA TABLA DE LA BASE DE DATOS
-    public static void InsertarValorDatos(int ID_ExamenClinico, String Dato, String Valor){
+    public static void InsertarValorDatos(int ID_ExamenClinico, String Dato, String Valor, String Unidad){
         int ID;
         
         ID = (int)(Math.random()*9000+1);
@@ -147,8 +150,8 @@ public class CRUD_DatosExamenes extends Conexion{
             
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE ALMACENA LOS DATOS)
             PreparedStatement st = conec.conexion.prepareStatement(
-                    "insert into TBL_DatosExamen(ID, ID_ExamenClinico, Dato, Valor)\n"
-                    + "values("+ID+",'"+ID_ExamenClinico+"','"+Dato+"','"+Valor+"');");
+                    "insert into TBL_PruebasExamen(ID, ID_ExamenClinico, Prueba, Valor, Unidad)\n"
+                    + "values("+ID+",'"+ID_ExamenClinico+"','"+Dato+"','"+Valor+"','"+Unidad+"');");
             //EJECUTA LA ACCION
             st.execute();
             
@@ -165,7 +168,7 @@ public class CRUD_DatosExamenes extends Conexion{
         
         try{
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE ELIMINA LOS DATOS SEGUN EL ID)
-            PreparedStatement st = conec.conexion.prepareStatement("delete from TBL_Datos where ID="+ID);
+            PreparedStatement st = conec.conexion.prepareStatement("delete from TBL_Prueba where ID="+ID);
             //EJECUTA LA ACCION
             st.execute();
             
@@ -184,7 +187,7 @@ public class CRUD_DatosExamenes extends Conexion{
         
         try{
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE ELIMINA LOS DATOS SEGUN EL ID)
-            PreparedStatement st = conec.conexion.prepareStatement("delete from TBL_DatosExamen where ID_ExamenClinico="+ID_ExamenClinico);
+            PreparedStatement st = conec.conexion.prepareStatement("delete from TBL_PruebasExamen where ID_ExamenClinico="+ID_ExamenClinico);
             //EJECUTA LA ACCION
             st.execute();
             
@@ -203,8 +206,8 @@ public class CRUD_DatosExamenes extends Conexion{
         
         try{
             
-            String sql = "Update TBL_DatosExamen set ID="+ID+",ID_ExamenClinico='"+ID_ExamenClinico+"', "
-                            + "Dato='"+Dato+"',Valor="+Valor+" where ID="+ID;
+            String sql = "Update TBL_PruebasExamen set ID="+ID+",ID_ExamenClinico='"+ID_ExamenClinico+"', "
+                            + "Prueba='"+Dato+"',Valor="+Valor+" where ID="+ID;
             
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE ALMACENA LOS DATOS)
             PreparedStatement st = conec.conexion.prepareStatement(sql);

@@ -124,7 +124,8 @@ public class CRUD_ExamenClinico extends Conexion {
 
                     Cr_DatosExamenes.InsertarValorDatos(ID, 
                                     listaDatos.get(PosD).getDato(),
-                                    listaDatosExamenes.get(PosD).getValor());
+                                    listaDatosExamenes.get(PosD).getValor(),
+                                    listaDatosExamenes.get(PosD).getUnidad());
                     
                 }
                 
