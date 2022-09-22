@@ -7,7 +7,7 @@ package JFInContable;
 import InContable.CRUD_InContable;
 import InContable.Conexion;
 import InContable.InConRecibo;
-import JFInClinico.JFCrear_InClinico;
+import VistasInClinico.JFCrear_InClinico;
 import JFInContable.JFCrear_InContable;
 import java.awt.Graphics;
 import java.awt.Graphics2D;

@@ -4,8 +4,8 @@
  */
 package JFInContable;
 
-import InClinico.CRUD_ExamenClinico;
-import static InClinico.CRUD_Recibo.listaTablaRecibo;
+import InClinico.Modulos.CRUD_ExamenClinico;
+import static InClinico.Modulos.CRUD_Recibo.listaTablaRecibo;
 import InContable.Conexion;
 import InContable.CRUD_InContable;
 import static InContable.CRUD_InContable.listaInContable;
