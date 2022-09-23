@@ -82,6 +82,7 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
         TxtBuscar = new javax.swing.JTextField();
         BtnBuscar = new javax.swing.JButton();
         BtnRellenar = new javax.swing.JButton();
+        BtnDetalles = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -228,6 +229,13 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
             }
         });
 
+        BtnDetalles.setText("Detalles");
+        BtnDetalles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnDetallesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -245,8 +253,9 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BtnEliminar)
                     .addComponent(BtnImprimir)
-                    .addComponent(BtnCrear))
-                .addGap(18, 18, 18))
+                    .addComponent(BtnCrear)
+                    .addComponent(BtnDetalles))
+                .addGap(16, 16, 16))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(97, 97, 97)
                 .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -267,7 +276,8 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
+                        .addComponent(BtnDetalles)
+                        .addGap(47, 47, 47)
                         .addComponent(BtnEliminar)
                         .addGap(68, 68, 68)
                         .addComponent(BtnImprimir)
@@ -442,6 +452,30 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
         
     }//GEN-LAST:event_BtnImprimirActionPerformed
 
+    private void BtnDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDetallesActionPerformed
+        // TODO add your handling code here:
+        
+        int ID_Recibo;
+        ID_Recibo = Integer.parseInt(TableInClinico.getValueAt(fila, 0).toString());
+        
+        fila = TableInClinico.getSelectedRow();
+        
+        //OBJETO PARA INTERACTUAR CON EL JFCrear_InContable
+        if(fila != -1){
+            
+            JFDetalles Agregar_Datos = new JFDetalles(ID_Recibo);
+
+            //SE INDICA QUE SE MUESTRE LA VENTANA
+            Agregar_Datos.setVisible(true);
+            //SE OCULTA LA VENTANA ACTUAL
+            this.dispose();
+
+        }else{
+            JOptionPane.showMessageDialog(null, "NO SE A SELECIONADO FILA");
+        }
+        
+    }//GEN-LAST:event_BtnDetallesActionPerformed
+
     public void Llenar(){
         Double Total = 0.0;
         
@@ -535,6 +569,7 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnBuscar;
     private javax.swing.JButton BtnCrear;
+    private javax.swing.JButton BtnDetalles;
     private javax.swing.JButton BtnEliminar;
     private javax.swing.JButton BtnImprimir;
     private javax.swing.JButton BtnRellenar;

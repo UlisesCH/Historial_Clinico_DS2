@@ -120,12 +120,14 @@ public class CRUD_ExamenClinico extends Conexion {
             
             for(int PosD = 0; PosD < listaDatosExamenes.size(); PosD++){
 
-                if(listaDatosExamenes.get(PosD).getID_Examen() == listaExamenClinicos.get(PosC).getID()){
+                if(listaDatosExamenes.get(PosD).getIDExamen() == listaExamenClinicos.get(PosC).getID()){
 
                     Cr_DatosExamenes.InsertarValorDatos(ID, 
                                     listaDatos.get(PosD).getDato(),
                                     listaDatosExamenes.get(PosD).getValor(),
                                     listaDatosExamenes.get(PosD).getUnidad());
+                    
+                    System.out.println("Unidad "+listaDatosExamenes.get(PosD).getUnidad());
                     
                 }
                 
@@ -157,8 +159,6 @@ public class CRUD_ExamenClinico extends Conexion {
                     Cr_DatosExamenes.EliminarValorDatos(listaExClinico.get(PosList).getID());
                 }
             }
-
-            JOptionPane.showMessageDialog(null, "DATOS ELIMINADOS");
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "ERROR AL ELIMINAR LOS DATOS " + e);

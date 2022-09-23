@@ -95,7 +95,7 @@ public class CRUD_DatosExamenes extends Conexion{
             while(result.next()){
                 //OBJETO DEL CONSTRUCTOR
                 DatosExamenes datosExamen = new DatosExamenes(result.getInt("ID"),
-                                                result.getInt("ID_Examen"),
+                                                result.getInt("ID_ExamenClinico"),
                                                 result.getString("Prueba"),
                                                 result.getString("Valor"),
                                                 result.getString("Unidad"));
