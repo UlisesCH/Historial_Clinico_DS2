@@ -26,7 +26,7 @@ public class JFAgregar_Datos extends javax.swing.JFrame {
      */
     public JFAgregar_Datos(String ID_Examen, String Examen) {
         initComponents();
-       
+        this.setLocationRelativeTo(null);
         ID_ExamenDato = ID_Examen;
         LabelNombreExamen.setText(Examen);
         

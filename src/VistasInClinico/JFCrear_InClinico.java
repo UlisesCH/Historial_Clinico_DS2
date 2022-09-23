@@ -277,11 +277,11 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
 
             },
             new String [] {
-                "ID", "Nombre Examen", "Valor", "Precio"
+                "ID", "Nombre Examen", "Valor", "Unidad", "Precio"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, true, false
+                true, false, true, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -295,13 +295,18 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
         });
         jScrollPane1.setViewportView(TableInClRecibo);
         if (TableInClRecibo.getColumnModel().getColumnCount() > 0) {
+            TableInClRecibo.getColumnModel().getColumn(0).setMinWidth(50);
             TableInClRecibo.getColumnModel().getColumn(0).setPreferredWidth(3);
-            TableInClRecibo.getColumnModel().getColumn(2).setMinWidth(100);
-            TableInClRecibo.getColumnModel().getColumn(2).setPreferredWidth(10);
-            TableInClRecibo.getColumnModel().getColumn(2).setMaxWidth(100);
-            TableInClRecibo.getColumnModel().getColumn(3).setMinWidth(100);
-            TableInClRecibo.getColumnModel().getColumn(3).setPreferredWidth(10);
-            TableInClRecibo.getColumnModel().getColumn(3).setMaxWidth(100);
+            TableInClRecibo.getColumnModel().getColumn(0).setMaxWidth(50);
+            TableInClRecibo.getColumnModel().getColumn(2).setMinWidth(70);
+            TableInClRecibo.getColumnModel().getColumn(2).setPreferredWidth(30);
+            TableInClRecibo.getColumnModel().getColumn(2).setMaxWidth(70);
+            TableInClRecibo.getColumnModel().getColumn(3).setMinWidth(70);
+            TableInClRecibo.getColumnModel().getColumn(3).setPreferredWidth(30);
+            TableInClRecibo.getColumnModel().getColumn(3).setMaxWidth(70);
+            TableInClRecibo.getColumnModel().getColumn(4).setMinWidth(70);
+            TableInClRecibo.getColumnModel().getColumn(4).setPreferredWidth(30);
+            TableInClRecibo.getColumnModel().getColumn(4).setMaxWidth(70);
         }
 
         TxtTotalExamen.setText("TOTAL");
@@ -626,43 +631,51 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
 
     private void BtnDarValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDarValorActionPerformed
         // TODO add your handling code here:
-        
         DatosExamenes datosExamenes = new DatosExamenes();
         int fila = TableInClRecibo.getSelectedRow();
-        int ID = Integer.parseInt((String) TableInClRecibo.getValueAt(fila, 0).toString());
-        boolean Auxiliar = false;
         
-        datosExamenes.setID(ID);
-        datosExamenes.setDato(TxtDato.getText());
-        datosExamenes.setValor(TxtValor.getText());
-
-        if(listaDatosExamenes.isEmpty()){
-            
-            listaDatosExamenes.add(datosExamenes);
-            
+        if("--".equals((String) TableInClRecibo.getValueAt(fila, 0).toString())){
+            JOptionPane.showMessageDialog(null, "FILA SELECCIONADA NO ES VALIDA");
         }else{
-            for(int index = 0; index < listaDatosExamenes.size(); index++){
-                
-                if(listaDatosExamenes.get(index).getID() == ID){
+            
+            int ID = Integer.parseInt((String) TableInClRecibo.getValueAt(fila, 0).toString());
+            String Unidad = (String) TableInClRecibo.getValueAt(fila, 3).toString();
+            boolean Auxiliar = false;
 
-                    datosExamenes.setID_Examen(listaDatosExamenes.get(index).getID_Examen());
-                    
-                    listaDatosExamenes.set(index, datosExamenes);
+            datosExamenes.setID(ID);
+            datosExamenes.setDato(TxtDato.getText());
+            datosExamenes.setValor(TxtValor.getText());
+            datosExamenes.setUnidad(Unidad);
 
-                    Auxiliar = true;
-                }
-            }if(Auxiliar == false){
+            if(listaDatosExamenes.isEmpty()){
+
                 listaDatosExamenes.add(datosExamenes);
-            }
- 
-        }
-        
-        ListaDatos();
 
-        TxtDato.setText("Dato");
-        TxtValor.setText("");
-        
-        Llenar();
+            }else{
+                for(int index = 0; index < listaDatosExamenes.size(); index++){
+
+                    if(listaDatosExamenes.get(index).getID() == ID){
+
+                        datosExamenes.setIDExamen(listaDatosExamenes.get(index).getIDExamen());
+
+                        listaDatosExamenes.set(index, datosExamenes);
+
+                        Auxiliar = true;
+                    }
+                }if(Auxiliar == false){
+                    listaDatosExamenes.add(datosExamenes);
+                }
+
+            }
+
+            ListaDatos();
+
+            TxtDato.setText("Dato");
+            TxtValor.setText("");
+
+            Llenar();
+        }
+
     }//GEN-LAST:event_BtnDarValorActionPerformed
 
     private void TxtValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtValorActionPerformed
@@ -714,6 +727,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
         listaDatosExamenes.clear();
 
         TxtNombCliente.setText("");
+        TxtEdad.setText("");
 
         TxtNomPacienteRecibo.setText("Nombre Paciente");
         TxtTotalExamen.setText("Total");
@@ -738,15 +752,16 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
 
             model.addRow(new Object[]{"--",
                     listaExamenClinicos.get(PosC).getNombre_Examen()
-                    ," ",listaExamenClinicos.get(PosC).getPrecio_Examen()});
+                    ," "," ",listaExamenClinicos.get(PosC).getPrecio_Examen()});
             
             for(int PosD = 0; PosD < listaDatos.size(); PosD++){
                 
-                if(listaDatosExamenes.get(PosD).getID_Examen() == listaExamenClinicos.get(PosC).getID()){
+                if(listaDatosExamenes.get(PosD).getIDExamen() == listaExamenClinicos.get(PosC).getID()){
 
                     model.addRow(new Object[]{listaDatosExamenes.get(PosD).getID(),
                                             listaDatosExamenes.get(PosD).getDato(),
-                                            listaDatosExamenes.get(PosD).getValor()," "});
+                                            listaDatosExamenes.get(PosD).getValor(),
+                                            listaDatosExamenes.get(PosD).getUnidad()," "});
 
                 }
                 

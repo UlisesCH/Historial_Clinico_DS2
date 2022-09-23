@@ -147,8 +147,6 @@ public class CRUD_Recibo extends Conexion {
             
             Cr_ExamenClinico.Eliminar(ID);
             
-            JOptionPane.showMessageDialog(null, "DATOS ELIMINADOS");
-            
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "ERROR AL ELIMINAR LOS DATOS " + e);
         }

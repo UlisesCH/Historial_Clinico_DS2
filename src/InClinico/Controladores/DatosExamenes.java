@@ -32,7 +32,7 @@ public class DatosExamenes {
         return ID;
     }
 
-    public int getID_Examen() {
+    public int getIDExamen() {
         return IDExamen;
     }
 
@@ -52,8 +52,8 @@ public class DatosExamenes {
         this.ID = ID;
     }
 
-    public void setID_Examen(int ID_Examen) {
-        this.IDExamen = ID_Examen;
+    public void setIDExamen(int IDExamen) {
+        this.IDExamen = IDExamen;
     }
 
     public void setDato(String Dato) {
