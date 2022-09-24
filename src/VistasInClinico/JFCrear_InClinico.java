@@ -817,7 +817,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
         
         try{
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive/Escritorio/Recibo_" 
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/Recibo_" 
                             +TxtNombCliente.getText().trim() + ".pdf"));
             
             documento.open();
@@ -882,7 +882,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
         try {
             
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive/Escritorio/"  
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/" 
                     +TxtNombCliente.getText().trim()+"_"
                     +listaExamenClinicos.get(posEx).getNombre_Examen().trim()+ ".pdf"));
             
