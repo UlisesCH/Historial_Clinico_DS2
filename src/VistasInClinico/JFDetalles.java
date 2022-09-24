@@ -5,12 +5,30 @@
 package VistasInClinico;
 
 import InClinico.Controladores.Conexion;
+import InClinico.Controladores.DatosExamenes;
+import InClinico.Controladores.ExamenClinico;
+import InClinico.Controladores.Recibo;
 import InClinico.Modulos.CRUD_Recibo;
 import InClinico.Modulos.CRUD_ExamenClinico;
 import InClinico.Modulos.CRUD_DatosExamenes;
 import static InClinico.Modulos.CRUD_DatosExamenes.listaDatosExamenes;
 import static InClinico.Modulos.CRUD_ExamenClinico.listaExClinico;
 import static InClinico.Modulos.CRUD_Recibo.listaTablaRecibo;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Font;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,7 +36,10 @@ import javax.swing.table.DefaultTableModel;
  * @author ulise
  */
 public class JFDetalles extends javax.swing.JFrame {
-     DefaultTableModel model;
+    public static int IDRecibo;
+    DefaultTableModel model;
+    //LISTA PARA ALMACENAR LOS DATOS OBTENIDOS DE LA BASE DE DATOS
+    public static List<Recibo> listaRecibo = new ArrayList<Recibo>(); 
     
     /**
      * Creates new form JFDetalles
@@ -30,6 +51,8 @@ public class JFDetalles extends javax.swing.JFrame {
         //SE VINCULA CON LA TABLA
         model = (DefaultTableModel) this.TableInDetalles.getModel();
 
+        IDRecibo = ID_Recibo;
+        
         LlenarRecivo(ID_Recibo);
     }
 
@@ -163,6 +186,11 @@ public class JFDetalles extends javax.swing.JFrame {
         });
 
         BtnPDF.setText("Crear PDF");
+        BtnPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnPDFActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -250,8 +278,24 @@ public class JFDetalles extends javax.swing.JFrame {
         
     }//GEN-LAST:event_BtnRegresoActionPerformed
 
-    public void LlenarRecivo(int ID_ReciboExamen){
+    private void BtnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPDFActionPerformed
+        // TODO add your handling code here:
+        for(int posEx = 0; posEx < listaExClinico.size(); posEx++){
+            
+            if(listaExClinico.get(posEx).getID_Recibo() == IDRecibo){
+                
+                PDFExamenes(posEx);
+                
+            }
+        }
+        
+        JOptionPane.showMessageDialog(null, "Reporte creado correctamente");
+        
+    }//GEN-LAST:event_BtnPDFActionPerformed
 
+    public void LlenarRecivo(int ID_ReciboExamen){
+        Recibo recibo = new Recibo();
+        
         TxtNomPacienteDetalles.setText("");
         TxtFechaDetalles.setText("");
         
@@ -273,8 +317,15 @@ public class JFDetalles extends javax.swing.JFrame {
                 
                 Total = listaTablaRecibo.get(PosR).getPrecioTotal_Examen();
                 
-                LlenarExamen(ID_ReciboExamen);
+                recibo.setNombre_Cliente(listaTablaRecibo.get(PosR).getNombre_Cliente());
+                recibo.setEdad_Cliente(listaTablaRecibo.get(PosR).getEdad_Cliente());
+                recibo.setFecha(listaTablaRecibo.get(PosR).getFecha());
                 
+                //SE AGREGA EL CONSTRUCTOR AL ARREGLO
+                listaRecibo.add(recibo);
+
+                LlenarExamen(ID_ReciboExamen);
+
             }
 
         }
@@ -322,6 +373,125 @@ public class JFDetalles extends javax.swing.JFrame {
             }else{
                 System.out.println("No Encontrado");
             }
+        }
+        
+    }
+    
+    public void PDFExamenes(int posEx){
+        
+        boolean Auxiliar = true;
+        Document documento = new Document();
+
+        try {
+            //ruta +"/Desktop/"
+            String ruta = System.getProperty("user.home");
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive/Escritorio/" 
+                    +listaRecibo.get(0).getNombre_Cliente()+"_"
+                    +listaExClinico.get(posEx).getNombre_Examen().trim()+ ".pdf"));
+            
+            documento.open();
+            
+            Paragraph parrafo = new Paragraph();
+            
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.add("LABORATORIO CLINICO DE ANALISIS HENDRYKS\n \n");
+            parrafo.add("Lotificación Avilés frente a Lotificacion San Emilio,\n");
+            parrafo.add("Santa Elena, Usulután\n \n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+            
+            documento.add(parrafo);
+            parrafo.clear();
+            
+            parrafo.setAlignment(Paragraph.ALIGN_LEFT);
+            parrafo.add("DOCTOR(A): \n \n");
+            parrafo.add("PACIENTE: "+listaRecibo.get(0).getNombre_Cliente()+"       "
+                     + "EDAD: "+listaRecibo.get(0).getEdad_Cliente()+"\n \n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 12, Font.BOLD, BaseColor.DARK_GRAY));
+
+            documento.add(parrafo);
+            parrafo.clear();
+
+            parrafo.setAlignment(Paragraph.ALIGN_LEFT);
+            parrafo.add("EXAMEN: "+listaExClinico.get(posEx).getNombre_Examen()+"\n \n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 12, Font.BOLD, BaseColor.DARK_GRAY));
+            
+            documento.add(parrafo);
+            
+            //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
+            for(int posDE = 0; posDE < listaDatosExamenes.size(); posDE++){
+
+                if(listaDatosExamenes.get(posDE).getIDExamen() 
+                    == listaExClinico.get(posEx).getID()){
+                    
+                    if("".equals(listaDatosExamenes.get(posDE).getUnidad())){
+                        Auxiliar = false;
+                    }
+                    
+                }
+            }
+
+            if(Auxiliar){
+                
+                PdfPTable tablaCliente = new PdfPTable(3);
+                tablaCliente.addCell("Prueba");
+                tablaCliente.addCell("Valor");
+                tablaCliente.addCell("Unidad");
+                
+                //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
+                for(int posDE = 0; posDE < listaDatosExamenes.size(); posDE++){
+                    
+                    if(listaDatosExamenes.get(posDE).getIDExamen()
+                            == listaExClinico.get(posEx).getID()){
+                        
+                        tablaCliente.addCell(listaDatosExamenes.get(posDE).getDato());
+                        tablaCliente.addCell(listaDatosExamenes.get(posDE).getValor());
+                        tablaCliente.addCell(listaDatosExamenes.get(posDE).getUnidad());
+                        
+                    }
+                    
+                }
+                
+                documento.add(tablaCliente);
+            }else{
+                
+                PdfPTable tablaCliente = new PdfPTable(2);
+                tablaCliente.addCell("Prueba");
+                tablaCliente.addCell("Valor");
+
+                //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
+                for(int posDE = 0; posDE < listaDatosExamenes.size(); posDE++){
+                    
+                    if(listaDatosExamenes.get(posDE).getIDExamen()
+                            == listaExClinico.get(posEx).getID()){
+                        
+                        tablaCliente.addCell(listaDatosExamenes.get(posDE).getDato());
+                        tablaCliente.addCell(listaDatosExamenes.get(posDE).getValor());
+                        
+                    }
+                    
+                }
+
+                documento.add(tablaCliente);
+    
+            }
+          
+            parrafo.clear();
+
+            parrafo.setAlignment(Paragraph.ALIGN_LEFT);
+            parrafo.add(listaRecibo.get(0).getFecha()+"\n \n");
+
+            parrafo.add("Observaciones:");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+            
+            
+            documento.add(parrafo);
+            
+            documento.close();  
+            
+        }catch (FileNotFoundException ex) {
+            Logger.getLogger(JFMostrar_InClinico.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(JFMostrar_InClinico.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
