@@ -716,7 +716,10 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
         Conexion conec = new Conexion();
         //CREA REALIZA LA CONEXION Y CREA LA TABLA SI NO HAY
         conec.CrearTablas();
-
+        
+        
+        
+        
         //SE MANDA LOS VALORES AL INSERTAR
         CrRecibo.Insertar(listaRecibo.get(0).getNombre_Cliente()
                 ,listaRecibo.get(0).getEdad_Cliente()
@@ -864,7 +867,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
             parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
             
             documento.add(parrafo);
-            
+
             documento.close();
             
             JOptionPane.showMessageDialog(null, "Reporte creado correctamente");
