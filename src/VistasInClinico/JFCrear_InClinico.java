@@ -822,7 +822,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
         
         try{
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/"
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive" + "/Escritorio/" 
                             +TxtNombCliente.getText().trim() + ".pdf"));
             
             documento.open();
@@ -881,13 +881,13 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
     }
     
     public void PDFExamenes(int posEx){
-        
+        boolean Auxiliar = true;
         Document documento = new Document();
         
         try {
             
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/"
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive" + "/Escritorio/" 
                     +TxtNombCliente.getText().trim()+"_"
                     +listaExamenClinicos.get(posEx).getNombre_Examen().trim()+ ".pdf"));
             
@@ -919,25 +919,61 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
             
             documento.add(parrafo);
 
-            PdfPTable tablaCliente = new PdfPTable(3);
-            tablaCliente.addCell("Prueba");
-            tablaCliente.addCell("Valor");
-            tablaCliente.addCell("Unidad");
-
             //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
             for(int posDE = 0; posDE < listaDatosExamenes.size(); posDE++){
 
                 if(listaDatosExamenes.get(posDE).getIDExamen() 
                     == listaExamenClinicos.get(posEx).getID()){
-
-                    tablaCliente.addCell(listaDatosExamenes.get(posDE).getDato());
-                    tablaCliente.addCell(listaDatosExamenes.get(posDE).getValor());
-                    tablaCliente.addCell(listaDatosExamenes.get(posDE).getUnidad());
-                }    
-
+                    
+                    if("".equals(listaDatosExamenes.get(posDE).getUnidad())){
+                        Auxiliar = false;
+                    }
+                    
+                }
             }
+            
+            if(Auxiliar){
+                PdfPTable tablaCliente = new PdfPTable(3);
+                tablaCliente.addCell("Prueba");
+                tablaCliente.addCell("Valor");
+                tablaCliente.addCell("Unidad");
 
-            documento.add(tablaCliente);
+                //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
+                for(int posDE = 0; posDE < listaDatosExamenes.size(); posDE++){
+
+                    if(listaDatosExamenes.get(posDE).getIDExamen() 
+                        == listaExamenClinicos.get(posEx).getID()){
+
+                        tablaCliente.addCell(listaDatosExamenes.get(posDE).getDato());
+                        tablaCliente.addCell(listaDatosExamenes.get(posDE).getValor());
+                        tablaCliente.addCell(listaDatosExamenes.get(posDE).getUnidad());
+                    }    
+
+                }
+
+                documento.add(tablaCliente);
+            }else{
+                
+                PdfPTable tablaCliente = new PdfPTable(2);
+                tablaCliente.addCell("Prueba");
+                tablaCliente.addCell("Valor");
+
+                //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
+                for(int posDE = 0; posDE < listaDatosExamenes.size(); posDE++){
+                    
+                    if(listaDatosExamenes.get(posDE).getIDExamen()
+                            == listaExamenClinicos.get(posEx).getID()){
+                        
+                        tablaCliente.addCell(listaDatosExamenes.get(posDE).getDato());
+                        tablaCliente.addCell(listaDatosExamenes.get(posDE).getValor());
+                        
+                    }
+                    
+                }
+
+                documento.add(tablaCliente);
+    
+            }
           
             parrafo.clear();
 
