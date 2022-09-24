@@ -163,6 +163,11 @@ public class JFDetalles extends javax.swing.JFrame {
         });
 
         BtnPDF.setText("Crear PDF");
+        BtnPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnPDFActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -249,6 +254,10 @@ public class JFDetalles extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_BtnRegresoActionPerformed
+
+    private void BtnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPDFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnPDFActionPerformed
 
     public void LlenarRecivo(int ID_ReciboExamen){
 
