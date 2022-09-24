@@ -382,7 +382,7 @@ public class JFDetalles extends javax.swing.JFrame {
         try {
             
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive" + "/Escritorio/" 
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/" 
                     +listaRecibo.get(0).getNombre_Cliente()+"_"
                     +listaExClinico.get(posEx).getNombre_Examen().trim()+ ".pdf"));
             
