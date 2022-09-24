@@ -716,7 +716,10 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
         Conexion conec = new Conexion();
         //CREA REALIZA LA CONEXION Y CREA LA TABLA SI NO HAY
         conec.CrearTablas();
-
+        
+        
+        
+        
         //SE MANDA LOS VALORES AL INSERTAR
         CrRecibo.Insertar(listaRecibo.get(0).getNombre_Cliente()
                 ,listaRecibo.get(0).getEdad_Cliente()
@@ -724,7 +727,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
 
         JOptionPane.showMessageDialog(null, "DATOS GUARDADOS");
 
-        //Imprimir();
+        Imprimir();
 
         listaRecibo.clear();
         listaExamenClinicos.clear();
@@ -840,7 +843,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
             tablaCliente.addCell("Fecha");
             
                 //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
-                for(int PosC = 0; PosC < listaRecibo.size(); PosC++){
+                for(int PosC = 0; listaRecibo.size() >= PosC; PosC++){
                     tablaCliente.addCell(listaRecibo.get(PosC).getNombre_Cliente());
                     tablaCliente.addCell(listaRecibo.get(PosC).getPrecioTotal_Examen().toString());
                     tablaCliente.addCell(listaRecibo.get(PosC).getFecha());
