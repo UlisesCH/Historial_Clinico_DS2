@@ -724,7 +724,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
 
         JOptionPane.showMessageDialog(null, "DATOS GUARDADOS");
 
-        //Imprimir();
+        Imprimir();
 
         listaRecibo.clear();
         listaExamenClinicos.clear();
@@ -744,6 +744,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
     
     public void Llenar(){
         
+        Recibo reciboDatos = new Recibo();
         int ContAux = 0;
         Total = 0.0;
         
@@ -752,8 +753,6 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
 
         //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
         for(int PosC = 0; PosC < listaExamenClinicos.size(); PosC++){
-
-            TxtNomPacienteRecibo.setText(listaRecibo.get(PosC).getNombre_Cliente());
 
             model.addRow(new Object[]{"--",
                     listaExamenClinicos.get(PosC).getNombre_Examen()
@@ -772,14 +771,17 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
                 
             }
             
-            TxtFecha.setText(listaRecibo.get(PosC).getFecha());
+            
             
             Total = Total+listaExamenClinicos.get(PosC).getPrecio_Examen();
 
         }
         
-        TxtTotalExamen.setText(""+Total);
+        TxtNomPacienteRecibo.setText(listaRecibo.get(0).getNombre_Cliente());
+        TxtFecha.setText(listaRecibo.get(0).getFecha());
         
+        TxtTotalExamen.setText(""+Total);
+
     }
     
     public void ListaDatos(){
@@ -817,7 +819,8 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
         
         try{
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/" + TxtNombCliente.getText().trim() + ".pdf"));
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive" + "/Escritorio/" 
+                            +TxtNombCliente.getText().trim() + ".pdf"));
             
             documento.open();
             
@@ -825,30 +828,123 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
             
             parrafo.setAlignment(Paragraph.ALIGN_CENTER);
             parrafo.add("LABORATORIO CLINICO DE ANALISIS HENDRYKS\n \n");
+            parrafo.add(" Lotificación Avilés frente a Lotificacion San Emilio,\n");
+            parrafo.add("Santa Elena, Usulután\n \n");
             parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
             
-            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
-            parrafo.add("RECIBO DE EXAMENES REALIZADOS\n \n");
+            documento.add(parrafo);
+            parrafo.clear();
+            
+            parrafo.setAlignment(Paragraph.ALIGN_LEFT);
+            parrafo.add("PACIENTE: "+listaRecibo.get(0).getNombre_Cliente()+"\n \n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 12, Font.NORMAL, BaseColor.DARK_GRAY));
+            
+            documento.add(parrafo);
+
+            PdfPTable tablaCliente = new PdfPTable(2);
+            tablaCliente.addCell("Nombre del Examen");
+            tablaCliente.addCell("Precio");
+
+            //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
+            for(int PosC = 0; PosC < listaExamenClinicos.size(); PosC++){
+            
+                tablaCliente.addCell(listaExamenClinicos.get(PosC).getNombre_Examen());
+                tablaCliente.addCell(listaExamenClinicos.get(PosC).getPrecio_Examen().toString());
+                
+                PDFExamenes(PosC);
+                
+            }
+            documento.add(tablaCliente);
+            
+            parrafo.clear();
+            
+            parrafo.setAlignment(Paragraph.ALIGN_LEFT);
+            parrafo.add("PRECIO TOTAL: "+TxtTotalExamen.getText()+"\n \n");
+            parrafo.add(listaRecibo.get(0).getFecha()+"\n \n");
             parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
             
             documento.add(parrafo);
             
-            PdfPTable tablaCliente = new PdfPTable(4);
-            tablaCliente.addCell("Nombre");
-            tablaCliente.addCell("Nombre del Examen");
-            tablaCliente.addCell("Precio");
-            tablaCliente.addCell("Fecha");
-            
-                //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
-                for(int PosC = 0; PosC < listaRecibo.size(); PosC++){
-                    tablaCliente.addCell(listaRecibo.get(PosC).getNombre_Cliente());
-                    tablaCliente.addCell(listaRecibo.get(PosC).getPrecioTotal_Examen().toString());
-                    tablaCliente.addCell(listaRecibo.get(PosC).getFecha());
-                }
-                documento.add(tablaCliente);
-                
             documento.close();
+            
             JOptionPane.showMessageDialog(null, "Reporte creado correctamente");
+            
+        }catch (FileNotFoundException ex) {
+            Logger.getLogger(JFMostrar_InClinico.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(JFMostrar_InClinico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    public void PDFExamenes(int posEx){
+        
+        Document documento = new Document();
+        
+        try {
+            
+            String ruta = System.getProperty("user.home");
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive" + "/Escritorio/" 
+                    +TxtNombCliente.getText().trim()+"_"
+                    +listaExamenClinicos.get(posEx).getNombre_Examen().trim()+ ".pdf"));
+            
+            documento.open();
+            
+            Paragraph parrafo = new Paragraph();
+            
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.add("LABORATORIO CLINICO DE ANALISIS HENDRYKS\n \n");
+            parrafo.add("Lotificación Avilés frente a Lotificacion San Emilio,\n");
+            parrafo.add("Santa Elena, Usulután\n \n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+            
+            documento.add(parrafo);
+            parrafo.clear();
+            
+            parrafo.setAlignment(Paragraph.ALIGN_LEFT);
+            parrafo.add("DOCTOR(A): \n \n");
+             parrafo.add("PACIENTE: "+listaRecibo.get(0).getNombre_Cliente()+"       "
+                     + "EDAD: "+listaRecibo.get(0).getEdad_Cliente()+"\n \n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 12, Font.BOLD, BaseColor.DARK_GRAY));
+
+            documento.add(parrafo);
+            parrafo.clear();
+
+            parrafo.setAlignment(Paragraph.ALIGN_LEFT);
+            parrafo.add("EXAMEN: "+listaExamenClinicos.get(posEx).getNombre_Examen()+"\n \n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 12, Font.BOLD, BaseColor.DARK_GRAY));
+            
+            documento.add(parrafo);
+
+            PdfPTable tablaCliente = new PdfPTable(3);
+            tablaCliente.addCell("Prueba");
+            tablaCliente.addCell("Valor");
+            tablaCliente.addCell("Unidad");
+
+            //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
+            for(int posDE = 0; posDE < listaDatosExamenes.size(); posDE++){
+
+                if(listaDatosExamenes.get(posDE).getIDExamen() 
+                    == listaExamenClinicos.get(posEx).getID()){
+
+                    tablaCliente.addCell(listaDatosExamenes.get(posDE).getDato());
+                    tablaCliente.addCell(listaDatosExamenes.get(posDE).getValor());
+                    tablaCliente.addCell(listaDatosExamenes.get(posDE).getUnidad());
+                }    
+
+            }
+
+            documento.add(tablaCliente);
+          
+            parrafo.clear();
+
+            parrafo.setAlignment(Paragraph.ALIGN_LEFT);
+            parrafo.add(listaRecibo.get(0).getFecha()+"\n \n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+            
+            documento.add(parrafo);
+            
+            documento.close();  
             
         }catch (FileNotFoundException ex) {
             Logger.getLogger(JFMostrar_InClinico.class.getName()).log(Level.SEVERE, null, ex);

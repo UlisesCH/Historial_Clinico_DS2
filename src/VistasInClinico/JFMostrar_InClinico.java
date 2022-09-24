@@ -335,7 +335,10 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
         
         try{
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/InformeClinico.pdf"));
+            
+            System.out.println(ruta);
+            
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive" + "/Escritorio/InformeClinico.pdf"));
             
             documento.open();
             
@@ -353,13 +356,13 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
             
             PdfPTable tablaCliente = new PdfPTable(5);
             tablaCliente.addCell("ID");
-            tablaCliente.addCell("Nombre");
-            tablaCliente.addCell("Nombre del Examen");
-            tablaCliente.addCell("Precio");
+            tablaCliente.addCell("Nombre Cliente");
+            tablaCliente.addCell("Edad Cliente");
+            tablaCliente.addCell("Precio Total");
             tablaCliente.addCell("Fecha");
             
             try{
-                String sql = "SELECT * FROM InClinico";
+                String sql = "SELECT * FROM TBL_Recibo";
                 Conexion  cn = new Conexion();
                 cn.CrearTablas();
                 PreparedStatement pst = cn.conexion.prepareStatement(sql);
@@ -375,6 +378,16 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
                     } while(rs.next());
                     documento.add(tablaCliente);
                 }
+                
+                parrafo.clear();
+                
+                parrafo.setAlignment(Paragraph.ALIGN_LEFT);
+                parrafo.add("PRECIO TOTAL: "+TxtTotalExamen.getText()+"\n \n");
+                parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+
+                documento.add(parrafo);
+
+                documento.close();
                 
             }catch (SQLException ex) {
                 Logger.getLogger(JFMostrar_InClinico.class.getName()).log(Level.SEVERE, null, ex);
