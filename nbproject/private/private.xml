@@ -3,17 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_DS2/src/VistasInClinico/JFAgregar_Datos.java</file>
-            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_DS2/src/VistasInClinico/JFDetalles.java</file>
-            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_DS2/src/VistasInClinico/JFCrear_InClinico.java</file>
-            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_DS2/src/VistasInClinico/JFCrear_Examen.java</file>
-            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_DS2/src/InClinico/Controladores/Conexion.java</file>
-            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_DS2/src/VistasInClinico/JFMostrar_InClinico.java</file>
-=======
             <file>file:/C:/Users/Isai/Documents/Universidad/Diseño%20de%20sistema%202/Historial_Clinico_DS2/src/VistasInClinico/JFCrear_InClinico.java</file>
-            <file>file:/C:/Users/Isai/Documents/Universidad/Diseño%20de%20sistema%202/Historial_Clinico_DS2/src/InClinico/Modulos/CRUD_Recibo.java</file>
->>>>>>> 4a81e2efa3af29db0c0926d31dcc3ced8513b6b6
+            <file>file:/C:/Users/Isai/Documents/Universidad/Diseño%20de%20sistema%202/Historial_Clinico_DS2/src/VistasInClinico/JFDetalles.java</file>
+            <file>file:/C:/Users/Isai/Documents/Universidad/Diseño%20de%20sistema%202/Historial_Clinico_DS2/src/InClinico/Controladores/Conexion.java</file>
         </group>
     </open-files>
 </project-private>
