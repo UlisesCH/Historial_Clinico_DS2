@@ -359,7 +359,7 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
             tablaCliente.addCell("Fecha");
             
             try{
-                String sql = "SELECT * FROM InClinico";
+                String sql = "SELECT * FROM TBL_Recibo";
                 Conexion  cn = new Conexion();
                 cn.CrearTablas();
                 PreparedStatement pst = cn.conexion.prepareStatement(sql);
