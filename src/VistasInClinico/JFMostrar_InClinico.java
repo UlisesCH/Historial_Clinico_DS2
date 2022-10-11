@@ -337,7 +337,7 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
             
             System.out.println(ruta);
             
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/InformeClinico.pdf"));
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive/Escritorio/InformeClinico.pdf"));
             
             documento.open();
             
