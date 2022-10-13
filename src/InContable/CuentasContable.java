@@ -8,7 +8,7 @@ package InContable;
  *
  * @author ulise
  */
-public class InCuentasContable {
+public class CuentasContable {
     
     //Listado de las cuentas y tipos de cuentas por grupo
     public static String ListaTipoCuentaAP[] = {"Corriente", "No Corriente"};
@@ -63,11 +63,11 @@ public class InCuentasContable {
     private String SubGrupoCuenta;
     private String NombreCuenta;
 
-    public InCuentasContable(){
+    public CuentasContable(){
         
     }
 
-    public InCuentasContable(int ID, String GrupoCuenta, String TipoCuenta, String SubGrupoCuenta, String NombreCuenta) {
+    public CuentasContable(int ID, String GrupoCuenta, String TipoCuenta, String SubGrupoCuenta, String NombreCuenta) {
         this.ID = ID;
         this.GrupoCuenta = GrupoCuenta;
         this.TipoCuenta = TipoCuenta;

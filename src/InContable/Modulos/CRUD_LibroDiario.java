@@ -5,7 +5,7 @@
 package InContable.Modulos;
 
 import InContable.Conexion;
-import InContable.CuentasContable;
+import InContable.LibroDiario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -16,16 +16,14 @@ import javax.swing.JOptionPane;
  *
  * @author ulise
  */
-public class CRUD_CuentasContable {
-    
+public class CRUD_LibroDiario {
     //LISTA PARA ALMACENAR LOS DATOS OBTENIDOS DE LA BASE DE DATOS
-    public static List<CuentasContable> listaCuentasContable = new ArrayList<CuentasContable>();
-    public static String ListaTipoCuentas [] = {"Activo","Pasivos","Capital"};
+    public static List<LibroDiario> listaLibroDiario = new ArrayList<LibroDiario>();
     
     //LLENA LA TABLA CON LOS DATOS OBTENIDOS DE LA BASE DE DATOS
     public static void LlenarTabla(){
         //SE VACIA LA LISTA
-        listaCuentasContable.clear();
+        listaLibroDiario.clear();
         //OBJETO PARA TENER INTERACCION CON LA CLASE Conexion
         Conexion conec = new Conexion();
         //CREA LA CONECION Y VERIFICA LA EXISTENCIA DE LA TABLA
@@ -35,20 +33,19 @@ public class CRUD_CuentasContable {
         
         try{
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE OBTINIENE LOS DATOS ALMACENADOS)
-            PreparedStatement st = conec.conexion.prepareStatement("select * from TBL_CuentasContable");
+            PreparedStatement st = conec.conexion.prepareStatement("select * from TBL_Libros");
             //SE ALMACENA LOS RESULTADOS
             result = st.executeQuery();
             
             //SE RECORRE TODO LO ALMACENADO
             while(result.next()){
                 //OBJETO DEL CONSTRUCTOR
-                CuentasContable InCuentas = new CuentasContable(result.getInt("ID"),
-                                                  result.getString("Grupo_Cuenta"),
-                                                  result.getString("Tipo_Cuenta"),
-                                                  result.getString("SubGrupo_Cuenta"),
-                                                    result.getString("Nombre_Cuenta"));
+                LibroDiario InLibroDiario = new LibroDiario(result.getInt("ID"),
+                                                result.getString("Nombre"),
+                                                result.getString("FechaInicio"),
+                                                result.getString("FechaFinal"));
                 //SE AGREGA EL CONSTRUCTOR AL ARREGLO
-                listaCuentasContable.add(InCuentas);
+                listaLibroDiario.add(InLibroDiario);
 
             }
             
@@ -58,7 +55,7 @@ public class CRUD_CuentasContable {
     }
     
     //INSERTA DATOS A LA TABLA DE LA BASE DE DATOS
-    public static void Insertar(String TipoCuenta, String GrupoCuenta, String SubGrupoCuenta, String NombreCuenta){
+    public static void Insertar(String Nombre, String FechaInicio, String FechaFinal){
         int ID;
         
         ID = (int)(Math.random()*9000+1);
@@ -70,14 +67,15 @@ public class CRUD_CuentasContable {
 
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE ALMACENA LOS DATOS)
             PreparedStatement st = conec.conexion.prepareStatement(
-                    "insert into TBL_CuentasContable(ID, Grupo_Cuenta, Tipo_Cuenta, SubGrupo_Cuenta, Nombre_Cuenta)\n"
-                    + "values("+ID+",'"+GrupoCuenta+"','"+TipoCuenta+"','"+SubGrupoCuenta+"','"+NombreCuenta+"');");
+                    "insert into TBL_Libros(ID, Nombre, FechaInicio, FechaFinal)\n"
+                    + "values("+ID+",'"+Nombre+"','"+FechaInicio+"','"+FechaFinal+"');");
             //EJECUTA LA ACCION
             st.execute();
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "ERROR AL INSERTAR LOS DATOS " + e);
         }
+        
     }
     
     //ELIMINA LOS DATOS DEL REGISTRO SELECCIONADO
@@ -88,9 +86,11 @@ public class CRUD_CuentasContable {
         
         try{
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE ELIMINA LOS DATOS SEGUN EL ID)
-            PreparedStatement st = conec.conexion.prepareStatement("delete from TBL_CuentasContable where ID="+id);
+            PreparedStatement st = conec.conexion.prepareStatement("delete from TBL_Libros where ID="+id);
             //EJECUTA LA ACCION
             st.execute();
+            
+            CRUD_Partidas.EliminarPorLibro(id);
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "ERROR AL ELIMINAR LOS DATOS " + e);

@@ -5,19 +5,32 @@
 package JFInContable;
 
 import InContable.Conexion;
+import InContable.Modulos.CRUD_LibroDiario;
+import static InContable.Modulos.CRUD_LibroDiario.listaLibroDiario;
 import VistasInClinico.JFCrear_InClinico;
+import java.util.Calendar;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author ulise
  */
 public class JFMostrar_LibrosDiarios extends javax.swing.JFrame {
-
+    
+    CRUD_LibroDiario CRLibroDiario = new CRUD_LibroDiario();
+    DefaultTableModel model;
+    int fila;
+    
     /**
      * Creates new form JFMostrar_LibrosDiarios
      */
     public JFMostrar_LibrosDiarios() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        
+        model = (DefaultTableModel) this.TableLibroDiario.getModel();
+        Llenar();
     }
 
     /**
@@ -31,14 +44,19 @@ public class JFMostrar_LibrosDiarios extends javax.swing.JFrame {
 
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        BtnMosInContable2 = new javax.swing.JButton();
         BtnInClinico2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        TableLibroDiario = new javax.swing.JTable();
+        BtnAgregar = new javax.swing.JButton();
+        BtnDetalles = new javax.swing.JButton();
+        BtnEliminar = new javax.swing.JButton();
+        TxtNombreLibro = new javax.swing.JTextField();
+        jDateIncio = new com.toedter.calendar.JDateChooser();
+        jDateFinal = new com.toedter.calendar.JDateChooser();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,13 +64,6 @@ public class JFMostrar_LibrosDiarios extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("LIBROS DIARIOS");
-
-        BtnMosInContable2.setText("MOSTRAR INFORMES");
-        BtnMosInContable2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnMosInContable2ActionPerformed(evt);
-            }
-        });
 
         BtnInClinico2.setText("INFORME CLINICO");
         BtnInClinico2.addActionListener(new java.awt.event.ActionListener() {
@@ -66,63 +77,73 @@ public class JFMostrar_LibrosDiarios extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(BtnMosInContable2, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
-                .addGap(23, 23, 23)
-                .addComponent(BtnInClinico2, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-                .addGap(50, 50, 50))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(276, 276, 276))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(276, 276, 276))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(BtnInClinico2, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(141, 141, 141))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnMosInContable2)
-                    .addComponent(BtnInClinico2))
-                .addGap(16, 16, 16))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BtnInClinico2)
+                .addGap(22, 22, 22))
         );
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TableLibroDiario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "ID", "Nombre", "Fecha Inicio", "Fecha Final"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(100);
+        TableLibroDiario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableLibroDiarioMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(TableLibroDiario);
+        if (TableLibroDiario.getColumnModel().getColumnCount() > 0) {
+            TableLibroDiario.getColumnModel().getColumn(0).setMinWidth(100);
+            TableLibroDiario.getColumnModel().getColumn(0).setPreferredWidth(100);
+            TableLibroDiario.getColumnModel().getColumn(0).setMaxWidth(100);
         }
 
-        jButton1.setText("Nuevo");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BtnAgregar.setText("Agregar");
+        BtnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BtnAgregarActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Detalles");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        BtnDetalles.setText("Detalles");
+        BtnDetalles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                BtnDetallesActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Eliminar");
+        BtnEliminar.setText("Eliminar");
+        BtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEliminarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("NOMBRE");
+
+        jLabel2.setText("INICIO");
+
+        jLabel4.setText("FINAL");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -130,27 +151,51 @@ public class JFMostrar_LibrosDiarios extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(TxtNombreLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDateIncio, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDateFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(BtnAgregar)
+                    .addComponent(BtnDetalles)
+                    .addComponent(BtnEliminar))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(TxtNombreLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2))
+                    .addComponent(jDateIncio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(BtnAgregar))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(60, 60, 60)
-                        .addComponent(jButton3)
-                        .addGap(59, 59, 59)
-                        .addComponent(jButton4))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(BtnDetalles)
+                        .addGap(79, 79, 79)
+                        .addComponent(BtnEliminar)
+                        .addContainerGap(149, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -166,19 +211,14 @@ public class JFMostrar_LibrosDiarios extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 6, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void BtnMosInContable2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnMosInContable2ActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_BtnMosInContable2ActionPerformed
 
     private void BtnInClinico2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInClinico2ActionPerformed
         // TODO add your handling code here:
@@ -190,26 +230,95 @@ public class JFMostrar_LibrosDiarios extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_BtnInClinico2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
         // TODO add your handling code here:
-        //OBJETO PARA INTERACTUAR CON EL JFCrear_InContable
-        JFCrear_Libro CrearLibro = new JFCrear_Libro();
-        //SE INDICA QUE SE MUESTRE LA VENTANA
-        CrearLibro.setVisible(true);
-        //SE OCULTA LA VENTANA ACTUAL
-        this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        String diainicio, diafinal;
+        String mesinicio, mesfinal;
+        String anioinicio, aniofinal;
+        String Nombre, FechaInicio, FechaFinal;
+        
+        diainicio = Integer.toString(jDateIncio.getCalendar().get(Calendar.DAY_OF_MONTH));
+        mesinicio = Integer.toString(jDateIncio.getCalendar().get(Calendar.MONTH)+1);
+        anioinicio = Integer.toString(jDateIncio.getCalendar().get(Calendar.YEAR));
+        
+        FechaInicio = diainicio+"/"+mesinicio+"/"+anioinicio;
+        
+        diafinal = Integer.toString(jDateFinal.getCalendar().get(Calendar.DAY_OF_MONTH));
+        mesfinal = Integer.toString(jDateFinal.getCalendar().get(Calendar.MONTH)+1);
+        aniofinal = Integer.toString(jDateFinal.getCalendar().get(Calendar.YEAR));
+        
+        FechaFinal = diafinal+"/"+mesfinal+"/"+aniofinal;
+        
+        Nombre = TxtNombreLibro.getText();
+        
+        CRLibroDiario.Insertar(Nombre,FechaInicio,FechaFinal);
+        
+        Llenar();
+    }//GEN-LAST:event_BtnAgregarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void BtnDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDetallesActionPerformed
         // TODO add your handling code here:
-        //OBJETO PARA INTERACTUAR CON EL JFCrear_InContable
-        JFCrear_InClinico InClinico = new JFCrear_InClinico();
-        //SE INDICA QUE SE MUESTRE LA VENTANA
-        InClinico.setVisible(true);
-        //SE OCULTA LA VENTANA ACTUAL
-        this.dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
+        
+        if(fila == -1){
+            JOptionPane.showMessageDialog(null, "NO SE A SELECIONADO FILA");
+        }
+        else{
+            String ID_Libro = (String) TableLibroDiario.getValueAt(fila, 0).toString();
+            
+            System.err.println(""+ID_Libro);
+            
+            //OBJETO PARA INTERACTUAR CON EL JFCrear_InContable
+            JFMostrar_DetallesLibro InClinico = new JFMostrar_DetallesLibro(ID_Libro);
+            //SE INDICA QUE SE MUESTRE LA VENTANA
+            InClinico.setVisible(true);
+            //SE OCULTA LA VENTANA ACTUAL
+            this.dispose();
+        }
+    }//GEN-LAST:event_BtnDetallesActionPerformed
 
+    private void TableLibroDiarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableLibroDiarioMouseClicked
+        // TODO add your handling code here:
+        fila = TableLibroDiario.getSelectedRow();
+
+        if(fila == -1){
+            JOptionPane.showMessageDialog(null, "NO SE A SELECIONADO FILA");
+        }
+    }//GEN-LAST:event_TableLibroDiarioMouseClicked
+
+    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
+        // TODO add your handling code here:
+        int fila = TableLibroDiario.getSelectedRow();
+        int ID = 0;
+        
+        if(fila == -1){
+            JOptionPane.showMessageDialog(null, "NO SE A SELECIONADO FILA");
+        }
+        else{
+            
+            ID = Integer.parseInt((String) TableLibroDiario.getValueAt(fila, 0).toString());
+            
+            CRLibroDiario.Eliminar(ID);
+        }
+        
+        Llenar();
+    }//GEN-LAST:event_BtnEliminarActionPerformed
+
+    public void Llenar(){
+        //SE LIMPIA LA TABLA
+        model.setRowCount(0);
+        CRLibroDiario.LlenarTabla();
+        
+        //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
+        for(int PosC = 0; PosC < listaLibroDiario.size(); PosC++){
+            
+            model.addRow(new Object[]{listaLibroDiario.get(PosC).getID(),
+                                      listaLibroDiario.get(PosC).getNombre(),
+                                      listaLibroDiario.get(PosC).getFechaInicio(),
+                                      listaLibroDiario.get(PosC).getFechaFinal()});
+        }
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -251,15 +360,20 @@ public class JFMostrar_LibrosDiarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnAgregar;
+    private javax.swing.JButton BtnDetalles;
+    private javax.swing.JButton BtnEliminar;
     private javax.swing.JButton BtnInClinico2;
-    private javax.swing.JButton BtnMosInContable2;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JTable TableLibroDiario;
+    private javax.swing.JTextField TxtNombreLibro;
+    private com.toedter.calendar.JDateChooser jDateFinal;
+    private com.toedter.calendar.JDateChooser jDateIncio;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

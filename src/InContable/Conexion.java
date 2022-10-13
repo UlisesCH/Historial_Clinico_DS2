@@ -47,6 +47,7 @@ public class Conexion {
             + "Grupo_Cuenta varchar(500),\n"
             + "Tipo_Cuenta varchar(500),\n"
             + "SubGrupo_Cuenta varchar(500),\n"
+            + "Nombre_Cuenta varchar(500),\n"
             + "TipoMovimiento varchar(500),\n"
             + "Monto Double)";
     

@@ -5,18 +5,30 @@
 package JFInContable;
 
 import InContable.Conexion;
+import InContable.Modulos.CRUD_Partidas;
+import static InContable.Modulos.CRUD_Partidas.listaPartidas;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author ulise
  */
 public class JFMostrar_DetallesLibro extends javax.swing.JFrame {
-
+    CRUD_Partidas CRPartidas = new CRUD_Partidas();
+    DefaultTableModel model;
+    public String ID_LibroDato;
+    int fila;
     /**
      * Creates new form JFMostrar_CuentasLibroDiarop
      */
-    public JFMostrar_DetallesLibro() {
+    public JFMostrar_DetallesLibro(String ID_Libro) {
         initComponents();
+        this.setLocationRelativeTo(null);
+        
+        ID_LibroDato = ID_Libro;
+        model = (DefaultTableModel) this.TablePartida.getModel();
+        Llenar(ID_Libro);
     }
 
     /**
@@ -30,44 +42,41 @@ public class JFMostrar_DetallesLibro extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablePartida = new javax.swing.JTable();
         TxtTotalDebe = new javax.swing.JLabel();
         TxtTotalHaber = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         BtnMosLibrosDiarios = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        BtnNuevaPartida = new javax.swing.JButton();
+        BtnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablePartida.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "Tipo", "Cuenta", "Debe", "Haber"
+                "ID", "Fecha", "Cuenta", "Debe", "Haber"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(100);
-            jTable1.getColumnModel().getColumn(1).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(1).setMaxWidth(100);
-            jTable1.getColumnModel().getColumn(3).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(3).setMaxWidth(100);
-            jTable1.getColumnModel().getColumn(4).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(4).setMaxWidth(100);
+        jScrollPane1.setViewportView(TablePartida);
+        if (TablePartida.getColumnModel().getColumnCount() > 0) {
+            TablePartida.getColumnModel().getColumn(0).setMinWidth(100);
+            TablePartida.getColumnModel().getColumn(0).setPreferredWidth(100);
+            TablePartida.getColumnModel().getColumn(0).setMaxWidth(100);
+            TablePartida.getColumnModel().getColumn(1).setMinWidth(150);
+            TablePartida.getColumnModel().getColumn(1).setPreferredWidth(150);
+            TablePartida.getColumnModel().getColumn(1).setMaxWidth(150);
+            TablePartida.getColumnModel().getColumn(3).setMinWidth(100);
+            TablePartida.getColumnModel().getColumn(3).setPreferredWidth(100);
+            TablePartida.getColumnModel().getColumn(3).setMaxWidth(100);
+            TablePartida.getColumnModel().getColumn(4).setMinWidth(100);
+            TablePartida.getColumnModel().getColumn(4).setPreferredWidth(100);
+            TablePartida.getColumnModel().getColumn(4).setMaxWidth(100);
         }
 
         TxtTotalDebe.setText("TOTAL DEBE");
@@ -113,14 +122,19 @@ public class JFMostrar_DetallesLibro extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Nueva Partida");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BtnNuevaPartida.setText("Nueva Partida");
+        BtnNuevaPartida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BtnNuevaPartidaActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Eliminar");
+        BtnEliminar.setText("Eliminar");
+        BtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -134,9 +148,9 @@ public class JFMostrar_DetallesLibro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(BtnMosLibrosDiarios, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(88, 88, 88)
-                .addComponent(jButton1)
+                .addComponent(BtnNuevaPartida)
                 .addGap(73, 73, 73)
-                .addComponent(jButton2)
+                .addComponent(BtnEliminar)
                 .addContainerGap(94, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -147,8 +161,8 @@ public class JFMostrar_DetallesLibro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnMosLibrosDiarios)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(BtnNuevaPartida)
+                    .addComponent(BtnEliminar))
                 .addGap(16, 16, 16))
         );
 
@@ -185,16 +199,66 @@ public class JFMostrar_DetallesLibro extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_BtnMosLibrosDiariosActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BtnNuevaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevaPartidaActionPerformed
         // TODO add your handling code here:
-        //OBJETO PARA INTERACTUAR CON EL JFMostrar_Detalle
-        JFCrear_Partida Mostrar = new JFCrear_Partida();
+
+        //OBJETO PARA INTERACTUAR CON EL JFCrear_InContable
+        JFCrear_Partida Mostrar = new JFCrear_Partida(ID_LibroDato);
         //SE INDICA QUE SE MUESTRE LA VENTANA
         Mostrar.setVisible(true);
         //SE OCULTA LA VENTANA ACTUAL
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
 
+    }//GEN-LAST:event_BtnNuevaPartidaActionPerformed
+
+    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
+        // TODO add your handling code here:
+        int fila = TablePartida.getSelectedRow();
+        int ID = 0;
+        
+        if(fila == -1){
+            JOptionPane.showMessageDialog(null, "NO SE A SELECIONADO FILA");
+        }
+        else{
+            
+            ID = Integer.parseInt((String) TablePartida.getValueAt(fila, 0).toString());
+            
+            CRUD_Partidas.EliminarPorPartida(ID);
+        }
+        
+        Llenar(ID_LibroDato);
+    }//GEN-LAST:event_BtnEliminarActionPerformed
+
+    public void Llenar(String ID_Libro){
+        int contador = 1;
+        //SE LIMPIA LA TABLA
+        model.setRowCount(0);
+        //SE LLENA EL ARREGLO CON LOS VALORES DE LA TABLA
+        CRPartidas.LlenarTabla();
+        
+        //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
+        for(int PosC = 0; PosC < listaPartidas.size(); PosC++){
+            
+            if(listaPartidas.get(PosC).getIDLibro() == Integer.valueOf(ID_Libro)){
+                
+                System.err.println(""+listaPartidas.get(PosC).getID());
+                
+                model.addRow(new Object[]{listaPartidas.get(PosC).getID(),
+                                    listaPartidas.get(PosC).getFecha(),
+                                    "Partida "+contador,"",""});
+                
+                model.addRow(new Object[]{listaPartidas.get(PosC).getID(),
+                                    listaPartidas.get(PosC).getFecha(),
+                                    listaPartidas.get(PosC).getConcepto(),
+                                     "",""});
+                
+                contador++;
+            }
+            
+        }
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -226,7 +290,6 @@ public class JFMostrar_DetallesLibro extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFMostrar_DetallesLibro().setVisible(true);
                 
                 //OBJETO PARA ENTERACTUAR CON LA CONEXION
                 Conexion conec = new Conexion();
@@ -237,15 +300,15 @@ public class JFMostrar_DetallesLibro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnEliminar;
     private javax.swing.JButton BtnMosLibrosDiarios;
+    private javax.swing.JButton BtnNuevaPartida;
+    private javax.swing.JTable TablePartida;
     private javax.swing.JLabel TxtTotalDebe;
     private javax.swing.JLabel TxtTotalHaber;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

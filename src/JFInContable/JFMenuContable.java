@@ -15,6 +15,7 @@ public class JFMenuContable extends javax.swing.JFrame {
      */
     public JFMenuContable() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

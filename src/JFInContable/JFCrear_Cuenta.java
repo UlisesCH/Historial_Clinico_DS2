@@ -5,21 +5,21 @@
 package JFInContable;
 
 import InContable.Conexion;
-import InContable.InCuentasContable;
-import static InContable.InCuentasContable.ListaGrupoActivoCorriente;
-import static InContable.InCuentasContable.ListaGrupoActivoNoCorriente;
-import static InContable.InCuentasContable.ListaGrupoCapital;
-import static InContable.InCuentasContable.ListaGrupoCosto;
-import static InContable.InCuentasContable.ListaGrupoGastoNoOperativos;
-import static InContable.InCuentasContable.ListaGrupoGastoOperativos;
-import static InContable.InCuentasContable.ListaGrupoIngresoNoOperativos;
-import static InContable.InCuentasContable.ListaGrupoIngresoOperativos;
-import static InContable.InCuentasContable.ListaGrupoPasivoCorriente;
-import static InContable.InCuentasContable.ListaGrupoPasivoNoCorriente;
-import static InContable.InCuentasContable.ListaTipoCuentaAP;
-import static InContable.InCuentasContable.ListaTipoCuentaIG;
+import InContable.CuentasContable;
+import static InContable.CuentasContable.ListaGrupoActivoCorriente;
+import static InContable.CuentasContable.ListaGrupoActivoNoCorriente;
+import static InContable.CuentasContable.ListaGrupoCapital;
+import static InContable.CuentasContable.ListaGrupoCosto;
+import static InContable.CuentasContable.ListaGrupoGastoNoOperativos;
+import static InContable.CuentasContable.ListaGrupoGastoOperativos;
+import static InContable.CuentasContable.ListaGrupoIngresoNoOperativos;
+import static InContable.CuentasContable.ListaGrupoIngresoOperativos;
+import static InContable.CuentasContable.ListaGrupoPasivoCorriente;
+import static InContable.CuentasContable.ListaGrupoPasivoNoCorriente;
+import static InContable.CuentasContable.ListaTipoCuentaAP;
+import static InContable.CuentasContable.ListaTipoCuentaIG;
 import InContable.Modulos.CRUD_CuentasContable;
-import static InContable.Modulos.CRUD_CuentasContable.listaCuentas;
+import static InContable.Modulos.CRUD_CuentasContable.listaCuentasContable;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import javax.swing.table.DefaultTableModel;
@@ -30,18 +30,20 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JFCrear_Cuenta extends javax.swing.JFrame {
     DefaultTableModel model;
-    InCuentasContable incuenta = new InCuentasContable();
+    CuentasContable incuenta = new CuentasContable();
     CRUD_CuentasContable CRCuentasContable = new CRUD_CuentasContable();
     String AuxiliarTipo;
+    public String ID_LibroDato;
     
     /**
      * Creates new form JFCrear_Cuenta
      */
-    public JFCrear_Cuenta() {
+    public JFCrear_Cuenta(String ID_Libro) {
         initComponents();
+        this.setLocationRelativeTo(null);
         
+        ID_LibroDato = ID_Libro;
         model = (DefaultTableModel) this.TableCuentasContables.getModel();
-
         Llenar();
     }
 
@@ -268,7 +270,7 @@ public class JFCrear_Cuenta extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         //OBJETO PARA INTERACTUAR CON EL JFCrear_Partida
-        JFCrear_Partida InContable = new JFCrear_Partida();
+        JFCrear_Partida InContable = new JFCrear_Partida(ID_LibroDato);
         //SE INDICA QUE SE MUESTRE LA VENTANA
         InContable.setVisible(true);
         //SE OCULTA LA VENTANA ACTUAL
@@ -469,13 +471,13 @@ public class JFCrear_Cuenta extends javax.swing.JFrame {
              
             model.addRow(new Object[]{"","--"+ListaGrupoActivoCorriente[PosGrupo]});
             
-            for(int PosC = 0; PosC < listaCuentas.size(); PosC++){
+            for(int PosC = 0; PosC < listaCuentasContable.size(); PosC++){
 
                 if(ListaGrupoActivoCorriente[PosGrupo].
-                        equals(listaCuentas.get(PosC).getSubGrupoCuenta())){
+                        equals(listaCuentasContable.get(PosC).getSubGrupoCuenta())){
 
-                    model.addRow(new Object[]{listaCuentas.get(PosC).getID()," "+
-                                "       "+listaCuentas.get(PosC).getNombreCuenta()});
+                    model.addRow(new Object[]{listaCuentasContable.get(PosC).getID()," "+
+                                "       "+listaCuentasContable.get(PosC).getNombreCuenta()});
                 }               
             }           
         }        
@@ -487,13 +489,13 @@ public class JFCrear_Cuenta extends javax.swing.JFrame {
              
             model.addRow(new Object[]{"","--"+ListaGrupoActivoNoCorriente[PosGrupo]});
             
-            for(int PosC = 0; PosC < listaCuentas.size(); PosC++){
+            for(int PosC = 0; PosC < listaCuentasContable.size(); PosC++){
                 
                 if(ListaGrupoActivoNoCorriente[PosGrupo].
-                        equals(listaCuentas.get(PosC).getSubGrupoCuenta())){
+                        equals(listaCuentasContable.get(PosC).getSubGrupoCuenta())){
 
-                    model.addRow(new Object[]{listaCuentas.get(PosC).getID()," "+
-                                "       "+listaCuentas.get(PosC).getNombreCuenta()});
+                    model.addRow(new Object[]{listaCuentasContable.get(PosC).getID()," "+
+                                "       "+listaCuentasContable.get(PosC).getNombreCuenta()});
                 }               
             }           
         }      
@@ -519,13 +521,13 @@ public class JFCrear_Cuenta extends javax.swing.JFrame {
              
             model.addRow(new Object[]{"","--"+ListaGrupoPasivoCorriente[PosGrupo]});
             
-            for(int PosC = 0; PosC < listaCuentas.size(); PosC++){
+            for(int PosC = 0; PosC < listaCuentasContable.size(); PosC++){
 
                 if(ListaGrupoPasivoCorriente[PosGrupo].
-                        equals(listaCuentas.get(PosC).getSubGrupoCuenta())){
+                        equals(listaCuentasContable.get(PosC).getSubGrupoCuenta())){
 
-                    model.addRow(new Object[]{listaCuentas.get(PosC).getID()," "+
-                                "       "+listaCuentas.get(PosC).getNombreCuenta()});
+                    model.addRow(new Object[]{listaCuentasContable.get(PosC).getID()," "+
+                                "       "+listaCuentasContable.get(PosC).getNombreCuenta()});
                 }               
             }            
         }         
@@ -537,13 +539,13 @@ public class JFCrear_Cuenta extends javax.swing.JFrame {
              
             model.addRow(new Object[]{"","--"+ListaGrupoPasivoNoCorriente[PosGrupo]});
             
-            for(int PosC = 0; PosC < listaCuentas.size(); PosC++){
+            for(int PosC = 0; PosC < listaCuentasContable.size(); PosC++){
 
                 if(ListaGrupoPasivoNoCorriente[PosGrupo].
-                        equals(listaCuentas.get(PosC).getSubGrupoCuenta())){
+                        equals(listaCuentasContable.get(PosC).getSubGrupoCuenta())){
 
-                    model.addRow(new Object[]{listaCuentas.get(PosC).getID()," "+
-                                "       "+listaCuentas.get(PosC).getNombreCuenta()});
+                    model.addRow(new Object[]{listaCuentasContable.get(PosC).getID()," "+
+                                "       "+listaCuentasContable.get(PosC).getNombreCuenta()});
                 }               
             }           
         }
@@ -555,13 +557,13 @@ public class JFCrear_Cuenta extends javax.swing.JFrame {
              
             model.addRow(new Object[]{"","--"+ListaGrupoCapital[PosGrupo]});
 
-            for(int PosC = 0; PosC < listaCuentas.size(); PosC++){
+            for(int PosC = 0; PosC < listaCuentasContable.size(); PosC++){
 
                 if(ListaGrupoCapital[PosGrupo].
-                        equals(listaCuentas.get(PosC).getSubGrupoCuenta())){
+                        equals(listaCuentasContable.get(PosC).getSubGrupoCuenta())){
 
-                    model.addRow(new Object[]{listaCuentas.get(PosC).getID()," "+
-                                "       "+listaCuentas.get(PosC).getNombreCuenta()});
+                    model.addRow(new Object[]{listaCuentasContable.get(PosC).getID()," "+
+                                "       "+listaCuentasContable.get(PosC).getNombreCuenta()});
                 }              
             }            
         }
@@ -586,13 +588,13 @@ public class JFCrear_Cuenta extends javax.swing.JFrame {
              
             model.addRow(new Object[]{"","--"+ListaGrupoIngresoOperativos[PosGrupo]});
             
-            for(int PosC = 0; PosC < listaCuentas.size(); PosC++){
+            for(int PosC = 0; PosC < listaCuentasContable.size(); PosC++){
 
                 if(ListaGrupoIngresoOperativos[PosGrupo].
-                        equals(listaCuentas.get(PosC).getSubGrupoCuenta())){
+                        equals(listaCuentasContable.get(PosC).getSubGrupoCuenta())){
 
-                    model.addRow(new Object[]{listaCuentas.get(PosC).getID()," "+
-                                "       "+listaCuentas.get(PosC).getNombreCuenta()});
+                    model.addRow(new Object[]{listaCuentasContable.get(PosC).getID()," "+
+                                "       "+listaCuentasContable.get(PosC).getNombreCuenta()});
                 }               
             }           
         }
@@ -604,13 +606,13 @@ public class JFCrear_Cuenta extends javax.swing.JFrame {
              
             model.addRow(new Object[]{"","--"+ListaGrupoIngresoNoOperativos[PosGrupo]});
             
-            for(int PosC = 0; PosC < listaCuentas.size(); PosC++){
+            for(int PosC = 0; PosC < listaCuentasContable.size(); PosC++){
 
                 if(ListaGrupoIngresoNoOperativos[PosGrupo].
-                        equals(listaCuentas.get(PosC).getSubGrupoCuenta())){
+                        equals(listaCuentasContable.get(PosC).getSubGrupoCuenta())){
 
-                    model.addRow(new Object[]{listaCuentas.get(PosC).getID()," "+
-                                "       "+listaCuentas.get(PosC).getNombreCuenta()});
+                    model.addRow(new Object[]{listaCuentasContable.get(PosC).getID()," "+
+                                "       "+listaCuentasContable.get(PosC).getNombreCuenta()});
                 }               
             }            
         }
@@ -622,13 +624,13 @@ public class JFCrear_Cuenta extends javax.swing.JFrame {
              
             model.addRow(new Object[]{"","--"+ListaGrupoCosto[PosGrupo]});
 
-            for(int PosC = 0; PosC < listaCuentas.size(); PosC++){
+            for(int PosC = 0; PosC < listaCuentasContable.size(); PosC++){
 
                 if(ListaGrupoCosto[PosGrupo].
-                        equals(listaCuentas.get(PosC).getSubGrupoCuenta())){
+                        equals(listaCuentasContable.get(PosC).getSubGrupoCuenta())){
 
-                    model.addRow(new Object[]{listaCuentas.get(PosC).getID()," "+
-                                "       "+listaCuentas.get(PosC).getNombreCuenta()});
+                    model.addRow(new Object[]{listaCuentasContable.get(PosC).getID()," "+
+                                "       "+listaCuentasContable.get(PosC).getNombreCuenta()});
                 }              
             }            
         }
@@ -654,13 +656,13 @@ public class JFCrear_Cuenta extends javax.swing.JFrame {
              
             model.addRow(new Object[]{"","--"+ListaGrupoGastoOperativos[PosGrupo]});
             
-            for(int PosC = 0; PosC < listaCuentas.size(); PosC++){
+            for(int PosC = 0; PosC < listaCuentasContable.size(); PosC++){
 
                 if(ListaGrupoGastoOperativos[PosGrupo].
-                        equals(listaCuentas.get(PosC).getSubGrupoCuenta())){
+                        equals(listaCuentasContable.get(PosC).getSubGrupoCuenta())){
 
-                    model.addRow(new Object[]{listaCuentas.get(PosC).getID()," "+
-                                "       "+listaCuentas.get(PosC).getNombreCuenta()});
+                    model.addRow(new Object[]{listaCuentasContable.get(PosC).getID()," "+
+                                "       "+listaCuentasContable.get(PosC).getNombreCuenta()});
                 }               
             }            
         }
@@ -672,13 +674,13 @@ public class JFCrear_Cuenta extends javax.swing.JFrame {
              
             model.addRow(new Object[]{"","--"+ListaGrupoGastoNoOperativos[PosGrupo]});
             
-            for(int PosC = 0; PosC < listaCuentas.size(); PosC++){
+            for(int PosC = 0; PosC < listaCuentasContable.size(); PosC++){
 
                 if(ListaGrupoGastoNoOperativos[PosGrupo].
-                        equals(listaCuentas.get(PosC).getSubGrupoCuenta())){
+                        equals(listaCuentasContable.get(PosC).getSubGrupoCuenta())){
 
-                    model.addRow(new Object[]{listaCuentas.get(PosC).getID()," "+
-                                "       "+listaCuentas.get(PosC).getNombreCuenta()});
+                    model.addRow(new Object[]{listaCuentasContable.get(PosC).getID()," "+
+                                "       "+listaCuentasContable.get(PosC).getNombreCuenta()});
                 }               
             }            
         }
@@ -714,7 +716,6 @@ public class JFCrear_Cuenta extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFCrear_Cuenta().setVisible(true);
                 
                 //OBJETO PARA ENTERACTUAR CON LA CONEXION
                 Conexion conec = new Conexion();

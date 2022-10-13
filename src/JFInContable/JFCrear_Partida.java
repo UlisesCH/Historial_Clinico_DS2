@@ -5,7 +5,11 @@
 package JFInContable;
 
 import InContable.Conexion;
-import InContable.InCuenta;
+import InContable.Cuenta;
+import InContable.CuentasContable;
+import InContable.Modulos.CRUD_CuentasContable;
+import static InContable.Modulos.CRUD_CuentasContable.listaCuentasContable;
+import InContable.Modulos.CRUD_Partidas;
 import VistasInClinico.JFCrear_InClinico;
 import JFInContable.JFCrear_Partida;
 import java.awt.Graphics;
@@ -13,10 +17,13 @@ import java.awt.Graphics2D;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,17 +35,25 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
     //OBJETO PARA INTERACTUAR CON LA TABLA
     DefaultTableModel model;
     //LISTA PARA ALMACENAR LOS DATOS OBTENIDOS DE LA BASE DE DATOS
-    public static List<InCuenta> listaInClRecibo = new ArrayList<InCuenta>();
+    public static List<Cuenta> listaInCuenta = new ArrayList<Cuenta>();
+    CRUD_Partidas CrPartidas = new CRUD_Partidas();
+    CuentasContable incuenta = new CuentasContable();
+    String AuxiliarTipo;
+    String AuxiliarGrupo;
+    Double TotalDebe = 0.0;
+    Double TotalHaber = 0.0;
+    public String ID_LibroDato;
     
     /**
      * Creates new form JFCrear_InClinico
      */
-    public JFCrear_Partida() {
+    public JFCrear_Partida(String ID_Libro) {
         initComponents();
         this.setLocationRelativeTo(null);
         
+        ID_LibroDato = ID_Libro;
         model = (DefaultTableModel) this.TableInClRecibo.getModel();
-        listaInClRecibo.clear();
+        listaInCuenta.clear();
     }
 
     /**
@@ -52,7 +67,6 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        BtnMosInContable = new javax.swing.JButton();
         BtnInClinico = new javax.swing.JButton();
         JPRecibo = new javax.swing.JPanel();
         jPanelRecibo = new javax.swing.JPanel();
@@ -60,19 +74,28 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
         TableInClRecibo = new javax.swing.JTable();
         TxtTotalHaber = new javax.swing.JLabel();
         TxtTotalDebe = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        TxtMonto = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        CombxGrupoCuenta = new javax.swing.JComboBox<>();
-        CombxNombreCuenta = new javax.swing.JComboBox<>();
-        BtnAgregar = new javax.swing.JButton();
-        BtnLimpiar = new javax.swing.JButton();
         BtnEliminar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jDatePartida = new com.toedter.calendar.JDateChooser();
+        jLabel7 = new javax.swing.JLabel();
+        TxtConcepto = new javax.swing.JTextField();
         BtnGuardar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        CombxGrupoCuentaPartida = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        CombxTipoCuentaPartida = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        CombxSubGrupoCuentaPartida = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        CombxNombreCuenta = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
-        CombxTipoCuenta = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        TxtMonto = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        CombxMovimientoCuenta = new javax.swing.JComboBox<>();
+        BtnAgregar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -81,13 +104,6 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("CREAR PARTIDA CONTABLE");
-
-        BtnMosInContable.setText("MOSTRAR INFORMES");
-        BtnMosInContable.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnMosInContableActionPerformed(evt);
-            }
-        });
 
         BtnInClinico.setText("INFORME CLINICO");
         BtnInClinico.addActionListener(new java.awt.event.ActionListener() {
@@ -101,14 +117,10 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(BtnMosInContable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(23, 23, 23)
-                .addComponent(BtnInClinico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(50, 50, 50))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(228, 228, 228)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BtnInClinico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(233, 233, 233))
         );
         jPanel1Layout.setVerticalGroup(
@@ -116,11 +128,9 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnMosInContable)
-                    .addComponent(BtnInClinico))
-                .addGap(16, 16, 16))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BtnInClinico)
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout JPReciboLayout = new javax.swing.GroupLayout(JPRecibo);
@@ -131,7 +141,7 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
         );
         JPReciboLayout.setVerticalGroup(
             JPReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 373, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jPanelRecibo.setBackground(new java.awt.Color(204, 204, 255));
@@ -166,43 +176,53 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
 
         TxtTotalDebe.setText("TOTAL DEBE");
 
-        jLabel2.setText("NOMBRE DE CUENTA");
-
-        jLabel11.setText("TIPO");
-
-        jLabel4.setText("MONTO");
-
-        jLabel6.setText("GRUPO DE CUENTA");
-
-        CombxGrupoCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  "Seleccione Grupo", "ACTIVO", "PASIVO", "CAPITAL", "INGRESO", "GASTOS" }));
-        CombxGrupoCuenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CombxGrupoCuentaActionPerformed(evt);
-            }
-        });
-
-        CombxNombreCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  "Seleccione Cuenta" }));
-
-        BtnAgregar.setText("AGREGAR");
-        BtnAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnAgregarActionPerformed(evt);
-            }
-        });
-
-        BtnLimpiar.setText("LIMPIAR");
-        BtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnLimpiarActionPerformed(evt);
-            }
-        });
-
         BtnEliminar.setText("ELIMINAR");
         BtnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnEliminarActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout jPanelReciboLayout = new javax.swing.GroupLayout(jPanelRecibo);
+        jPanelRecibo.setLayout(jPanelReciboLayout);
+        jPanelReciboLayout.setHorizontalGroup(
+            jPanelReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelReciboLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BtnEliminar)
+                .addGap(28, 28, 28))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelReciboLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(TxtTotalDebe)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TxtTotalHaber)
+                .addGap(146, 146, 146))
+        );
+        jPanelReciboLayout.setVerticalGroup(
+            jPanelReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelReciboLayout.createSequentialGroup()
+                .addGroup(jPanelReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelReciboLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(jPanelReciboLayout.createSequentialGroup()
+                        .addGap(114, 114, 114)
+                        .addComponent(BtnEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)))
+                .addGroup(jPanelReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtTotalDebe)
+                    .addComponent(TxtTotalHaber))
+                .addGap(15, 15, 15))
+        );
+
+        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
+
+        jLabel8.setText("FECHA REALIZADA");
+
+        jLabel7.setText("CONCEPTO");
 
         BtnGuardar.setText("GUARDAR PARTIDA");
         BtnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -211,6 +231,80 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
             }
         });
 
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(jDatePartida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(TxtConcepto, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(54, 54, 54)
+                .addComponent(BtnGuardar)
+                .addGap(155, 155, 155))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jDatePartida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(jLabel7))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(TxtConcepto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(BtnGuardar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBackground(new java.awt.Color(204, 204, 255));
+
+        jLabel6.setText("GRUPO DE CUENTA");
+
+        CombxGrupoCuentaPartida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  "Seleccione Grupo", "ACTIVO", "PASIVO", "CAPITAL", "INGRESO", "GASTOS" }));
+        CombxGrupoCuentaPartida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CombxGrupoCuentaPartidaActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("TIPO CUENTA");
+
+        CombxTipoCuentaPartida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {}));
+        CombxTipoCuentaPartida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CombxTipoCuentaPartidaActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("SUB-GRUPO CUENTA");
+
+        CombxSubGrupoCuentaPartida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {}));
+        CombxSubGrupoCuentaPartida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CombxSubGrupoCuentaPartidaActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("NOMBRE DE CUENTA");
+
+        CombxNombreCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {}));
+
         jButton1.setText("CREAR");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,86 +312,90 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
             }
         });
 
-        CombxTipoCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DEBE","HABER" }));
+        jLabel4.setText("MONTO");
 
-        javax.swing.GroupLayout jPanelReciboLayout = new javax.swing.GroupLayout(jPanelRecibo);
-        jPanelRecibo.setLayout(jPanelReciboLayout);
-        jPanelReciboLayout.setHorizontalGroup(
-            jPanelReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelReciboLayout.createSequentialGroup()
+        jLabel11.setText("MOVIMIENTO");
+
+        CombxMovimientoCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DEBE","HABER" }));
+
+        BtnAgregar.setText("AGREGAR");
+        BtnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAgregarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelReciboLayout.createSequentialGroup()
-                        .addComponent(BtnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(51, 51, 51)
-                        .addComponent(TxtTotalDebe)
-                        .addGap(31, 31, 31)
-                        .addComponent(TxtTotalHaber)
-                        .addGap(151, 151, 151))
-                    .addGroup(jPanelReciboLayout.createSequentialGroup()
-                        .addGroup(jPanelReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanelReciboLayout.createSequentialGroup()
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addGroup(jPanelReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(BtnAgregar)
-                                        .addComponent(BtnLimpiar)
-                                        .addComponent(BtnEliminar)))
-                                .addGroup(jPanelReciboLayout.createSequentialGroup()
-                                    .addComponent(CombxNombreCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton1)
-                                    .addGap(55, 55, 55)
-                                    .addGroup(jPanelReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel11)
-                                        .addComponent(CombxTipoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(28, 28, 28)))
-                            .addGroup(jPanelReciboLayout.createSequentialGroup()
-                                .addGroup(jPanelReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(TxtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(CombxGrupoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(55, 55, 55)
-                                .addComponent(jLabel2)))
-                        .addContainerGap(28, Short.MAX_VALUE))))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(CombxNombreCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(TxtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(CombxMovimientoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(238, 238, 238)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel11))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(CombxGrupoCuentaPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6))
+                                .addGap(24, 24, 24)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(CombxTipoCuentaPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(33, 33, 33)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(CombxSubGrupoCuentaPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(28, 28, 28)
+                        .addComponent(BtnAgregar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanelReciboLayout.setVerticalGroup(
-            jPanelReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelReciboLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(jPanelReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel11))
-                .addGap(4, 4, 4)
-                .addGroup(jPanelReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CombxGrupoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CombxNombreCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(CombxTipoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CombxGrupoCuentaPartida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CombxTipoCuentaPartida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CombxSubGrupoCuentaPartida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel11))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(BtnAgregar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanelReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelReciboLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                        .addGroup(jPanelReciboLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(BtnGuardar)
-                            .addComponent(TxtTotalDebe)
-                            .addComponent(TxtTotalHaber))
-                        .addContainerGap())
-                    .addGroup(jPanelReciboLayout.createSequentialGroup()
-                        .addComponent(BtnAgregar)
-                        .addGap(73, 73, 73)
-                        .addComponent(BtnLimpiar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BtnEliminar)
-                        .addGap(66, 66, 66))))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(CombxNombreCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1)
+                        .addComponent(TxtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CombxMovimientoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -311,7 +409,10 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanelRecibo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanelRecibo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JPRecibo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
@@ -326,6 +427,10 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
                         .addComponent(JPRecibo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(69, 69, 69))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanelRecibo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
         );
@@ -333,15 +438,10 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnMosInContableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnMosInContableActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_BtnMosInContableActionPerformed
-
     private void BtnInClinicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInClinicoActionPerformed
         // TODO add your handling code here:
         //OBJETO PARA INTERACTUAR CON EL JFCrear_Partida
-        JFCrear_InClinico InClinico = new JFCrear_InClinico();
+        JFMostrar_DetallesLibro InClinico = new JFMostrar_DetallesLibro(ID_LibroDato);
         //SE INDICA QUE SE MUESTRE LA VENTANA
         InClinico.setVisible(true);
         //SE OCULTA LA VENTANA ACTUAL
@@ -350,8 +450,17 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
 
     private void BtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarActionPerformed
         // TODO add your handling code here:
-        
-        Guardar();
+        if(Objects.equals(TotalDebe, TotalHaber)){
+           
+            if(!"".equals(TxtConcepto.getText().toString())){
+                Guardar();
+            }else{
+                JOptionPane.showMessageDialog(null, "Debe Agregar Concepto");
+            }
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "El Total del Debe y el Total del Haber deben ser iguales");
+        }
     }//GEN-LAST:event_BtnGuardarActionPerformed
 
     private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
@@ -362,37 +471,29 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
             JOptionPane.showMessageDialog(null, "NO SE A SELECIONADO FILA");
         }
         else{
-            listaInClRecibo.remove(fila);
+            listaInCuenta.remove(fila);
         }
         
         Llenar();
     }//GEN-LAST:event_BtnEliminarActionPerformed
 
-    private void BtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLimpiarActionPerformed
-        // TODO add your handling code here:
-
-        TxtMonto.setText("");
-        TxtTotalHaber.setText("Total Haber");
-        TxtTotalDebe.setText("Total Debe");
-
-        listaInClRecibo.clear();
-        Llenar();
-    }//GEN-LAST:event_BtnLimpiarActionPerformed
-
     private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
         // TODO add your handling code here:
 
         //SE OBTIENES LOS DATOS DE LOS INPUTS
-        String GrupoCuenta = CombxGrupoCuenta.getSelectedItem().toString();
+        String GrupoCuenta = CombxGrupoCuentaPartida.getSelectedItem().toString();
+        String TipoCuenta = CombxTipoCuentaPartida.getSelectedItem().toString();
+        String SubGrupoCuenta = CombxSubGrupoCuentaPartida.getSelectedItem().toString();
         String NombreCuenta = CombxNombreCuenta.getSelectedItem().toString();
-        Double Monto = Double.parseDouble(TxtMonto.getText());
-        String TipoCuenta = (String) CombxTipoCuenta.getSelectedItem();
+        Double Monto = Double.valueOf(TxtMonto.getText());
+        String MovimientoCuenta = CombxMovimientoCuenta.getSelectedItem().toString();
 
         //OBJETO DEL CONSTRUCTOR
-        InCuenta Incuenta = new InCuenta(GrupoCuenta, NombreCuenta, Monto, TipoCuenta);
+        Cuenta Incuenta = new Cuenta(GrupoCuenta, TipoCuenta, SubGrupoCuenta, 
+                NombreCuenta, Monto, MovimientoCuenta);
 
         //SE AGREGA EL CONSTRUCTOR AL ARREGLO
-        listaInClRecibo.add(Incuenta);
+        listaInCuenta.add(Incuenta);
 
         Llenar();
 
@@ -401,18 +502,179 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         //OBJETO PARA INTERACTUAR CON EL JFMostrar_Detalle
-        JFCrear_Cuenta Mostrar = new JFCrear_Cuenta();
+        JFCrear_Cuenta Mostrar = new JFCrear_Cuenta(ID_LibroDato);
         //SE INDICA QUE SE MUESTRE LA VENTANA
         Mostrar.setVisible(true);
         //SE OCULTA LA VENTANA ACTUAL
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void CombxGrupoCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CombxGrupoCuentaActionPerformed
+    private void CombxGrupoCuentaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CombxGrupoCuentaPartidaActionPerformed
         // TODO add your handling code here:
         
+        CombxSubGrupoCuentaPartida.removeAllItems();
+        CombxTipoCuentaPartida.removeAllItems();
         
-    }//GEN-LAST:event_CombxGrupoCuentaActionPerformed
+        switch (CombxGrupoCuentaPartida.getSelectedItem().toString()) {
+            case "Seleccione Grupo":
+                
+            break;
+            case "ACTIVO":
+                jLabel3.setVisible(TRUE);
+                CombxTipoCuentaPartida.setVisible(TRUE);
+                CombxTipoCuentaPartida.addItem("Seleccione Tipo");
+                for(int i = 0; i < incuenta.ListaTipoCuentaAP.length; i++){
+                    CombxTipoCuentaPartida.addItem(incuenta.ListaTipoCuentaAP[i].toString());
+                }
+                AuxiliarTipo = CombxTipoCuentaPartida.getSelectedItem().toString();
+                break;
+            case "PASIVO":
+                jLabel3.setVisible(TRUE);
+                CombxTipoCuentaPartida.setVisible(TRUE);
+                CombxTipoCuentaPartida.addItem("Seleccione Tipo");
+                for(int i = 0; i < incuenta.ListaTipoCuentaAP.length; i++){
+                    CombxTipoCuentaPartida.addItem(incuenta.ListaTipoCuentaAP[i].toString());
+                }
+                AuxiliarTipo = CombxTipoCuentaPartida.getSelectedItem().toString();
+                break;
+            case "CAPITAL":
+                jLabel3.setVisible(FALSE);
+                CombxTipoCuentaPartida.setVisible(FALSE);
+                
+                for(int i = 0; i < incuenta.ListaGrupoCapital.length; i++){
+                    CombxSubGrupoCuentaPartida.addItem(incuenta.ListaGrupoCapital[i].toString());
+                }
+
+                break;
+            case "INGRESO":
+                jLabel3.setVisible(TRUE);
+                CombxTipoCuentaPartida.setVisible(TRUE);
+                CombxTipoCuentaPartida.addItem("Seleccione Tipo");
+                for(int i = 0; i < incuenta.ListaTipoCuentaIG.length; i++){
+                    CombxTipoCuentaPartida.addItem(incuenta.ListaTipoCuentaIG[i].toString());
+                }
+                AuxiliarTipo = CombxTipoCuentaPartida.getSelectedItem().toString();
+                break;
+            case "COSTO":
+                jLabel3.setVisible(FALSE);
+                CombxTipoCuentaPartida.setVisible(FALSE);
+                
+                for(int i = 0; i < incuenta.ListaGrupoCosto.length; i++){
+                    CombxSubGrupoCuentaPartida.addItem(incuenta.ListaGrupoCosto[i].toString());
+                }
+
+                break;
+            case "GASTOS":
+                jLabel3.setVisible(TRUE);
+                CombxTipoCuentaPartida.setVisible(TRUE);
+                CombxTipoCuentaPartida.addItem("Seleccione Tipo");
+                for(int i = 0; i < incuenta.ListaTipoCuentaIG.length; i++){
+                    CombxTipoCuentaPartida.addItem(incuenta.ListaTipoCuentaIG[i].toString());
+                }
+                AuxiliarTipo = CombxTipoCuentaPartida.getSelectedItem().toString();
+                break;
+            default:
+                throw new AssertionError();
+        }
+    }//GEN-LAST:event_CombxGrupoCuentaPartidaActionPerformed
+
+    private void CombxTipoCuentaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CombxTipoCuentaPartidaActionPerformed
+        // TODO add your handling code here:
+        CombxSubGrupoCuentaPartida.removeAllItems();
+
+        if(CombxTipoCuentaPartida.getSelectedItem()!= null){
+            AuxiliarTipo = CombxTipoCuentaPartida.getSelectedItem().toString();
+        }
+        
+        switch (CombxGrupoCuentaPartida.getSelectedItem().toString()) {
+            case "ACTIVO":
+
+                if("Corriente".equals(AuxiliarTipo)){
+                    for(int i = 0; i < incuenta.ListaGrupoActivoCorriente.length; i++){
+                        CombxSubGrupoCuentaPartida.addItem(incuenta.ListaGrupoActivoCorriente[i].toString());
+                    } 
+                }else if("No Corriente".equals(AuxiliarTipo)){
+                    for(int i = 0; i < incuenta.ListaGrupoActivoNoCorriente.length; i++){
+                        CombxSubGrupoCuentaPartida.addItem(incuenta.ListaGrupoActivoNoCorriente[i].toString());
+                    } 
+                }
+                
+            break;
+            case "PASIVO":
+                
+                if("Corriente".equals(AuxiliarTipo)){
+                    for(int i = 0; i < incuenta.ListaGrupoPasivoCorriente.length; i++){
+                        CombxSubGrupoCuentaPartida.addItem(incuenta.ListaGrupoPasivoCorriente[i].toString());
+                    } 
+                }else if("No Corriente".equals(AuxiliarTipo)){
+                    for(int i = 0; i < incuenta.ListaGrupoPasivoNoCorriente.length; i++){
+                        CombxSubGrupoCuentaPartida.addItem(incuenta.ListaGrupoPasivoNoCorriente[i].toString());
+                    }
+                }
+                
+            break;
+            case "CAPITAL":
+                for(int i = 0; i < incuenta.ListaGrupoCapital.length; i++){
+                    CombxSubGrupoCuentaPartida.addItem(incuenta.ListaGrupoCapital[i].toString());
+                }
+            break;
+            case "INGRESO":
+                
+                if("Operativos".equals(AuxiliarTipo)){
+                    for(int i = 0; i < incuenta.ListaGrupoIngresoOperativos.length; i++){
+                        CombxSubGrupoCuentaPartida.addItem(incuenta.ListaGrupoIngresoOperativos[i].toString());
+                    } 
+                }else if("No Operativos".equals(AuxiliarTipo)){
+                    for(int i = 0; i < incuenta.ListaGrupoIngresoNoOperativos.length; i++){
+                        CombxSubGrupoCuentaPartida.addItem(incuenta.ListaGrupoIngresoNoOperativos[i].toString());
+                    }
+                }
+ 
+            break;
+            case "COSTO":
+                for(int i = 0; i < incuenta.ListaGrupoCosto.length; i++){
+                    CombxSubGrupoCuentaPartida.addItem(incuenta.ListaGrupoCosto[i].toString());
+                }
+            break;
+            case "GASTOS":
+
+                if("Operativos".equals(AuxiliarTipo)){
+                    for(int i = 0; i < incuenta.ListaGrupoGastoOperativos.length; i++){
+                        CombxSubGrupoCuentaPartida.addItem(incuenta.ListaGrupoGastoOperativos[i].toString());
+                    } 
+                }else if("No Operativos".equals(AuxiliarTipo)){
+                    for(int i = 0; i < incuenta.ListaGrupoGastoNoOperativos.length; i++){
+                        CombxSubGrupoCuentaPartida.addItem(incuenta.ListaGrupoGastoNoOperativos[i].toString());
+                    }
+                }
+                
+            break;
+            default:
+                throw new AssertionError();
+        }
+    }//GEN-LAST:event_CombxTipoCuentaPartidaActionPerformed
+
+    private void CombxSubGrupoCuentaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CombxSubGrupoCuentaPartidaActionPerformed
+        // TODO add your handling code here:
+
+        CRUD_CuentasContable CRCuentasContable = new CRUD_CuentasContable();
+        CRCuentasContable.LlenarTabla();
+        
+        CombxNombreCuenta.removeAllItems();
+        
+        if(CombxSubGrupoCuentaPartida.getSelectedItem()!= null){
+
+            for(int PosC = 0; PosC < listaCuentasContable.size(); PosC++){
+
+                if(CombxSubGrupoCuentaPartida.getSelectedItem().toString().
+                        equals(listaCuentasContable.get(PosC).getSubGrupoCuenta())){
+
+                    CombxNombreCuenta.addItem(listaCuentasContable.get(PosC).getNombreCuenta());
+
+                }               
+            }      
+        }
+    }//GEN-LAST:event_CombxSubGrupoCuentaPartidaActionPerformed
 
     public void Guardar(){
         //OBJETO PARA ENTERACTUAR CON LA CONEXION
@@ -420,10 +682,18 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
         //CREA REALIZA LA CONEXION Y CREA LA TABLA SI NO HAY
         conec.CrearTablas();
 
-        //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
-        for(int PosC = 0; PosC < listaInClRecibo.size(); PosC++){
-
-        }
+        String dia;
+        String mes;
+        String anio;
+        String Fecha;
+        
+        dia= Integer.toString(jDatePartida.getCalendar().get(Calendar.DAY_OF_MONTH));
+        mes = Integer.toString(jDatePartida.getCalendar().get(Calendar.MONTH)+1);
+        anio = Integer.toString(jDatePartida.getCalendar().get(Calendar.YEAR));
+        
+        Fecha = dia+"/"+mes+"/"+anio;
+        
+        CrPartidas.Insertar(Integer.parseInt(ID_LibroDato),TxtConcepto.getText().toString(), Fecha);
         
         JOptionPane.showMessageDialog(null, "DATOS GUARDADOS");
 
@@ -431,32 +701,31 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
         TxtTotalHaber.setText("Total Haber");
         TxtTotalDebe.setText("Total Debe");
 
-        listaInClRecibo.clear();
+        listaInCuenta.clear();
         Llenar();
         
     }
     
     public void Llenar(){
-        Double TotalDebe = 0.0;
-        Double TotalHaber = 0.0;
-        
         //SE LIMPIA LA TABLA
         model.setRowCount(0);
+        TotalDebe = 0.0;
+        TotalHaber = 0.0;
         
         //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
-        for(int PosC = 0; PosC < listaInClRecibo.size(); PosC++){
-           
-            if("DEBE".equals(listaInClRecibo.get(PosC).getTipoCuenta())){
-                model.addRow(new Object[]{listaInClRecibo.get(PosC).getNombreCuenta()
-                        ,listaInClRecibo.get(PosC).getMonto(),""});
+        for(int PosC = 0; PosC < listaInCuenta.size(); PosC++){
             
-                TotalDebe = TotalDebe+listaInClRecibo.get(PosC).getMonto();
+            if("DEBE".equals(listaInCuenta.get(PosC).getTipoMovimiento())){
+                model.addRow(new Object[]{listaInCuenta.get(PosC).getNombreCuenta()
+                        ,listaInCuenta.get(PosC).getMonto(),""});
+            
+                TotalDebe = TotalDebe+listaInCuenta.get(PosC).getMonto();
             }
-            else if("HABER".equals(listaInClRecibo.get(PosC).getTipoCuenta())){
-                model.addRow(new Object[]{listaInClRecibo.get(PosC).getNombreCuenta()
-                        ,"",listaInClRecibo.get(PosC).getMonto()});
+            else if("HABER".equals(listaInCuenta.get(PosC).getTipoMovimiento())){
+                model.addRow(new Object[]{listaInCuenta.get(PosC).getNombreCuenta()
+                        ,"",listaInCuenta.get(PosC).getMonto()});
             
-                TotalHaber = TotalHaber+listaInClRecibo.get(PosC).getMonto();
+                TotalHaber = TotalHaber+listaInCuenta.get(PosC).getMonto();
             }
             
         }
@@ -503,10 +772,8 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFCrear_Partida().setVisible(true);
-                //OBJETO PARA ENTERACTUAR CON LA CONEXION
+                
                 Conexion conec = new Conexion();
-                //CREA REALIZA LA CONEXION Y CREA LA TABLA SI NO HAY
                 conec.CrearTablas();
                 
             }
@@ -518,23 +785,31 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
     private javax.swing.JButton BtnEliminar;
     private javax.swing.JButton BtnGuardar;
     private javax.swing.JButton BtnInClinico;
-    private javax.swing.JButton BtnLimpiar;
-    private javax.swing.JButton BtnMosInContable;
-    private javax.swing.JComboBox<String> CombxGrupoCuenta;
+    private javax.swing.JComboBox<String> CombxGrupoCuentaPartida;
+    private javax.swing.JComboBox<String> CombxMovimientoCuenta;
     private javax.swing.JComboBox<String> CombxNombreCuenta;
-    private javax.swing.JComboBox<String> CombxTipoCuenta;
+    private javax.swing.JComboBox<String> CombxSubGrupoCuentaPartida;
+    private javax.swing.JComboBox<String> CombxTipoCuentaPartida;
     private javax.swing.JPanel JPRecibo;
     private javax.swing.JTable TableInClRecibo;
+    private javax.swing.JTextField TxtConcepto;
     private javax.swing.JTextField TxtMonto;
     private javax.swing.JLabel TxtTotalDebe;
     private javax.swing.JLabel TxtTotalHaber;
     private javax.swing.JButton jButton1;
+    private com.toedter.calendar.JDateChooser jDatePartida;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelRecibo;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
