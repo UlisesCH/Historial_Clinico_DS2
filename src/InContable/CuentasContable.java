@@ -40,7 +40,7 @@ public class CuentasContable {
     = {"CAPITAL SOCIAL", "RESERVA LEGAL", "UTILIDADES ACUMULADAS", "PERDIDAS ACUMULADAS"};
     
     public static String ListaGrupoIngresoOperativos[] 
-    = {"VENTAS", "REBAJAS Y DEVOLUCIONES SOBRE VENTAS", "INGRESOS POR SERVICIOS",
+    = {"INGRESOS POR VENTAS", "REBAJAS Y DEVOLUCIONES SOBRE VENTAS", "INGRESOS POR SERVICIOS",
        "INGRESOS POR REVERSION DEL DETERIORO"};
     
     public static String ListaGrupoIngresoNoOperativos[] 
