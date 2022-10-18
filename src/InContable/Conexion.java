@@ -33,6 +33,15 @@ public class Conexion {
             + "FechaInicio date,\n"
             + "FechaFinal date)";
     
+    static final String TBL_LibroMayor
+            = "CREATE TABLE TBL_LibroMayor("
+            + "ID integer primary key autoincrement,"
+            + "IDLibro integer,\n"
+            + "Grupo_Cuenta varchar(500),\n"
+            + "Tipo_Cuenta varchar(500),\n"
+            + "SubGrupo_Cuenta varchar(500),\n"
+            + "MontoTotal Double)";
+    
     static final String TBL_Partida
             = "CREATE TABLE TBL_Partida(\n"
             + "ID integer primary key autoincrement,\n"
