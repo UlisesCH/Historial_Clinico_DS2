@@ -9,13 +9,12 @@ import static InClinico.Modulos.CRUD_DatosExamenes.listaDatos;
 import static InClinico.Modulos.CRUD_DatosExamenes.listaDatosExamenes;
 import InClinico.Modulos.CRUD_Examenes;
 import static InClinico.Modulos.CRUD_Examenes.listaExamenes;
-import InClinico.Modulos.CRUD_ExamenClinico;
 import InClinico.Modulos.CRUD_Recibo;
 import InClinico.Controladores.Conexion;
 import InClinico.Controladores.DatosExamenes;
 import InClinico.Controladores.ExamenClinico;
 import InClinico.Controladores.Recibo;
-import JFInContable.JFCrear_InContable;
+import JFInContable.JFMostrar_LibrosDiarios;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -29,7 +28,6 @@ import java.awt.Graphics2D;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
@@ -497,8 +495,8 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
 
     private void BtnInContableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInContableActionPerformed
         // TODO add your handling code here:
-        //OBJETO PARA INTERACTUAR CON EL JFCrear_InContable
-        JFCrear_InContable InContable = new JFCrear_InContable();
+        //OBJETO PARA INTERACTUAR CON EL JFCrear_Partida
+        JFMostrar_LibrosDiarios InContable = new JFMostrar_LibrosDiarios();
         //SE INDICA QUE SE MUESTRE LA VENTANA
         InContable.setVisible(true);
         //SE OCULTA LA VENTANA ACTUAL
@@ -625,7 +623,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
     private void BtnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCrearActionPerformed
         // TODO add your handling code here:
         
-        //OBJETO PARA INTERACTUAR CON EL JFCrear_InContable
+        //OBJETO PARA INTERACTUAR CON EL JFCrear_Partida
         JFCrear_Examen Examen = new JFCrear_Examen();
         //SE INDICA QUE SE MUESTRE LA VENTANA
         Examen.setVisible(true);
@@ -817,7 +815,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
         
         try{
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/Recibo_" 
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive/Escritorio/Recibo_" 
                             +TxtNombCliente.getText().trim() + ".pdf"));
             
             documento.open();
@@ -882,7 +880,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
         try {
             
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/" 
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive/Escritorio/" 
                     +TxtNombCliente.getText().trim()+"_"
                     +listaExamenClinicos.get(posEx).getNombre_Examen().trim()+ ".pdf"));
             

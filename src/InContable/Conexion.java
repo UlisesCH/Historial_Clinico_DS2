@@ -17,19 +17,42 @@ public class Conexion {
     //OBJETO PARA LA CONEXION CON LA BASE DE DATOS
     public static Connection conexion;
     
-    //ESTRUCTURA DE LA TABLA DE INFORMES CONTABLE
-    static final String InContable
-            = "CREATE TABLE InContable(\n"
+    static final String TBL_CuentasContable
+            = "CREATE TABLE TBL_CuentasContable(\n"
             + "ID integer primary key autoincrement,\n"
-            + "NombProducto varchar(500),\n"
-            + "Cantidad INT,\n"
-            + "NombProveedor varchar(500),\n"
-            + "PrecioProducto Double,\n"
-            + "TipoCuenta varchar(500),\n"
+            + "Grupo_Cuenta varchar(500),\n"
+            + "Tipo_Cuenta varchar(500),\n"
+            + "SubGrupo_Cuenta varchar(500),\n"
+            + "Nombre_Cuenta varchar(500))";
+    
+    //ESTRUCTURA DE LA TABLA DE INFORMES CONTABLES
+    static final String TBL_Libros
+            = "CREATE TABLE TBL_Libros(\n"
+            + "ID integer primary key autoincrement,\n"
+            + "Nombre varchar(500),\n"
+            + "FechaInicio date,\n"
+            + "FechaFinal date)";
+    
+    static final String TBL_Partida
+            = "CREATE TABLE TBL_Partida(\n"
+            + "ID integer primary key autoincrement,\n"
+            + "IDLibro integer,\n"
+            + "Concepto varchar(500),\n"
             + "Fecha date)";
     
+    static final String TBL_Cuenta
+            = "CREATE TABLE TBL_Cuenta(\n"
+            + "ID integer primary key autoincrement,\n"
+            + "IDPartida integer,\n"
+            + "Grupo_Cuenta varchar(500),\n"
+            + "Tipo_Cuenta varchar(500),\n"
+            + "SubGrupo_Cuenta varchar(500),\n"
+            + "Nombre_Cuenta varchar(500),\n"
+            + "TipoMovimiento varchar(500),\n"
+            + "Monto Double)";
+    
     //DIRECCION DONDE SE ALMACENARA LA BASE DE DATOS
-    static String url = "jdbc:sqlite:BDHisClinico.db";
+    static String url = "jdbc:sqlite:BDHisContable.db";
     
     //CREA LA CONEXION CON LA BASE DE DATOS Y TABLA INDICADA
     public static void crearConexion(){
@@ -47,7 +70,10 @@ public class Conexion {
         try{
             crearConexion();
             stmt = conexion.createStatement();
-            stmt.executeUpdate(InContable);
+            stmt.executeUpdate(TBL_CuentasContable);
+            stmt.executeUpdate(TBL_Libros);
+            stmt.executeUpdate(TBL_Partida);
+            stmt.executeUpdate(TBL_Cuenta);
             stmt.close();
             conexion.close();
             return true;

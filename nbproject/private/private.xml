@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/InContable/Cuenta.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>26</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Isai/Documents/Universidad/Diseño%20de%20sistema%202/Historial_Clinico_DS2/src/JFInClinico/JFCrear_InClinico.java</file>
-            <file>file:/C:/Users/Isai/Documents/Universidad/Diseño%20de%20sistema%202/Historial_Clinico_DS2/src/JFInClinico/JFAgregar_Datos.java</file>
-            <file>file:/C:/Users/Isai/Documents/Universidad/Diseño%20de%20sistema%202/Historial_Clinico_DS2/src/JFInClinico/JFCrear_Examen.java</file>
-            <file>file:/C:/Users/Isai/Documents/Universidad/Diseño%20de%20sistema%202/Historial_Clinico_DS2/src/JFInClinico/JFMostrar_InClinico.java</file>
+            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_Final/Historial_Clinico_DS2/src/JFInContable/JFMostrar_DetallesLibro.java</file>
+            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_Final/Historial_Clinico_DS2/src/InContable/Modulos/CRUD_Partidas.java</file>
+            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_Final/Historial_Clinico_DS2/src/InContable/Modulos/CRUD_LibroDiario.java</file>
+            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_Final/Historial_Clinico_DS2/src/InContable/Modulos/CRUD_Cuenta.java</file>
         </group>
     </open-files>
 </project-private>
