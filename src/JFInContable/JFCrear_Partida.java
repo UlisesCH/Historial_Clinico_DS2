@@ -441,7 +441,7 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
     private void BtnInClinicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInClinicoActionPerformed
         // TODO add your handling code here:
         //OBJETO PARA INTERACTUAR CON EL JFCrear_Partida
-        JFMostrar_DetallesLibro InClinico = new JFMostrar_DetallesLibro(ID_LibroDato);
+        JFMostrar_LibroDiaro InClinico = new JFMostrar_LibroDiaro(ID_LibroDato);
         //SE INDICA QUE SE MUESTRE LA VENTANA
         InClinico.setVisible(true);
         //SE OCULTA LA VENTANA ACTUAL

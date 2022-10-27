@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ulise
  */
-public class JFMostrar_LibrosDiarios extends javax.swing.JFrame {
+public class JFMostrar_InformeLibros extends javax.swing.JFrame {
     
     CRUD_LibroDiario CRLibroDiario = new CRUD_LibroDiario();
     DefaultTableModel model;
@@ -25,7 +25,7 @@ public class JFMostrar_LibrosDiarios extends javax.swing.JFrame {
     /**
      * Creates new form JFMostrar_LibrosDiarios
      */
-    public JFMostrar_LibrosDiarios() {
+    public JFMostrar_InformeLibros() {
         initComponents();
         this.setLocationRelativeTo(null);
         
@@ -268,7 +268,7 @@ public class JFMostrar_LibrosDiarios extends javax.swing.JFrame {
             System.err.println(""+ID_Libro);
             
             //OBJETO PARA INTERACTUAR CON EL JFCrear_InContable
-            JFMostrar_DetallesLibro InClinico = new JFMostrar_DetallesLibro(ID_Libro);
+            JFMostrar_LibroDiaro InClinico = new JFMostrar_LibroDiaro(ID_Libro);
             //SE INDICA QUE SE MUESTRE LA VENTANA
             InClinico.setVisible(true);
             //SE OCULTA LA VENTANA ACTUAL
@@ -336,20 +336,21 @@ public class JFMostrar_LibrosDiarios extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFMostrar_LibrosDiarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFMostrar_InformeLibros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFMostrar_LibrosDiarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFMostrar_InformeLibros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFMostrar_LibrosDiarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFMostrar_InformeLibros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFMostrar_LibrosDiarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFMostrar_InformeLibros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFMostrar_LibrosDiarios().setVisible(true);
+                new JFMostrar_InformeLibros().setVisible(true);
                 
                 //OBJETO PARA ENTERACTUAR CON LA CONEXION
                 Conexion conec = new Conexion();
