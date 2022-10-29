@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ulise
  */
-public class JFMostrar_DetallesLibro extends javax.swing.JFrame {
+public class JFMostrar_LibroDiaro extends javax.swing.JFrame {
     CRUD_Partidas CRPartidas = new CRUD_Partidas();
     DefaultTableModel model;
     public String ID_LibroDato;
@@ -22,7 +22,7 @@ public class JFMostrar_DetallesLibro extends javax.swing.JFrame {
     /**
      * Creates new form JFMostrar_CuentasLibroDiarop
      */
-    public JFMostrar_DetallesLibro(String ID_Libro) {
+    public JFMostrar_LibroDiaro(String ID_Libro) {
         initComponents();
         this.setLocationRelativeTo(null);
         
@@ -192,7 +192,7 @@ public class JFMostrar_DetallesLibro extends javax.swing.JFrame {
     private void BtnMosLibrosDiariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnMosLibrosDiariosActionPerformed
         // TODO add your handling code here:
         //OBJETO PARA INTERACTUAR CON EL JFMostrar_Detalle
-        JFMostrar_LibrosDiarios Mostrar = new JFMostrar_LibrosDiarios();
+        JFMostrar_InformeLibros Mostrar = new JFMostrar_InformeLibros();
         //SE INDICA QUE SE MUESTRE LA VENTANA
         Mostrar.setVisible(true);
         //SE OCULTA LA VENTANA ACTUAL
@@ -276,14 +276,16 @@ public class JFMostrar_DetallesLibro extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFMostrar_DetallesLibro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFMostrar_LibroDiaro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFMostrar_DetallesLibro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFMostrar_LibroDiaro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFMostrar_DetallesLibro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFMostrar_LibroDiaro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFMostrar_DetallesLibro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFMostrar_LibroDiaro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

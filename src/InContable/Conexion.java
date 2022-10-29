@@ -81,6 +81,7 @@ public class Conexion {
             stmt = conexion.createStatement();
             stmt.executeUpdate(TBL_CuentasContable);
             stmt.executeUpdate(TBL_Libros);
+            stmt.executeUpdate(TBL_LibroMayor);
             stmt.executeUpdate(TBL_Partida);
             stmt.executeUpdate(TBL_Cuenta);
             stmt.close();

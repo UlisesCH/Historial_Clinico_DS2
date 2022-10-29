@@ -9,6 +9,7 @@ import InContable.Cuenta;
 import InContable.CuentasContable;
 import InContable.Modulos.CRUD_CuentasContable;
 import static InContable.Modulos.CRUD_CuentasContable.listaCuentasContable;
+import InContable.Modulos.CRUD_LibroMayor;
 import InContable.Modulos.CRUD_Partidas;
 import VistasInClinico.JFCrear_InClinico;
 import JFInContable.JFCrear_Partida;
@@ -32,16 +33,23 @@ import javax.swing.table.DefaultTableModel;
  * @author ulise
  */
 public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
-    //OBJETO PARA INTERACTUAR CON LA TABLA
+//OBJETO PARA INTERACTUAR CON LA TABLA
     DefaultTableModel model;
     //LISTA PARA ALMACENAR LOS DATOS OBTENIDOS DE LA BASE DE DATOS
     public static List<Cuenta> listaInCuenta = new ArrayList<Cuenta>();
+    
     CRUD_Partidas CrPartidas = new CRUD_Partidas();
+    CRUD_LibroMayor CrLibroMayor = new CRUD_LibroMayor();
     CuentasContable incuenta = new CuentasContable();
+    
     String AuxiliarTipo;
     String AuxiliarGrupo;
     Double TotalDebe = 0.0;
     Double TotalHaber = 0.0;
+    String dia;
+    String mes;
+    String anio;
+    String Fecha;
     public String ID_LibroDato;
     
     /**
@@ -441,7 +449,7 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
     private void BtnInClinicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInClinicoActionPerformed
         // TODO add your handling code here:
         //OBJETO PARA INTERACTUAR CON EL JFCrear_Partida
-        JFMostrar_DetallesLibro InClinico = new JFMostrar_DetallesLibro(ID_LibroDato);
+        JFMostrar_LibroDiaro InClinico = new JFMostrar_LibroDiaro(ID_LibroDato);
         //SE INDICA QUE SE MUESTRE LA VENTANA
         InClinico.setVisible(true);
         //SE OCULTA LA VENTANA ACTUAL
@@ -681,12 +689,7 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
         Conexion conec = new Conexion();
         //CREA REALIZA LA CONEXION Y CREA LA TABLA SI NO HAY
         conec.CrearTablas();
-
-        String dia;
-        String mes;
-        String anio;
-        String Fecha;
-        
+ 
         dia= Integer.toString(jDatePartida.getCalendar().get(Calendar.DAY_OF_MONTH));
         mes = Integer.toString(jDatePartida.getCalendar().get(Calendar.MONTH)+1);
         anio = Integer.toString(jDatePartida.getCalendar().get(Calendar.YEAR));
@@ -694,7 +697,7 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
         Fecha = dia+"/"+mes+"/"+anio;
         
         CrPartidas.Insertar(Integer.parseInt(ID_LibroDato),TxtConcepto.getText().toString(), Fecha);
-        
+        CrLibroMayor.LibroMayor(ID_LibroDato);
         JOptionPane.showMessageDialog(null, "DATOS GUARDADOS");
 
         TxtMonto.setText("");
