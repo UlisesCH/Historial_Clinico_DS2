@@ -57,6 +57,7 @@ public class JFMostrar_InformeLibros extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -125,7 +126,7 @@ public class JFMostrar_InformeLibros extends javax.swing.JFrame {
             }
         });
 
-        BtnDetalles.setText("Detalles");
+        BtnDetalles.setText("Libro Diario");
         BtnDetalles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnDetallesActionPerformed(evt);
@@ -144,6 +145,13 @@ public class JFMostrar_InformeLibros extends javax.swing.JFrame {
         jLabel2.setText("INICIO");
 
         jLabel4.setText("FINAL");
+
+        jButton1.setText("Libro Mayor");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -165,12 +173,13 @@ public class JFMostrar_InformeLibros extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jDateFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BtnAgregar)
+                    .addComponent(BtnEliminar)
                     .addComponent(BtnDetalles)
-                    .addComponent(BtnEliminar))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(BtnAgregar)
+                    .addComponent(jButton1))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,9 +200,11 @@ public class JFMostrar_InformeLibros extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
+                        .addGap(83, 83, 83)
                         .addComponent(BtnDetalles)
-                        .addGap(79, 79, 79)
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton1)
+                        .addGap(30, 30, 30)
                         .addComponent(BtnEliminar)
                         .addContainerGap(149, Short.MAX_VALUE))))
         );
@@ -303,6 +314,25 @@ public class JFMostrar_InformeLibros extends javax.swing.JFrame {
         Llenar();
     }//GEN-LAST:event_BtnEliminarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(fila == -1){
+            JOptionPane.showMessageDialog(null, "NO SE A SELECIONADO FILA");
+        }
+        else{
+            String ID_Libro = (String) TableLibroDiario.getValueAt(fila, 0).toString();
+            
+            System.err.println(""+ID_Libro);
+            
+            //OBJETO PARA INTERACTUAR CON EL JFCrear_InContable
+            JFMostrar_LibroMayor InClinico = new JFMostrar_LibroMayor(ID_Libro);
+            //SE INDICA QUE SE MUESTRE LA VENTANA
+            InClinico.setVisible(true);
+            //SE OCULTA LA VENTANA ACTUAL
+            this.dispose();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public void Llenar(){
         //SE LIMPIA LA TABLA
         model.setRowCount(0);
@@ -367,6 +397,7 @@ public class JFMostrar_InformeLibros extends javax.swing.JFrame {
     private javax.swing.JButton BtnInClinico2;
     private javax.swing.JTable TableLibroDiario;
     private javax.swing.JTextField TxtNombreLibro;
+    private javax.swing.JButton jButton1;
     private com.toedter.calendar.JDateChooser jDateFinal;
     private com.toedter.calendar.JDateChooser jDateIncio;
     private javax.swing.JLabel jLabel1;
