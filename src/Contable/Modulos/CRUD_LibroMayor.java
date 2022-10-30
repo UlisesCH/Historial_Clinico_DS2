@@ -8,7 +8,7 @@ import Contable.Controladores.Conexion;
 import Contable.Controladores.LibroMayor;
 import static Contable.Modulos.CRUD_Cuenta.listaCuenta;
 import static Contable.Modulos.CRUD_Partidas.listaPartidas;
-import Clinico.Vistas.JFMostrar_InClinico;
+import Contable.Vistas.JFCrear_Partida;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -34,7 +34,8 @@ public class CRUD_LibroMayor {
     
     CRUD_Partidas CrPartidas = new CRUD_Partidas();
     CRUD_Cuenta CrCuenta = new CRUD_Cuenta();
-    
+
+    int PosicionLibroMayor;
     double TotalDebeMayor = 0;
     double TotalHaberMayor = 0;
     double TotalMayor = 0;
@@ -62,8 +63,8 @@ public class CRUD_LibroMayor {
                 LibroMayor InLibroMayor = new LibroMayor(result.getInt("ID"),
                                                 result.getInt("IDLibro"),
                                                 result.getString("Grupo_Cuenta"),
-                                                result.getString("Tipo_Cuenta"),
                                                 result.getString("SubGrupo_Cuenta"),
+                                                result.getString("Nombre_Cuenta"),
                                                 result.getDouble("MontoTotal"));
                 
                 //SE AGREGA EL CONSTRUCTOR AL ARREGLO
@@ -77,8 +78,8 @@ public class CRUD_LibroMayor {
     }
     
     //INSERTA DATOS A LA TABLA DE LA BASE DE DATOS
-    public static void Insertar(int IDLibro, String Grupo_Cuenta, String Tipo_Cuenta, 
-                                String SubGrupo_Cuenta, Double MontoTotal){
+    public static void Insertar(int IDLibro, String Grupo_Cuenta, String SubGrupo_Cuenta, 
+                                String Nombre_Cuenta, Double MontoTotal){
         int ID;
         
         ID = (int)(Math.random()*9000+1);
@@ -90,11 +91,11 @@ public class CRUD_LibroMayor {
 
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE ALMACENA LOS DATOS)
             PreparedStatement st = conec.conexion.prepareStatement(
-                    "insert into TBL_LibroMayor(ID, IDLibro, Grupo_Cuenta, Tipo_Cuenta, "
-                            + "SubGrupo_Cuenta, MontoTotal)\n"
+                    "insert into TBL_LibroMayor(ID, IDLibro, Grupo_Cuenta, SubGrupo_Cuenta, "
+                            + "Nombre_Cuenta, MontoTotal)\n"
                             
-                    + "values("+ID+","+IDLibro+",'"+Grupo_Cuenta+"','"+Tipo_Cuenta+"',"
-                            + "'"+SubGrupo_Cuenta+"',"+MontoTotal+");");
+                    + "values("+ID+","+IDLibro+",'"+Grupo_Cuenta+"','"+SubGrupo_Cuenta+"',"
+                            + "'"+Nombre_Cuenta+"',"+MontoTotal+");");
             
             //EJECUTA LA ACCION
             st.execute();
@@ -106,24 +107,21 @@ public class CRUD_LibroMayor {
     }
     
     //MODIFICA DATOS A LA TABLA DE LA BASE DE DATOS
-    public static void Modificar(int IDLibro, String Grupo_Cuenta, String Tipo_Cuenta, 
-                                String SubGrupo_Cuenta, Double MontoTotal){
-        int ID;
-        
-        ID = (int)(Math.random()*9000+1);
+    public static void Modificar(int ID, int IDLibro, String Grupo_Cuenta, String SubGrupo_Cuenta, 
+                                String Nombre_Cuenta, Double MontoTotal){
         
         //OBJETO PARA TENER INTERACCION CON LA CLASE Conexion
         Conexion conec = new Conexion();
-        System.err.println("Modificar"+SubGrupo_Cuenta);
         
         try{
             
-            String sql = "Update TBL_LibroMayor set ID="+ID+",IDLibro="+IDLibro+","
+            String sql = "Update TBL_LibroMayor set IDLibro="+IDLibro+","
                             + "Grupo_Cuenta='"+Grupo_Cuenta+"',"
-                            + "Tipo_Cuenta='"+Tipo_Cuenta+"',"
                             + "SubGrupo_Cuenta='"+SubGrupo_Cuenta+"',"
+                            + "Nombre_Cuenta='"+Nombre_Cuenta+"',"
                             + "MontoTotal="+MontoTotal+" "
-                            + "where SubGrupo_Cuenta='"+SubGrupo_Cuenta+"'";
+                            + "where ID="+ID+" "
+                            + "AND IDLibro="+IDLibro;
             
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE ALMACENA LOS DATOS)
             PreparedStatement st = conec.conexion.prepareStatement(sql);
@@ -137,13 +135,13 @@ public class CRUD_LibroMayor {
     
     
     public void LibroMayor(String ID_LibroDato){
-        
+        CRUD_BalanceComprobacion balanceComprobacion = new CRUD_BalanceComprobacion();
         CrPartidas.LlenarTabla();
         CrCuenta.LlenarTabla();
         LlenarTabla();
         
         boolean VariableAuxiliar;
-        boolean VariableAuxiliar2 = true;
+        boolean VariableAuxiliar2;
       
         ListaCuentasRecoridas.add("");
         
@@ -155,7 +153,9 @@ public class CRUD_LibroMayor {
                 
                 for(int PosC = 0; PosC < listaCuenta.size(); PosC++){
                     
+                    VariableAuxiliar2 = true;
                     VariableAuxiliar = true;
+                    
                     
                     //VERIFICA SI LA CUENTA PERTENECE A LA PARTIDA
                     if(listaCuenta.get(PosC).getIDPartida() == listaPartidas.get(PosP).getID()){
@@ -200,18 +200,13 @@ public class CRUD_LibroMayor {
                         
                         //VERIFICA SI ALGUNA VARIABLE ES DIFERENTE A CERO
                         if(TotalDebeMayor != 0 || TotalHaberMayor != 0){
-                            
-                            System.err.println(""+listaCuenta.get(PosC).getNombreCuenta());
-                            TotalMayor = TotalDebeMayor-TotalHaberMayor;
-                            System.err.println(""+TotalDebeMayor);
-                            System.err.println(""+TotalHaberMayor);
-                            System.err.println(""+TotalMayor);
-                            System.err.println("-----------------------------");
 
                             for(int PosLibroMayor = 0; PosLibroMayor < listaLibroMayor.size(); PosLibroMayor++){
                                 
-                                if(listaCuenta.get(PosC).getSubGrupoCuenta()
-                                        .equals(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta())){
+                                if(listaCuenta.get(PosC).getNombreCuenta()
+                                        .equals(listaLibroMayor.get(PosLibroMayor).getNombre_Cuenta())){
+                                    
+                                    PosicionLibroMayor = PosLibroMayor;
                                     
                                     VariableAuxiliar2 = false;
                                     break;
@@ -219,22 +214,32 @@ public class CRUD_LibroMayor {
                                 
                             }
                             
+                            TotalMayor = TotalDebeMayor-TotalHaberMayor;
+                            
                             if(VariableAuxiliar2){
-
+                   
                                 Insertar(Integer.parseInt(ID_LibroDato), 
                                         listaCuenta.get(PosC).getGrupoCuenta(), 
-                                        listaCuenta.get(PosC).getTipoCuenta(), 
                                         listaCuenta.get(PosC).getSubGrupoCuenta(), 
+                                        listaCuenta.get(PosC).getNombreCuenta(), 
                                         TotalMayor);
                             }else{
 
-                                Modificar(Integer.parseInt(ID_LibroDato), 
+                                System.err.println("Dinero "+TotalMayor);
+                                System.err.println("ID "+listaLibroMayor.get(PosicionLibroMayor).getID());
+                                System.err.println("Cuenta "+listaLibroMayor.get(PosicionLibroMayor).getNombre_Cuenta());
+
+                                Modificar(listaLibroMayor.get(PosicionLibroMayor).getID(),
+                                        Integer.parseInt(ID_LibroDato), 
                                         listaCuenta.get(PosC).getGrupoCuenta(), 
-                                        listaCuenta.get(PosC).getTipoCuenta(), 
                                         listaCuenta.get(PosC).getSubGrupoCuenta(), 
+                                        listaCuenta.get(PosC).getNombreCuenta(), 
                                         TotalMayor);
                             }
                             
+                            PosicionLibroMayor = 0;
+                            
+                            TotalMayor = 0;
                             TotalDebeMayor = 0;
                             TotalHaberMayor = 0;
 
@@ -247,13 +252,15 @@ public class CRUD_LibroMayor {
             }
 
         }
+        
+        balanceComprobacion.BalanceComprobacion(ID_LibroDato);
 
     }
     
-    public void PDFExamenes(String ID_LibroDato){
+    public void PDFLibroMayor(String ID_LibroDato){
         
         boolean ContAuxiliar;
-        boolean Auxiliar = true;
+        boolean Auxiliar;
         
         Document documento = new Document();
         ListaCuentasRecoridas.clear();
@@ -266,8 +273,7 @@ public class CRUD_LibroMayor {
             
             documento.open();
 
-            PdfPTable tablaCliente = new PdfPTable(5);
-            tablaCliente.addCell("Fecha");
+            PdfPTable tablaCliente = new PdfPTable(4);
             tablaCliente.addCell("Cuenta");
             tablaCliente.addCell("Debe");
             tablaCliente.addCell("Haber");
@@ -286,6 +292,7 @@ public class CRUD_LibroMayor {
 
                     for(int PosC = 0; PosC < listaCuenta.size(); PosC++){
                         
+                        Auxiliar = true;
                         ContAuxiliar = true;
                         
                         //VERIFICA SI LA CUENTA PERTENECE A LA PARTIDA
@@ -308,9 +315,8 @@ public class CRUD_LibroMayor {
                                     if(ContAuxiliar){
 
                                         //VERIFICA EL TIPO DE MOVIMIENTO
-                                        if("DEBE".equals(listaCuenta.get(PosC).getTipoMovimiento())){
+                                        if("DEBE".equals(listaCuenta.get(PosC2).getTipoMovimiento())){
 
-                                            tablaCliente.addCell("");
                                             tablaCliente.addCell(listaCuenta.get(PosC).getNombreCuenta());
                                             tablaCliente.addCell( String.valueOf(listaCuenta.get(PosC2).getMonto()));
                                             tablaCliente.addCell( "");
@@ -320,9 +326,8 @@ public class CRUD_LibroMayor {
                                     
                                         }
                                     
-                                        else if("HABER".equals(listaCuenta.get(PosC).getTipoMovimiento())){
+                                        else if("HABER".equals(listaCuenta.get(PosC2).getTipoMovimiento())){
 
-                                            tablaCliente.addCell("");
                                             tablaCliente.addCell(listaCuenta.get(PosC).getNombreCuenta());
                                             tablaCliente.addCell( "");
                                             tablaCliente.addCell( String.valueOf(listaCuenta.get(PosC2).getMonto()));
@@ -346,11 +351,15 @@ public class CRUD_LibroMayor {
 
                                 TotalMayor = TotalDebeMayor-TotalHaberMayor;
 
-                                tablaCliente.addCell("");
                                 tablaCliente.addCell("Total");
                                 tablaCliente.addCell( String.valueOf(TotalDebeMayor));
                                 tablaCliente.addCell( String.valueOf(TotalHaberMayor));
                                 tablaCliente.addCell( String.valueOf(TotalMayor));
+                                
+                                tablaCliente.addCell(" ");
+                                tablaCliente.addCell(" ");
+                                tablaCliente.addCell(" ");
+                                tablaCliente.addCell(" ");
                                 
                                 TotalDebeMayor = 0;
                                 TotalHaberMayor = 0;
@@ -372,9 +381,9 @@ public class CRUD_LibroMayor {
             JOptionPane.showMessageDialog(null, "PDF CREADO");
           
         }catch (FileNotFoundException ex) {
-            Logger.getLogger(JFMostrar_InClinico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JFCrear_Partida.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
-            Logger.getLogger(JFMostrar_InClinico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JFCrear_Partida.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }

@@ -38,8 +38,8 @@ public class Conexion {
             + "ID integer primary key autoincrement,"
             + "IDLibro integer,\n"
             + "Grupo_Cuenta varchar(500),\n"
-            + "Tipo_Cuenta varchar(500),\n"
             + "SubGrupo_Cuenta varchar(500),\n"
+            + "Nombre_Cuenta varchar(500),\n"
             + "MontoTotal Double)";
     
     static final String TBL_BalanceComprobacion

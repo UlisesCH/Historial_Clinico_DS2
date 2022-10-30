@@ -5,8 +5,10 @@
 package Contable.Vistas;
 
 import Contable.Controladores.Conexion;
+import Contable.Modulos.CRUD_BalanceComprobacion;
 import Contable.Modulos.CRUD_LibroMayor;
 import static Contable.Modulos.CRUD_LibroMayor.listaLibroMayor;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -15,13 +17,22 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JFMostrar_BalancenComprobacion extends javax.swing.JFrame {
     CRUD_LibroMayor CrLibroMayor = new CRUD_LibroMayor();
+    CRUD_BalanceComprobacion balanceComprobacion = new CRUD_BalanceComprobacion();
+    ArrayList<String> ListaCuentasRecoridas = new ArrayList<String>();
+
     DefaultTableModel model;
     public String ID_LibroDato;
     
-    public static String ListaTipoCuentas [] = {"ACTIVO","PASIVO","CAPITAL"};
+    public static String ListaTipoCuentas [] = {"ACTIVO","PASIVO","CAPITAL", 
+                                                "INGRESO", "COSTO", "GASTO"};
     
-    int TotalActivoCorriente = 0, TotalActivoNoCorriente = 0, TotalActivo = 0, 
-        TotalPasivo = 0, TotalCapital = 0, TotalPasivoCapital = 0;
+    double TotalActivos = 0, TotalPasivos = 0, TotalCapital = 0, 
+        TotalIngresos = 0, TotalCostos = 0, TotalGastos = 0,
+        TotalDeudor = 0, TotalAcreedor = 0;
+    
+    double TotalActivos2 = 0, TotalPasivos2 = 0, TotalCapital2 = 0, 
+        TotalIngresos2 = 0, TotalCostos2 = 0, TotalGastos2 = 0,
+        TotalDeudor2 = 0, TotalAcreedor2 = 0;
     
     /**
      * Creates new form JFMostrar_BalaceComprobacion
@@ -51,6 +62,8 @@ public class JFMostrar_BalancenComprobacion extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TableBalanceComprobacion = new javax.swing.JTable();
+        TxtTotalDeudor = new javax.swing.JLabel();
+        TxtTotalAcreedor = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,6 +125,10 @@ public class JFMostrar_BalancenComprobacion extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(TableBalanceComprobacion);
 
+        TxtTotalDeudor.setText("Total Deudor:");
+
+        TxtTotalAcreedor.setText("Total Acreedor:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -120,13 +137,23 @@ public class JFMostrar_BalancenComprobacion extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(295, 295, 295)
+                .addComponent(TxtTotalDeudor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(TxtTotalAcreedor)
+                .addGap(94, 94, 94))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtTotalDeudor)
+                    .addComponent(TxtTotalAcreedor))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -165,35 +192,139 @@ public class JFMostrar_BalancenComprobacion extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-
+        balanceComprobacion.PDFComprobacion(ID_LibroDato);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void Llenar(String ID_Libro){
         
         CrLibroMayor.LlenarTabla();
+        boolean ContAuxiliar;
+        ListaCuentasRecoridas.clear();
+      
+        ListaCuentasRecoridas.add("");
         
         for(int PosicionCuenta = 0; PosicionCuenta < ListaTipoCuentas.length; PosicionCuenta++){
-            
-            model.addRow(new Object[]{ListaTipoCuentas[PosicionCuenta],"",""});
-            
+        
+            model.addRow(new Object[]{ListaTipoCuentas[PosicionCuenta]});
+
             for(int PosLibroMayor = 0; PosLibroMayor < listaLibroMayor.size(); PosLibroMayor++){
 
-                System.err.println(""+ListaTipoCuentas[PosicionCuenta]);
-                
+                ContAuxiliar = true;
+
                 if(ListaTipoCuentas[PosicionCuenta].equals(
                         listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
-                    
-                    model.addRow(new Object[]{listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta(),
-                        listaLibroMayor.get(PosLibroMayor).getMontoTotal(),""});
-                    
-                    System.err.println(""+listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
-                    
+                
+                    for(int Pos2LibroMayor = 0; Pos2LibroMayor < listaLibroMayor.size(); Pos2LibroMayor++){
+
+                        if(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta().equals(
+                           listaLibroMayor.get(Pos2LibroMayor).getSubGrupo_Cuenta())){
+
+                            for(int PosLC = 0; PosLC < ListaCuentasRecoridas.size(); PosLC++){
+
+                                //VERIFICA SI LAS CUENTA YA FUE RECORRIDA
+                                if(ListaCuentasRecoridas.get(PosLC).equals(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta())){
+                                    ContAuxiliar = false;
+                                    break;
+                                }
+
+                            }
+
+                            if(ContAuxiliar){
+
+                                if(ListaTipoCuentas[PosicionCuenta].equals(
+                            listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
+
+                                }
+
+                                if("ACTIVO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+
+                                    TotalActivos = TotalActivos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                }
+                                else if("PASIVO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+
+                                    TotalPasivos = TotalPasivos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                }
+                                else if("CAPITAL".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+
+                                    TotalCapital = TotalCapital + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                }
+                                else if("INGRESO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+
+                                    TotalIngresos = TotalIngresos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                }
+                                else if("COSTO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+
+                                    TotalCostos = TotalCostos+ listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                }
+                                else if("GASTO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+
+                                    TotalGastos = TotalGastos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                }
+
+                            }
+
+                        }
+
+                    }
+                    if("".equals(ListaCuentasRecoridas.get(0))){
+                        ListaCuentasRecoridas.set(0, listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
+                    }else{
+                        ListaCuentasRecoridas.add(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
+                    }
+
+                    if("ACTIVO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
+                        if(TotalActivos != 0){
+                            model.addRow(new Object[]{listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta(), TotalActivos, ""});
+                            TotalActivos2 = TotalActivos2+TotalActivos;
+                            TotalActivos = 0;
+                        }
+                    }
+                    if("PASIVO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
+                        if(TotalPasivos != 0){
+                            model.addRow(new Object[]{listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta(), "", TotalPasivos});
+                            TotalPasivos2 = TotalPasivos2+TotalPasivos;
+                            TotalPasivos = 0;
+                        }
+                    }
+                    if("CAPITAL".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
+                        if(TotalCapital != 0){
+                            model.addRow(new Object[]{listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta(), "", TotalCapital});
+                            TotalCapital2 = TotalCapital2+TotalCapital;
+                            TotalCapital = 0;
+                        }
+                    }
+                    if("INGRESO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
+                        if(TotalIngresos != 0){
+                            model.addRow(new Object[]{listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta(), "", TotalIngresos});
+                            TotalIngresos2 = TotalIngresos2+TotalIngresos;
+                            TotalIngresos = 0;
+                        }
+                    }
+                    if("COSTO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
+                        if(TotalCostos != 0){
+                            model.addRow(new Object[]{listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta(), TotalCostos, ""});
+                            TotalCostos2 = TotalCostos2+TotalCostos;
+                            TotalCostos = 0;
+                        }
+                    }
+                    if("GASTO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
+                        if(TotalGastos != 0){
+                            model.addRow(new Object[]{listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta(), TotalGastos, ""});
+                            TotalGastos2 = TotalGastos2+TotalGastos;
+                            TotalGastos = 0;
+                        }
+                    }
+
                 }
-            
-            }
-            
+            }    
+            model.addRow(new Object[]{});
         }
         
+        TotalDeudor = TotalActivos2 + TotalCostos2 + TotalGastos2;
+        TotalAcreedor = TotalPasivos2 + TotalCapital2 + TotalIngresos2;
+        
+        TxtTotalDeudor.setText("Total Deudor "+ TotalDeudor);
+        TxtTotalAcreedor.setText("Total Acreedor "+ TotalAcreedor);
     }
     
     /**
@@ -252,6 +383,8 @@ public class JFMostrar_BalancenComprobacion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnInClinico2;
     private javax.swing.JTable TableBalanceComprobacion;
+    private javax.swing.JLabel TxtTotalAcreedor;
+    private javax.swing.JLabel TxtTotalDeudor;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

@@ -118,7 +118,7 @@ public class JFMostrar_LibroMayor extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Fecha", "Cuenta", "Debe", "Haber", "Total"
+                "Cuenta", "Debe", "Haber", "Total"
             }
         ));
         jScrollPane1.setViewportView(TableLibroMayor);
@@ -176,7 +176,7 @@ public class JFMostrar_LibroMayor extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        CrLibroMayor.PDFExamenes(ID_LibroDato);
+        CrLibroMayor.PDFLibroMayor(ID_LibroDato);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -222,7 +222,7 @@ public class JFMostrar_LibroMayor extends javax.swing.JFrame {
                                     
                                     if("DEBE".equals(listaCuenta.get(PosC2).getTipoMovimiento())){
 
-                                        model.addRow(new Object[]{ "",
+                                        model.addRow(new Object[]{
                                                        listaCuenta.get(PosC).getNombreCuenta(),
                                                        listaCuenta.get(PosC2).getMonto(), ""});
                                         
@@ -230,7 +230,7 @@ public class JFMostrar_LibroMayor extends javax.swing.JFrame {
                                     }
                                     else if("HABER".equals(listaCuenta.get(PosC2).getTipoMovimiento())){
                                         
-                                        model.addRow(new Object[]{ "",
+                                        model.addRow(new Object[]{
                                                        listaCuenta.get(PosC).getNombreCuenta(),
                                                        "",listaCuenta.get(PosC2).getMonto()});
                                         
@@ -254,8 +254,10 @@ public class JFMostrar_LibroMayor extends javax.swing.JFrame {
                             
                             TotalMayor = TotalDebeMayor-TotalHaberMayor;
 
-                            model.addRow(new Object[]{ "","TOTAL",
+                            model.addRow(new Object[]{"TOTAL",
                                                        TotalDebeMayor,TotalHaberMayor,TotalMayor});
+                            
+                            model.addRow(new Object[]{});
 
                             TotalDebeMayor = 0;
                             TotalHaberMayor = 0;
