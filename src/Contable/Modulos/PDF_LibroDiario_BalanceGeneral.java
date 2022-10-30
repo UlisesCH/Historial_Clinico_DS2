@@ -62,7 +62,7 @@ public class PDF_LibroDiario_BalanceGeneral {
         try {
             //ruta +"/Desktop/"
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive/Escritorio/"
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/"
                     +"LibroDiario"+".pdf"));
             
             documento.open();
@@ -159,7 +159,7 @@ public class PDF_LibroDiario_BalanceGeneral {
         try {
             //ruta +"/Desktop/"
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive/Escritorio/"
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/"
                     +"BalanceGeneral"+".pdf"));
             
             documento.open();
