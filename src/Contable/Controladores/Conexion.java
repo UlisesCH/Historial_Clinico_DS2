@@ -55,7 +55,8 @@ public class Conexion {
             + "ID integer primary key autoincrement,"
             + "IDLibro integer,\n"
             + "Reserva Double,\n"
-            + "Impuesto Double)";
+            + "Impuesto Double,\n"
+            + "Utilidad Double)";
     
     static final String TBL_Partida
             = "CREATE TABLE TBL_Partida(\n"

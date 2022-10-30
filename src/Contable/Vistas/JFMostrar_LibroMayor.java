@@ -192,7 +192,7 @@ public class JFMostrar_LibroMayor extends javax.swing.JFrame {
         for(int PosP = 0; PosP < listaPartidas.size(); PosP++){
             
             //VERIFICA SI PERTENECE AL LIBRO
-            if(listaPartidas.get(PosP).getIDLibro() == Integer.valueOf(ID_LibroDato)){
+            if(listaPartidas.get(PosP).getIDLibro() == Integer.parseInt(ID_LibroDato)){
                 
                 for(int PosC = 0; PosC < listaCuenta.size(); PosC++){
                     

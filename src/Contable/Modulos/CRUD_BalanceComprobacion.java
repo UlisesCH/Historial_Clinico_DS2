@@ -135,7 +135,8 @@ public class CRUD_BalanceComprobacion {
     }
     
     public void BalanceComprobacion(String ID_Libro){
-        
+        CRUD_EstadoResultado estadoResultado = new CRUD_EstadoResultado();
+                
         CrLibroMayor.LlenarTabla();
         LlenarTabla();
         
@@ -149,76 +150,80 @@ public class CRUD_BalanceComprobacion {
 
             for(int PosLibroMayor = 0; PosLibroMayor < listaLibroMayor.size(); PosLibroMayor++){
 
-                ContAuxiliar = true;
+                //VERIFICA SI PERTENECE AL LIBRO
+                if(listaLibroMayor.get(PosLibroMayor).getIDLibro() == Integer.parseInt(ID_Libro)){
+                    
+                    ContAuxiliar = true;
 
-                if(ListaTipoCuentas[PosicionCuenta].equals(
-                        listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
-                
-                    for(int Pos2LibroMayor = 0; Pos2LibroMayor < listaLibroMayor.size(); Pos2LibroMayor++){
-
-                        if(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta().equals(
-                           listaLibroMayor.get(Pos2LibroMayor).getSubGrupo_Cuenta())){
-
-                            for(int PosLC = 0; PosLC < ListaCuentasRecoridas.size(); PosLC++){
-
-                                //VERIFICA SI LAS CUENTA YA FUE RECORRIDA
-                                if(ListaCuentasRecoridas.get(PosLC).equals(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta())){
-                                    ContAuxiliar = false;
-                                    break;
-                                }
-
-                            }
-
-                            if(ContAuxiliar){
-
-                                if(ListaTipoCuentas[PosicionCuenta].equals(
+                    if(ListaTipoCuentas[PosicionCuenta].equals(
                             listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
 
+                        for(int Pos2LibroMayor = 0; Pos2LibroMayor < listaLibroMayor.size(); Pos2LibroMayor++){
+
+                            if(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta().equals(
+                               listaLibroMayor.get(Pos2LibroMayor).getSubGrupo_Cuenta())){
+
+                                for(int PosLC = 0; PosLC < ListaCuentasRecoridas.size(); PosLC++){
+
+                                    //VERIFICA SI LAS CUENTA YA FUE RECORRIDA
+                                    if(ListaCuentasRecoridas.get(PosLC).equals(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta())){
+                                        ContAuxiliar = false;
+                                        break;
+                                    }
+
                                 }
 
-                                if("INGRESO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+                                if(ContAuxiliar){
 
-                                    TotalIngresos = TotalIngresos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
-                                }
-                                else if("COSTO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+                                    if(ListaTipoCuentas[PosicionCuenta].equals(
+                                listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
 
-                                    TotalCostos = TotalCostos+ listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
-                                }
-                                else if("GASTO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+                                    }
 
-                                    TotalGastos = TotalGastos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                    if("INGRESO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+
+                                        TotalIngresos = TotalIngresos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                    }
+                                    else if("COSTO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+
+                                        TotalCostos = TotalCostos+ listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                    }
+                                    else if("GASTO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+
+                                        TotalGastos = TotalGastos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                    }
+
                                 }
 
                             }
 
                         }
+                        if("".equals(ListaCuentasRecoridas.get(0))){
+                            ListaCuentasRecoridas.set(0, listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
+                        }else{
+                            ListaCuentasRecoridas.add(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
+                        }
+
+                        if("INGRESO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
+                            if(TotalIngresos != 0){
+                                TotalIngresos2 = TotalIngresos2+TotalIngresos;
+                                TotalIngresos = 0;
+                            }
+                        }
+                        if("COSTO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
+                            if(TotalCostos != 0){
+                                TotalCostos2 = TotalCostos2+TotalCostos;
+                                TotalCostos = 0;
+                            }
+                        }
+                        if("GASTO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
+                            if(TotalGastos != 0){
+                                TotalGastos2 = TotalGastos2+TotalGastos;
+                                TotalGastos = 0;
+                            }
+                        }
 
                     }
-                    if("".equals(ListaCuentasRecoridas.get(0))){
-                        ListaCuentasRecoridas.set(0, listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
-                    }else{
-                        ListaCuentasRecoridas.add(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
-                    }
-
-                    if("INGRESO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
-                        if(TotalIngresos != 0){
-                            TotalIngresos2 = TotalIngresos2+TotalIngresos;
-                            TotalIngresos = 0;
-                        }
-                    }
-                    if("COSTO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
-                        if(TotalCostos != 0){
-                            TotalCostos2 = TotalCostos2+TotalCostos;
-                            TotalCostos = 0;
-                        }
-                    }
-                    if("GASTO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
-                        if(TotalGastos != 0){
-                            TotalGastos2 = TotalGastos2+TotalGastos;
-                            TotalGastos = 0;
-                        }
-                    }
-
                 }
             } 
 
@@ -247,6 +252,8 @@ public class CRUD_BalanceComprobacion {
                     TotalCostos2, 
                     TotalGastos2);
         }
+        
+        estadoResultado.EstadoResultado(ID_Libro);
         
     }
     
@@ -279,126 +286,130 @@ public class CRUD_BalanceComprobacion {
             tablaComprobacion.addCell("");
             
             for(int PosLibroMayor = 0; PosLibroMayor < listaLibroMayor.size(); PosLibroMayor++){
-
-                ContAuxiliar = true;
-
-                if(ListaTipoCuentas[PosicionCuenta].equals(
-                        listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
                 
-                    for(int Pos2LibroMayor = 0; Pos2LibroMayor < listaLibroMayor.size(); Pos2LibroMayor++){
+                //VERIFICA SI PERTENECE AL LIBRO
+                if(listaLibroMayor.get(PosLibroMayor).getIDLibro() == Integer.parseInt(ID_Libro)){
+                    
+                    ContAuxiliar = true;
 
-                        if(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta().equals(
-                           listaLibroMayor.get(Pos2LibroMayor).getSubGrupo_Cuenta())){
-
-                            for(int PosLC = 0; PosLC < ListaCuentasRecoridas.size(); PosLC++){
-
-                                //VERIFICA SI LAS CUENTA YA FUE RECORRIDA
-                                if(ListaCuentasRecoridas.get(PosLC).equals(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta())){
-                                    ContAuxiliar = false;
-                                    break;
-                                }
-
-                            }
-
-                            if(ContAuxiliar){
-
-                                if(ListaTipoCuentas[PosicionCuenta].equals(
+                    if(ListaTipoCuentas[PosicionCuenta].equals(
                             listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
 
+                        for(int Pos2LibroMayor = 0; Pos2LibroMayor < listaLibroMayor.size(); Pos2LibroMayor++){
+
+                            if(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta().equals(
+                               listaLibroMayor.get(Pos2LibroMayor).getSubGrupo_Cuenta())){
+
+                                for(int PosLC = 0; PosLC < ListaCuentasRecoridas.size(); PosLC++){
+
+                                    //VERIFICA SI LAS CUENTA YA FUE RECORRIDA
+                                    if(ListaCuentasRecoridas.get(PosLC).equals(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta())){
+                                        ContAuxiliar = false;
+                                        break;
+                                    }
+
                                 }
 
-                                if("ACTIVO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+                                if(ContAuxiliar){
 
-                                    TotalActivos = TotalActivos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
-                                }
-                                else if("PASIVO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+                                    if(ListaTipoCuentas[PosicionCuenta].equals(
+                                listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
 
-                                    TotalPasivos = TotalPasivos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
-                                }
-                                else if("CAPITAL".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+                                    }
 
-                                    TotalCapital = TotalCapital + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
-                                }
-                                else if("INGRESO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+                                    if("ACTIVO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
 
-                                    TotalIngresos = TotalIngresos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
-                                }
-                                else if("COSTO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+                                        TotalActivos = TotalActivos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                    }
+                                    else if("PASIVO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
 
-                                    TotalCostos = TotalCostos+ listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
-                                }
-                                else if("GASTO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+                                        TotalPasivos = TotalPasivos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                    }
+                                    else if("CAPITAL".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
 
-                                    TotalGastos = TotalGastos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                        TotalCapital = TotalCapital + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                    }
+                                    else if("INGRESO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+
+                                        TotalIngresos = TotalIngresos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                    }
+                                    else if("COSTO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+
+                                        TotalCostos = TotalCostos+ listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                    }
+                                    else if("GASTO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
+
+                                        TotalGastos = TotalGastos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                    }
+
                                 }
 
                             }
 
                         }
+                        if("".equals(ListaCuentasRecoridas.get(0))){
+                            ListaCuentasRecoridas.set(0, listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
+                        }else{
+                            ListaCuentasRecoridas.add(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
+                        }
+
+                        if("ACTIVO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
+                            if(TotalActivos != 0){
+                                //celda
+                                tablaComprobacion.addCell(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
+                                tablaComprobacion.addCell(String.valueOf(TotalActivos));
+                                tablaComprobacion.addCell("");
+                                TotalActivos2 = TotalActivos2+TotalActivos;
+                                TotalActivos = 0;
+                            }
+                        }
+                        if("PASIVO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
+                            if(TotalPasivos != 0){
+                                tablaComprobacion.addCell(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
+                                tablaComprobacion.addCell("");
+                                tablaComprobacion.addCell(String.valueOf(TotalPasivos));
+                                TotalPasivos2 = TotalPasivos2+TotalPasivos;
+                                TotalPasivos = 0;
+                            }
+                        }
+                        if("CAPITAL".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
+                            if(TotalCapital != 0){
+                                tablaComprobacion.addCell(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
+                                tablaComprobacion.addCell("");
+                                tablaComprobacion.addCell(String.valueOf(TotalCapital));
+                                TotalCapital2 = TotalCapital2+TotalCapital;
+                                TotalCapital = 0;
+                            }
+                        }
+                        if("INGRESO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
+                            if(TotalIngresos != 0){
+                                tablaComprobacion.addCell(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
+                                tablaComprobacion.addCell("");
+                                tablaComprobacion.addCell(String.valueOf(TotalIngresos));
+                                TotalIngresos2 = TotalIngresos2+TotalIngresos;
+                                TotalIngresos = 0;
+                            }
+                        }
+                        if("COSTO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
+                            if(TotalCostos != 0){
+                                tablaComprobacion.addCell(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
+                                tablaComprobacion.addCell(String.valueOf(TotalCostos));
+                                tablaComprobacion.addCell("");
+                                TotalCostos2 = TotalCostos2+TotalCostos;
+                                TotalCostos = 0;
+                            }
+                        }
+                        if("GASTO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
+                            if(TotalGastos != 0){
+                                tablaComprobacion.addCell(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
+                                tablaComprobacion.addCell(String.valueOf(TotalGastos));
+                                tablaComprobacion.addCell("");
+                                TotalGastos2 = TotalGastos2+TotalGastos;
+                                TotalGastos = 0;
+                            }
+                        }
 
                     }
-                    if("".equals(ListaCuentasRecoridas.get(0))){
-                        ListaCuentasRecoridas.set(0, listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
-                    }else{
-                        ListaCuentasRecoridas.add(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
-                    }
-
-                    if("ACTIVO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
-                        if(TotalActivos != 0){
-                            //celda
-                            tablaComprobacion.addCell(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
-                            tablaComprobacion.addCell(String.valueOf(TotalActivos));
-                            tablaComprobacion.addCell("");
-                            TotalActivos2 = TotalActivos2+TotalActivos;
-                            TotalActivos = 0;
-                        }
-                    }
-                    if("PASIVO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
-                        if(TotalPasivos != 0){
-                            tablaComprobacion.addCell(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
-                            tablaComprobacion.addCell("");
-                            tablaComprobacion.addCell(String.valueOf(TotalPasivos));
-                            TotalPasivos2 = TotalPasivos2+TotalPasivos;
-                            TotalPasivos = 0;
-                        }
-                    }
-                    if("CAPITAL".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
-                        if(TotalCapital != 0){
-                            tablaComprobacion.addCell(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
-                            tablaComprobacion.addCell("");
-                            tablaComprobacion.addCell(String.valueOf(TotalCapital));
-                            TotalCapital2 = TotalCapital2+TotalCapital;
-                            TotalCapital = 0;
-                        }
-                    }
-                    if("INGRESO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
-                        if(TotalIngresos != 0){
-                            tablaComprobacion.addCell(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
-                            tablaComprobacion.addCell("");
-                            tablaComprobacion.addCell(String.valueOf(TotalIngresos));
-                            TotalIngresos2 = TotalIngresos2+TotalIngresos;
-                            TotalIngresos = 0;
-                        }
-                    }
-                    if("COSTO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
-                        if(TotalCostos != 0){
-                            tablaComprobacion.addCell(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
-                            tablaComprobacion.addCell(String.valueOf(TotalCostos));
-                            tablaComprobacion.addCell("");
-                            TotalCostos2 = TotalCostos2+TotalCostos;
-                            TotalCostos = 0;
-                        }
-                    }
-                    if("GASTO".equals(listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta())){
-                        if(TotalGastos != 0){
-                            tablaComprobacion.addCell(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta());
-                            tablaComprobacion.addCell(String.valueOf(TotalGastos));
-                            tablaComprobacion.addCell("");
-                            TotalGastos2 = TotalGastos2+TotalGastos;
-                            TotalGastos = 0;
-                        }
-                    }
-
                 }
             }    
             tablaComprobacion.addCell("");

@@ -60,7 +60,8 @@ public class CRUD_EstadoResultado {
                 EstadoResultado InEstadoResultado = new EstadoResultado(result.getInt("ID"),
                                                 result.getInt("IDLibro"),
                                                 result.getDouble("Reserva"),
-                                                result.getDouble("Impuesto"));
+                                                result.getDouble("Impuesto"),
+                                                result.getDouble("Utilidad"));
                 
                 //SE AGREGA EL CONSTRUCTOR AL ARREGLO
                 listaEstadoResultado.add(InEstadoResultado);
@@ -73,7 +74,7 @@ public class CRUD_EstadoResultado {
     }
     
     //INSERTA DATOS A LA TABLA DE LA BASE DE DATOS
-    public static void Insertar(int IDLibro, Double Reserva, Double Impuesto){
+    public static void Insertar(int IDLibro, Double Reserva, Double Impuesto, Double Utilidad){
         int ID;
         
         ID = (int)(Math.random()*9000+1);
@@ -85,9 +86,9 @@ public class CRUD_EstadoResultado {
 
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE ALMACENA LOS DATOS)
             PreparedStatement st = conec.conexion.prepareStatement(
-                    "insert into TBL_EstadoResultado(ID, IDLibro, Reserva, Impuesto, MontoTotal)\n"
+                    "insert into TBL_EstadoResultado(ID, IDLibro, Reserva, Impuesto, Utilidad)\n"
                             
-                    + "values("+ID+","+IDLibro+","+Reserva+","+Impuesto+");");
+                    + "values("+ID+","+IDLibro+","+Reserva+","+Impuesto+","+Utilidad+");");
             
             //EJECUTA LA ACCION
             st.execute();
@@ -99,7 +100,7 @@ public class CRUD_EstadoResultado {
     }
     
     //MODIFICA DATOS A LA TABLA DE LA BASE DE DATOS
-    public static void Modificar(int IDLibro, Double Reserva, Double Impuesto){
+    public static void Modificar(int IDLibro, Double Reserva, Double Impuesto, Double Utilidad){
 
         //OBJETO PARA TENER INTERACCION CON LA CLASE Conexion
         Conexion conec = new Conexion();
@@ -108,8 +109,9 @@ public class CRUD_EstadoResultado {
             
             String sql = "Update TBL_EstadoResultado set "
                             + "IDLibro="+IDLibro+","
-                            + "Reserva='"+Reserva+"',"
-                            + "Impuesto="+Impuesto+" "
+                            + "Reserva="+Reserva+","
+                            + "Impuesto="+Impuesto+","
+                            + "Utilidad="+Utilidad+" "
                             + "where IDLibro="+IDLibro;
             
             //SE INDICA LA ACCION CON LA BASE DE DATOS (SE ALMACENA LOS DATOS)
@@ -176,12 +178,14 @@ public class CRUD_EstadoResultado {
 
             Insertar(Integer.parseInt(ID_Libro), 
                     ReservaLegar, 
-                    ImpuestoPorPagar);
+                    ImpuestoPorPagar, 
+                    UtilidadNeta);
         }else{
 
             Modificar(Integer.parseInt(ID_Libro), 
                     ReservaLegar, 
-                    ImpuestoPorPagar);
+                    ImpuestoPorPagar, 
+                    UtilidadNeta);
         }
         
     }
