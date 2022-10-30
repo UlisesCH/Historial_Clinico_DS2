@@ -14,16 +14,18 @@ public class ExamenClinico {
     private int ID;
     private int IDRecibo;
     private String NombreExamen;
+    private String RangoMuestra;
     private Double PrecioExamen;
     
     public ExamenClinico(){
         
     }
 
-    public ExamenClinico(int ID, int IDRecibo, String NombreExamen, Double PrecioExamen) {
+    public ExamenClinico(int ID, int IDRecibo, String NombreExamen, String CantidadMuestra, Double PrecioExamen) {
         this.ID = ID;
         this.IDRecibo = IDRecibo;
         this.NombreExamen = NombreExamen;
+        this.RangoMuestra = CantidadMuestra;
         this.PrecioExamen = PrecioExamen;
     }
 
@@ -31,34 +33,42 @@ public class ExamenClinico {
         return ID;
     }
 
-    public int getID_Recibo() {
-        return IDRecibo;
-    }
-
-    public String getNombre_Examen() {
-        return NombreExamen;
-    }
-
-    public Double getPrecio_Examen() {
-        return PrecioExamen;
-    }
-
     public void setID(int ID) {
         this.ID = ID;
     }
 
-    public void setID_Recibo(int ID_Recibo) {
-        this.IDRecibo = ID_Recibo;
+    public int getIDRecibo() {
+        return IDRecibo;
     }
 
-    public void setNombre_Examen(String Nombre_Examen) {
-        this.NombreExamen = Nombre_Examen;
+    public void setIDRecibo(int IDRecibo) {
+        this.IDRecibo = IDRecibo;
     }
 
-    public void setPrecio_Examen(Double Precio_Examen) {
-        this.PrecioExamen = Precio_Examen;
+    public String getNombreExamen() {
+        return NombreExamen;
     }
 
-   
+    public void setNombreExamen(String NombreExamen) {
+        this.NombreExamen = NombreExamen;
+    }
+
+    public String getRangoMuestra() {
+        return RangoMuestra;
+    }
+
+    public void setRangoMuestra(String RangoMuestra) {
+        this.RangoMuestra = RangoMuestra;
+    }
+
+    public Double getPrecioExamen() {
+        return PrecioExamen;
+    }
+
+    public void setPrecioExamen(Double PrecioExamen) {
+        this.PrecioExamen = PrecioExamen;
+    }
+
+    
     
 }

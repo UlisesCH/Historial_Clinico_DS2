@@ -55,6 +55,8 @@ public class JFCrear_Examen extends javax.swing.JFrame {
         BtnAgregarDatos = new javax.swing.JButton();
         BtnCrearExamen = new javax.swing.JButton();
         BtnRegresar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        TxtRangoMuestra = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -65,13 +67,13 @@ public class JFCrear_Examen extends javax.swing.JFrame {
 
         TableExamenes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Precio"
+                "ID", "Nombre", "Precio", "Rango"
             }
         ));
         TableExamenes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -130,37 +132,45 @@ public class JFCrear_Examen extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("RANGO DE MUESTRA");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(TxtTabNombExamen, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(94, 94, 94))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                                .addGap(42, 42, 42))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(TxtTabNombExamen, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(TxtRangoMuestra))
+                        .addGap(58, 58, 58)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(TxtTabPrecioExamen, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(BtnCrearExamen))
+                            .addComponent(jLabel5)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(211, 211, 211))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(TxtTabPrecioExamen, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BtnCrearExamen)))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BtnAgregarDatos)
+                            .addComponent(BtnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BtnAgregarDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BtnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BtnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BtnRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(519, 519, 519)
+                .addComponent(BtnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -169,21 +179,23 @@ public class JFCrear_Examen extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TxtTabNombExamen)
                     .addComponent(TxtTabPrecioExamen)
-                    .addComponent(BtnCrearExamen))
+                    .addComponent(BtnCrearExamen)
+                    .addComponent(TxtRangoMuestra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(84, 84, 84)
-                        .addComponent(BtnAgregarDatos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BtnAgregarDatos)
+                        .addGap(60, 60, 60)
                         .addComponent(BtnModificar)
-                        .addGap(63, 63, 63)
+                        .addGap(58, 58, 58)
                         .addComponent(BtnEliminar)
-                        .addGap(55, 55, 55)
+                        .addGap(63, 63, 63)
                         .addComponent(BtnRegresar)
                         .addGap(35, 35, 35))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -257,10 +269,11 @@ public class JFCrear_Examen extends javax.swing.JFrame {
         
         //SE OBTIENES LOS DATOS DE LOS INPUTS
         String NombExamen = TxtTabNombExamen.getText();
+        String RangoMuestra = TxtRangoMuestra.getText();
         Double PrecioExamen = Double.valueOf(TxtTabPrecioExamen.getText());
         
         CRUD_Examenes Cr = new CRUD_Examenes();
-        Cr.Insertar(NombExamen, PrecioExamen);
+        Cr.Insertar(NombExamen, RangoMuestra, PrecioExamen);
         
         Llenar();
         
@@ -287,12 +300,13 @@ public class JFCrear_Examen extends javax.swing.JFrame {
 
             //SE OBTIENES LOS DATOS DE LOS INPUTS
             String NombExamen = TxtTabNombExamen.getText();
+            String RangoMuestra = TxtRangoMuestra.getText();
             Double PrecioExamen = Double.parseDouble(TxtTabPrecioExamen.getText());
             
             //OBJETO PARA ENTERACTUAR CON EL CRUD
             CRUD_Examenes Cr = new CRUD_Examenes();
             //SE MANDA LOS VALORES AL INSERTAR
-            Cr.Modificar(ID, NombExamen, PrecioExamen);
+            Cr.Modificar(ID, NombExamen, RangoMuestra, PrecioExamen);
 
             Llenar();
         }
@@ -386,7 +400,8 @@ public class JFCrear_Examen extends javax.swing.JFrame {
         for(int PosC = 0; PosC < listaExamenes.size(); PosC++){
 
             model.addRow(new Object[]{listaExamenes.get(PosC).getID()
-                    ,listaExamenes.get(PosC).getNombre_Examen(),listaExamenes.get(PosC).getPrecio_Examen()});
+                    ,listaExamenes.get(PosC).getNombreExamen(),listaExamenes.get(PosC).getPrecioExamen()
+                    ,listaExamenes.get(PosC).getRangoMuestra()});
             
             //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
             for(int PosD = 0; PosD < listaDatos.size(); PosD++){
@@ -450,9 +465,11 @@ public class JFCrear_Examen extends javax.swing.JFrame {
     private javax.swing.JButton BtnModificar;
     private javax.swing.JButton BtnRegresar;
     private javax.swing.JTable TableExamenes;
+    private javax.swing.JTextField TxtRangoMuestra;
     private javax.swing.JTextField TxtTabNombExamen;
     private javax.swing.JTextField TxtTabPrecioExamen;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel2;

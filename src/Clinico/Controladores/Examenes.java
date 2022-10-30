@@ -12,11 +12,13 @@ public class Examenes {
     
     private int ID;
     private String NombreExamen;
+    private String RangoMuestra;
     private Double PrecioExamen;
 
-    public Examenes(int ID, String NombreExamen, Double PrecioExamen) {
+    public Examenes(int ID, String NombreExamen, String CantidadMuestra, Double PrecioExamen) {
         this.ID = ID;
         this.NombreExamen = NombreExamen;
+        this.RangoMuestra = CantidadMuestra;
         this.PrecioExamen = PrecioExamen;
     }
 
@@ -24,12 +26,34 @@ public class Examenes {
         return ID;
     }
 
-    public String getNombre_Examen() {
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getNombreExamen() {
         return NombreExamen;
     }
 
-    public Double getPrecio_Examen() {
+    public void setNombreExamen(String NombreExamen) {
+        this.NombreExamen = NombreExamen;
+    }
+
+    public String getRangoMuestra() {
+        return RangoMuestra;
+    }
+
+    public void setRangoMuestra(String RangoMuestra) {
+        this.RangoMuestra = RangoMuestra;
+    }
+
+    public Double getPrecioExamen() {
         return PrecioExamen;
     }
+
+    public void setPrecioExamen(Double PrecioExamen) {
+        this.PrecioExamen = PrecioExamen;
+    }
+
+    
     
 }
