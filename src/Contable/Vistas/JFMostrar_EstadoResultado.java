@@ -4,6 +4,9 @@
  */
 package Contable.Vistas;
 
+import Contable.Modulos.CRUD_BalanceComprobacion;
+import static Contable.Modulos.CRUD_BalanceComprobacion.listaBalanceComprobacion;
+import Contable.Modulos.CRUD_EstadoResultado;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -11,8 +14,15 @@ import javax.swing.table.DefaultTableModel;
  * @author ulise
  */
 public class JFMostrar_EstadoResultado extends javax.swing.JFrame {
+    CRUD_BalanceComprobacion balanceComprobacion = new CRUD_BalanceComprobacion();
+    CRUD_EstadoResultado estadoResultado = new CRUD_EstadoResultado();
+    
     DefaultTableModel model;
     public String ID_LibroDato;
+    
+    double Ingreso = 0, Costo = 0, Gasto = 0,
+            UtilidadBruta = 0, UtilidadAntesOperacion = 0, ReservaLegar = 0, 
+            UtilidadAntesImpuesto = 0, ImpuestoPorPagar = 0, UtilidadNeta = 0;
     
     /**
      * Creates new form JFMostrar_EstadoResultado
@@ -156,12 +166,68 @@ public class JFMostrar_EstadoResultado extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-
-
+        estadoResultado.PDFEstadoResultado(ID_LibroDato);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void Llenar(String ID_Libro){
+        balanceComprobacion.LlenarTabla();
         
+        for(int PosComrpobacion = 0; PosComrpobacion < listaBalanceComprobacion.size(); PosComrpobacion++){
+            
+            if(Integer.parseInt(ID_Libro) == listaBalanceComprobacion.get(PosComrpobacion).getIDLibro()){
+                
+                Ingreso = listaBalanceComprobacion.get(PosComrpobacion).getIngresos();
+                Costo = listaBalanceComprobacion.get(PosComrpobacion).getCostos();
+                Gasto = listaBalanceComprobacion.get(PosComrpobacion).getGastos();
+                
+                if(Ingreso<0){
+                    Ingreso = Ingreso*-1;
+                }
+                if(Costo<0){
+                    Costo = Costo*-1;
+                }
+                if(Gasto<0){
+                    Gasto = Gasto*-1;
+                }
+                
+                model.addRow(new Object[]{"Ingresos ",Ingreso});
+                model.addRow(new Object[]{"Costos ",Costo});
+                
+                UtilidadBruta = Ingreso-Costo;
+                
+                model.addRow(new Object[]{"Utilidad Antes de Operacion ",UtilidadBruta});
+                
+                model.addRow(new Object[]{"Gastos de Operacion ",Gasto});
+                
+                UtilidadAntesOperacion = UtilidadBruta-Gasto;
+                
+                model.addRow(new Object[]{"Utilidad Antes de Operacion ",UtilidadAntesOperacion, "7 %"});
+                
+                ReservaLegar = UtilidadAntesOperacion*0.07;
+                
+                model.addRow(new Object[]{"Reserva Legar ",ReservaLegar});
+                
+                UtilidadAntesImpuesto = UtilidadAntesOperacion - ReservaLegar;
+                
+                model.addRow(new Object[]{"Utilidad Antes de Impiesto ",UtilidadAntesImpuesto});
+                
+                if(UtilidadAntesImpuesto > 50000){
+                    
+                    ImpuestoPorPagar = UtilidadAntesImpuesto*0.30; 
+                    
+                    model.addRow(new Object[]{"Impuesto Por Pagar",ImpuestoPorPagar, "30%"});
+                }else if(UtilidadAntesImpuesto <= 50000){
+                    
+                    ImpuestoPorPagar = UtilidadAntesImpuesto*0.25;
+                    
+                    model.addRow(new Object[]{"Impuesto Por Pagar",ImpuestoPorPagar, "25%"});
+                }
+
+                UtilidadNeta = UtilidadAntesImpuesto-ImpuestoPorPagar;
+                
+                model.addRow(new Object[]{"Utilidad Neta",UtilidadNeta});
+            }          
+        }
     }
     
     /**

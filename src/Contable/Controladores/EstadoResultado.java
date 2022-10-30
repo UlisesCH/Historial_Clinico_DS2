@@ -14,12 +14,14 @@ public class EstadoResultado {
     int IDLibro;
     double Reserva;
     double Impuesto;
+    double Utilidad;
 
-    public EstadoResultado(int ID, int IDLibro, double Reserva, double Impuesto) {
+    public EstadoResultado(int ID, int IDLibro, double Reserva, double Impuesto, double Utilidad) {
         this.ID = ID;
         this.IDLibro = IDLibro;
         this.Reserva = Reserva;
         this.Impuesto = Impuesto;
+        this.Utilidad = Utilidad;
     }
 
     public int getID() {
@@ -53,5 +55,14 @@ public class EstadoResultado {
     public void setImpuesto(double Impuesto) {
         this.Impuesto = Impuesto;
     }
+
+    public double getUtilidad() {
+        return Utilidad;
+    }
+
+    public void setUtilidad(double Utilidad) {
+        this.Utilidad = Utilidad;
+    }
+
     
 }

@@ -62,6 +62,7 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
         ID_LibroDato = ID_Libro;
         model = (DefaultTableModel) this.TableInClRecibo.getModel();
         listaInCuenta.clear();
+        CrLibroMayor.LibroMayor(ID_LibroDato);
     }
 
     /**

@@ -12,10 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_Final/Historial_Clinico_DS2/src/JFInContable/JFMostrar_DetallesLibro.java</file>
-            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_Final/Historial_Clinico_DS2/src/InContable/Conexion.java</file>
-            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_Final/Historial_Clinico_DS2/src/JFInContable/JFCrear_Partida.java</file>
-            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_Final/Historial_Clinico_DS2/src/InContable/CuentasContable.java</file>
+            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_DS2/src/Contable/Modulos/CRUD_LibroMayor.java</file>
+            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_DS2/src/Contable/Modulos/CRUD_BalanceComprobacion.java</file>
+            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_DS2/src/Contable/Controladores/Conexion.java</file>
+            <file>file:/C:/Users/ulise/OneDrive/Documentos/NetBeansProjects/Historial_Clinico_DS2/src/Contable/Vistas/JFMostrar_BalancenComprobacion.java</file>
         </group>
     </open-files>
 </project-private>
