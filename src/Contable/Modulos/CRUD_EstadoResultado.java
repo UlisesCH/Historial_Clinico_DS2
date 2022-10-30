@@ -197,7 +197,7 @@ public class CRUD_EstadoResultado {
         try {
             //ruta +"/Desktop/"
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive/Escritorio/"
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/"
                     +"EstadoResultado"+".pdf"));
             
             documento.open();

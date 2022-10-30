@@ -268,7 +268,7 @@ public class CRUD_LibroMayor {
         try {
             //ruta +"/Desktop/"
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive/Escritorio/"
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/"
                     +"LibroMayor"+".pdf"));
             
             documento.open();

@@ -267,7 +267,7 @@ public class CRUD_BalanceComprobacion {
         try {
             //ruta +"/Desktop/"
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive/Escritorio/"
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/"
                     +"BalanceComprobacion"+".pdf"));
             
             documento.open();

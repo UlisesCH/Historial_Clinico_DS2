@@ -22,7 +22,7 @@ public class JFMostrar_BalanceGeneral extends javax.swing.JFrame {
     
     CRUD_LibroMayor CrLibroMayor = new CRUD_LibroMayor();
     CRUD_EstadoResultado estadoResultado = new CRUD_EstadoResultado();
-    PDF_LibroDiario_BalanceGeneral balanceGeneral = new PDF_LibroDiario_BalanceGeneral();
+    PDF_LibroDiario_BalanceGeneral libroDiario_BalanceGeneral = new PDF_LibroDiario_BalanceGeneral();
     
     public static String ListaTipoCuentas [] = {"ACTIVO","PASIVO","Impuesto", 
                                                 "CAPITAL", "Reserva", "Utilidad"};
@@ -195,7 +195,7 @@ public class JFMostrar_BalanceGeneral extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        balanceGeneral.PDFBalanceGeneral(String.valueOf(ID_LibroDato));
+        libroDiario_BalanceGeneral.PDFBalanceGeneral(String.valueOf(ID_LibroDato));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void Llenar(String ID_Libro){
