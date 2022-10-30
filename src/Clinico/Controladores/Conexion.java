@@ -23,6 +23,7 @@ public class Conexion {
             = "CREATE TABLE TBL_Examen(\n"
             + "ID integer primary key autoincrement,\n"
             + "Nombre_Examen varchar(500),\n"
+            + "Cantidad_Muestra varchar(500),\n"
             + "Precio_Examen Double)";
     
     static final String TBL_Prueba
@@ -46,6 +47,7 @@ public class Conexion {
             + "ID integer primary key autoincrement,\n"
             + "ID_Recibo integer,\n"
             + "Nombre_Examen varchar(500),\n"
+            + "Rango_Muestra varchar(500),\n"
             + "Precio_Examen Double)";
     
     static final String TBL_PruebasExamen

@@ -5,8 +5,11 @@
 package Contable.Vistas;
 
 import Contable.Controladores.Conexion;
+import Contable.Modulos.CRUD_Cuenta;
+import static Contable.Modulos.CRUD_Cuenta.listaCuenta;
 import Contable.Modulos.CRUD_Partidas;
 import static Contable.Modulos.CRUD_Partidas.listaPartidas;
+import Contable.Modulos.PDF_LibroDiario_BalanceGeneral;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,6 +19,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JFMostrar_LibroDiaro extends javax.swing.JFrame {
     CRUD_Partidas CRPartidas = new CRUD_Partidas();
+    CRUD_Cuenta CRCuenta = new CRUD_Cuenta();
+    PDF_LibroDiario_BalanceGeneral libroDiario_BalanceGeneral = new PDF_LibroDiario_BalanceGeneral();
     DefaultTableModel model;
     public String ID_LibroDato;
     int fila;
@@ -50,6 +55,7 @@ public class JFMostrar_LibroDiaro extends javax.swing.JFrame {
         BtnMosLibrosDiarios = new javax.swing.JButton();
         BtnNuevaPartida = new javax.swing.JButton();
         BtnEliminar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,9 +99,10 @@ public class JFMostrar_LibroDiaro extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(TxtTotalDebe)
-                        .addGap(29, 29, 29)
-                        .addComponent(TxtTotalHaber))
-                    .addComponent(jScrollPane1))
+                        .addGap(51, 51, 51)
+                        .addComponent(TxtTotalHaber)
+                        .addGap(39, 39, 39))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -136,22 +143,32 @@ public class JFMostrar_LibroDiaro extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("PDF");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(284, 284, 284))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(BtnMosLibrosDiarios, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(88, 88, 88)
-                .addComponent(BtnNuevaPartida)
-                .addGap(73, 73, 73)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(BtnMosLibrosDiarios, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(BtnNuevaPartida))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(242, 242, 242)
+                        .addComponent(jLabel1)))
+                .addGap(44, 44, 44)
+                .addComponent(jButton1)
+                .addGap(34, 34, 34)
                 .addComponent(BtnEliminar)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,7 +179,8 @@ public class JFMostrar_LibroDiaro extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnMosLibrosDiarios)
                     .addComponent(BtnNuevaPartida)
-                    .addComponent(BtnEliminar))
+                    .addComponent(BtnEliminar)
+                    .addComponent(jButton1))
                 .addGap(16, 16, 16))
         );
 
@@ -229,36 +247,76 @@ public class JFMostrar_LibroDiaro extends javax.swing.JFrame {
         Llenar(ID_LibroDato);
     }//GEN-LAST:event_BtnEliminarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        libroDiario_BalanceGeneral.PDFLibroDiario(ID_LibroDato);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public void Llenar(String ID_Libro){
         int contador = 1;
+        double TotalDebe = 0;
+        double TotalHaber = 0;
+        
         //SE LIMPIA LA TABLA
         model.setRowCount(0);
         //SE LLENA EL ARREGLO CON LOS VALORES DE LA TABLA
         CRPartidas.LlenarTabla();
+        CRCuenta.LlenarTabla();
         
         //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
-        for(int PosC = 0; PosC < listaPartidas.size(); PosC++){
+        for(int PosPartida = 0; PosPartida < listaPartidas.size(); PosPartida++){
             
-            if(listaPartidas.get(PosC).getIDLibro() == Integer.valueOf(ID_Libro)){
+            if(listaPartidas.get(PosPartida).getIDLibro() == Integer.valueOf(ID_Libro)){
                 
-                System.err.println(""+listaPartidas.get(PosC).getID());
+                System.err.println(""+listaPartidas.get(PosPartida).getID());
                 
-                model.addRow(new Object[]{listaPartidas.get(PosC).getID(),
-                                    listaPartidas.get(PosC).getFecha(),
+                model.addRow(new Object[]{listaPartidas.get(PosPartida).getID(),
+                                    listaPartidas.get(PosPartida).getFecha(),
                                     "Partida "+contador,"",""});
                 
-                model.addRow(new Object[]{listaPartidas.get(PosC).getID(),
-                                    listaPartidas.get(PosC).getFecha(),
-                                    listaPartidas.get(PosC).getConcepto(),
+                for(int PosCuenta = 0; PosCuenta < listaCuenta.size(); PosCuenta++){
+                    
+                    if(listaCuenta.get(PosCuenta).getIDPartida() == listaPartidas.get(PosPartida).getID()){
+                        
+                        if("DEBE".equals(listaCuenta.get(PosCuenta).getTipoMovimiento())){
+                            model.addRow(new Object[]{"","",
+                                listaCuenta.get(PosCuenta).getNombreCuenta(),
+                                listaCuenta.get(PosCuenta).getMonto(),""});
+                            
+                            TotalDebe = TotalDebe+listaCuenta.get(PosCuenta).getMonto();
+                            
+                        }
+                        else if("HABER".equals(listaCuenta.get(PosCuenta).getTipoMovimiento())){
+                            model.addRow(new Object[]{"","",
+                                listaCuenta.get(PosCuenta).getNombreCuenta(),
+                                "",listaCuenta.get(PosCuenta).getMonto()});
+                            
+                            TotalHaber = TotalHaber+listaCuenta.get(PosCuenta).getMonto();
+                        }
+                        
+                    }
+                    
+                }
+                
+                model.addRow(new Object[]{listaPartidas.get(PosPartida).getID(),
+                                    listaPartidas.get(PosPartida).getFecha(),
+                                    listaPartidas.get(PosPartida).getConcepto(),
                                      "",""});
+                
+                model.addRow(new Object[]{});
                 
                 contador++;
             }
             
         }
         
+        TxtTotalDebe.setText("Total Debe: "+ String.valueOf(TotalDebe));
+        TxtTotalHaber.setText("Total Haber: "+ String.valueOf(TotalHaber));
+        
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -308,6 +366,7 @@ public class JFMostrar_LibroDiaro extends javax.swing.JFrame {
     private javax.swing.JTable TablePartida;
     private javax.swing.JLabel TxtTotalDebe;
     private javax.swing.JLabel TxtTotalHaber;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

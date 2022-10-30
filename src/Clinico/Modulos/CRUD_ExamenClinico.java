@@ -45,7 +45,8 @@ public class CRUD_ExamenClinico extends Conexion {
             while(result.next()){
                 //OBJETO DEL CONSTRUCTOR
                 ExamenClinico inclinico = new ExamenClinico(result.getInt("ID"),result.getInt("ID_Recibo")
-                                            ,result.getString("Nombre_Examen"),result.getDouble("Precio_Examen"));
+                                            ,result.getString("Nombre_Examen"),result.getString("Rango_Muestra")
+                                            ,result.getDouble("Precio_Examen"));
                 //SE AGREGA EL CONSTRUCTOR AL ARREGLO
                 listaExClinico.add(inclinico);
                 
@@ -83,7 +84,8 @@ public class CRUD_ExamenClinico extends Conexion {
             while(result.next()){
                 //OBJETO DEL CONSTRUCTOR
                 ExamenClinico inclinico = new ExamenClinico(result.getInt("ID"),result.getInt("ID_Recibo")
-                                            ,result.getString("Nombre_Examen"),result.getDouble("Precio_Examen"));
+                                            ,result.getString("Nombre_Examen"),result.getString("Rango_Muestra")
+                                            ,result.getDouble("Precio_Examen"));
                 //SE AGREGA EL CONSTRUCTOR AL ARREGLO
                 listaExClinico.add(inclinico);
 
@@ -155,7 +157,7 @@ public class CRUD_ExamenClinico extends Conexion {
             st.execute();
             
             for(int PosList = 0; PosList < listaExClinico.size(); PosList++){
-                if(listaExClinico.get(PosList).getID_Recibo()==ID_Recibo){
+                if(listaExClinico.get(PosList).getIDRecibo()==ID_Recibo){
                     Cr_DatosExamenes.EliminarValorDatos(listaExClinico.get(PosList).getID());
                 }
             }

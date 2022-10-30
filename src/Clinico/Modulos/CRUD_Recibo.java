@@ -122,8 +122,8 @@ public class CRUD_Recibo extends Conexion {
             //CICLO PARA ALMACENAR LOS VALORES
             for(int PosC = 0; PosC < listaExamenClinicos.size(); PosC++){   
                 
-                Cr_ExamenClinico.Insertar(ID, listaExamenClinicos.get(PosC).getNombre_Examen()
-                        , listaExamenClinicos.get(PosC).getPrecio_Examen(), PosC);
+                Cr_ExamenClinico.Insertar(ID, listaExamenClinicos.get(PosC).getNombreExamen()
+                        , listaExamenClinicos.get(PosC).getPrecioExamen(), PosC);
 
             }
 

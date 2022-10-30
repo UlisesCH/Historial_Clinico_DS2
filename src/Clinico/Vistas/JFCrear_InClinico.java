@@ -524,6 +524,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
     private void BtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAgregarActionPerformed
         
         String Nombre_Examen;
+        String CantidadMuestra;
         Double Precio_Examen;
         String dia;
         String mes;
@@ -562,6 +563,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
 
             ID_Examen = result.getInt("ID");
             Nombre_Examen = result.getString("Nombre_Examen");
+            CantidadMuestra = result.getString("CantidadMuestra");
             Precio_Examen = result.getDouble("Precio_Examen");
             
             conec.conexion.close();
@@ -574,8 +576,9 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
             recibo.setFecha(Fecha);
             
             examenClinico.setID(ID_Examen);
-            examenClinico.setNombre_Examen(Nombre_Examen);
-            examenClinico.setPrecio_Examen(Precio_Examen);
+            examenClinico.setNombreExamen(Nombre_Examen);
+            examenClinico.setRangoMuestra(CantidadMuestra);
+            examenClinico.setPrecioExamen(Precio_Examen);
             
             //SE AGREGA EL CONSTRUCTOR AL ARREGLO
             listaRecibo.add(recibo);
@@ -608,7 +611,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
             
             for(int index = 0; index < listaExamenClinicos.size(); index++){
                 
-                if(listaExamenClinicos.get(index).getNombre_Examen().equals(Nombre)){
+                if(listaExamenClinicos.get(index).getNombreExamen().equals(Nombre)){
                     listaExamenClinicos.remove(index);
                     
                     break;
@@ -754,8 +757,8 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
             TxtNomPacienteRecibo.setText(listaRecibo.get(PosC).getNombre_Cliente());
 
             model.addRow(new Object[]{"--",
-                    listaExamenClinicos.get(PosC).getNombre_Examen()
-                    ," "," ",listaExamenClinicos.get(PosC).getPrecio_Examen()});
+                    listaExamenClinicos.get(PosC).getNombreExamen()
+                    ," "," ",listaExamenClinicos.get(PosC).getPrecioExamen()});
             
             for(int PosD = 0; PosD < listaDatos.size(); PosD++){
                 
@@ -772,7 +775,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
             
             TxtFecha.setText(listaRecibo.get(PosC).getFecha());
             
-            Total = Total+listaExamenClinicos.get(PosC).getPrecio_Examen();
+            Total = Total+listaExamenClinicos.get(PosC).getPrecioExamen();
 
         }
         
@@ -802,9 +805,9 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
         //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
         for(int PosC = 0; PosC < listaExamenes.size(); PosC++){
             
-            System.out.println("Se lleno el arreglo con los datos"+ listaExamenes.get(PosC).getNombre_Examen());
+            System.out.println("Se lleno el arreglo con los datos"+ listaExamenes.get(PosC).getNombreExamen());
             
-            CombxExamen.addItem(listaExamenes.get(PosC).getNombre_Examen());
+            CombxExamen.addItem(listaExamenes.get(PosC).getNombreExamen());
 
         }
         
@@ -844,8 +847,8 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
             //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
             for(int PosC = 0; PosC < listaExamenClinicos.size(); PosC++){
             
-                tablaCliente.addCell(listaExamenClinicos.get(PosC).getNombre_Examen());
-                tablaCliente.addCell(listaExamenClinicos.get(PosC).getPrecio_Examen().toString());
+                tablaCliente.addCell(listaExamenClinicos.get(PosC).getNombreExamen());
+                tablaCliente.addCell(listaExamenClinicos.get(PosC).getPrecioExamen().toString());
                 
                 PDFExamenes(PosC);
                 
@@ -882,7 +885,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
             String ruta = System.getProperty("user.home");
             PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive/Escritorio/" 
                     +TxtNombCliente.getText().trim()+"_"
-                    +listaExamenClinicos.get(posEx).getNombre_Examen().trim()+ ".pdf"));
+                    +listaExamenClinicos.get(posEx).getNombreExamen().trim()+ ".pdf"));
             
             documento.open();
             
@@ -899,7 +902,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
             
             parrafo.setAlignment(Paragraph.ALIGN_LEFT);
             parrafo.add("DOCTOR(A): \n \n");
-             parrafo.add("PACIENTE: "+listaRecibo.get(0).getNombre_Cliente()+"       "
+            parrafo.add("PACIENTE: "+listaRecibo.get(0).getNombre_Cliente()+"       "
                      + "EDAD: "+listaRecibo.get(0).getEdad_Cliente()+"\n \n");
             parrafo.setFont(FontFactory.getFont("Tahoma", 12, Font.BOLD, BaseColor.DARK_GRAY));
 
@@ -907,7 +910,8 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
             parrafo.clear();
 
             parrafo.setAlignment(Paragraph.ALIGN_LEFT);
-            parrafo.add("EXAMEN: "+listaExamenClinicos.get(posEx).getNombre_Examen()+"\n \n");
+            parrafo.add("EXAMEN: "+listaExamenClinicos.get(posEx).getNombreExamen()+"\n \n");
+            parrafo.add("Rango de Mustra: "+listaExamenClinicos.get(posEx).getRangoMuestra()+"\n \n");
             parrafo.setFont(FontFactory.getFont("Tahoma", 12, Font.BOLD, BaseColor.DARK_GRAY));
             
             documento.add(parrafo);

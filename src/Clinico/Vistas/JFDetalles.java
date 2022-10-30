@@ -282,7 +282,7 @@ public class JFDetalles extends javax.swing.JFrame {
         // TODO add your handling code here:
         for(int posEx = 0; posEx < listaExClinico.size(); posEx++){
             
-            if(listaExClinico.get(posEx).getID_Recibo() == IDRecibo){
+            if(listaExClinico.get(posEx).getIDRecibo() == IDRecibo){
                 
                 PDFExamenes(posEx);
                 
@@ -342,9 +342,9 @@ public class JFDetalles extends javax.swing.JFrame {
         
         for(int PosE = 0; PosE < listaExClinico.size(); PosE++){
             
-            if(listaExClinico.get(PosE).getID_Recibo() == ID_Recibo){
+            if(listaExClinico.get(PosE).getIDRecibo() == ID_Recibo){
                 
-                model.addRow(new Object[]{listaExClinico.get(PosE).getNombre_Examen(),"",""});
+                model.addRow(new Object[]{listaExClinico.get(PosE).getNombreExamen(),"",""});
 
                 LlenarDatosExamen(listaExClinico.get(PosE).getID());
                 
@@ -387,7 +387,7 @@ public class JFDetalles extends javax.swing.JFrame {
             String ruta = System.getProperty("user.home");
             PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/OneDrive/Escritorio/"
                     +listaRecibo.get(0).getNombre_Cliente()+"_"
-                    +listaExClinico.get(posEx).getNombre_Examen().trim()+ ".pdf"));
+                    +listaExClinico.get(posEx).getNombreExamen().trim()+ ".pdf"));
             
             documento.open();
             
@@ -412,7 +412,8 @@ public class JFDetalles extends javax.swing.JFrame {
             parrafo.clear();
 
             parrafo.setAlignment(Paragraph.ALIGN_LEFT);
-            parrafo.add("EXAMEN: "+listaExClinico.get(posEx).getNombre_Examen()+"\n \n");
+            parrafo.add("EXAMEN: "+listaExClinico.get(posEx).getNombreExamen()+"\n \n");
+            parrafo.add("Rango de Mustra: "+listaExClinico.get(posEx).getRangoMuestra()+"\n \n");
             parrafo.setFont(FontFactory.getFont("Tahoma", 12, Font.BOLD, BaseColor.DARK_GRAY));
             
             documento.add(parrafo);

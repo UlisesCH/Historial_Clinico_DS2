@@ -9,7 +9,7 @@ import Contable.Modulos.CRUD_EstadoResultado;
 import static Contable.Modulos.CRUD_EstadoResultado.listaEstadoResultado;
 import Contable.Modulos.CRUD_LibroMayor;
 import static Contable.Modulos.CRUD_LibroMayor.listaLibroMayor;
-import Contable.Modulos.PDF_BalanceGeneral;
+import Contable.Modulos.PDF_LibroDiario_BalanceGeneral;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,7 +22,7 @@ public class JFMostrar_BalanceGeneral extends javax.swing.JFrame {
     
     CRUD_LibroMayor CrLibroMayor = new CRUD_LibroMayor();
     CRUD_EstadoResultado estadoResultado = new CRUD_EstadoResultado();
-    PDF_BalanceGeneral balanceGeneral = new PDF_BalanceGeneral();
+    PDF_LibroDiario_BalanceGeneral balanceGeneral = new PDF_LibroDiario_BalanceGeneral();
     
     public static String ListaTipoCuentas [] = {"ACTIVO","PASIVO","Impuesto", 
                                                 "CAPITAL", "Reserva", "Utilidad"};
