@@ -15,7 +15,8 @@ import java.sql.Statement;
  */
 public class Conexion {
     
-    public static String URL = "/OneDrive/Escritorio/";
+    public static String URL = "/Desktop/";
+//    public static String URL = "/OneDrive/Escritorio/";
     
     //OBJETO PARA LA CONEXION CON LA BASE DE DATOS
     public static Connection conexion;
