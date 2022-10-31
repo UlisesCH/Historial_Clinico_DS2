@@ -4,15 +4,20 @@
  */
 package Contable.Modulos;
 
+import static Clinico.Controladores.Conexion.URL;
 import Contable.Controladores.Conexion;
 import Contable.Controladores.LibroMayor;
 import static Contable.Modulos.CRUD_Cuenta.listaCuenta;
 import static Contable.Modulos.CRUD_Partidas.listaPartidas;
 import Contable.Vistas.JFCrear_Partida;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.PreparedStatement;
@@ -268,10 +273,21 @@ public class CRUD_LibroMayor {
         try {
             //ruta +"/Desktop/"
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/"
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +URL
                     +"LibroMayor"+".pdf"));
             
             documento.open();
+            
+            Paragraph parrafo = new Paragraph();
+
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.add("\n \n");
+            parrafo.add(" LIBRO MAYOR \n");
+            parrafo.add("\n \n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+
+            documento.add(parrafo);
+            parrafo.clear();
 
             PdfPTable tablaCliente = new PdfPTable(4);
             tablaCliente.addCell("Cuenta");
@@ -378,7 +394,7 @@ public class CRUD_LibroMayor {
             
             documento.close();
             
-            JOptionPane.showMessageDialog(null, "PDF CREADO");
+            JOptionPane.showMessageDialog(null, "PDF Libro Mayor CREADO");
           
         }catch (FileNotFoundException ex) {
             Logger.getLogger(JFCrear_Partida.class.getName()).log(Level.SEVERE, null, ex);

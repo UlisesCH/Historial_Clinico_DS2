@@ -4,6 +4,7 @@
  */
 package Contable.Modulos;
 
+import static Clinico.Controladores.Conexion.URL;
 import Contable.Controladores.BalanceComprobacion;
 import Contable.Controladores.Conexion;
 import static Contable.Modulos.CRUD_LibroMayor.listaLibroMayor;
@@ -267,11 +268,22 @@ public class CRUD_BalanceComprobacion {
         try {
             //ruta +"/Desktop/"
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/"
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +URL
                     +"BalanceComprobacion"+".pdf"));
             
             documento.open();
 
+            Paragraph parrafo = new Paragraph();
+
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.add("\n \n");
+            parrafo.add(" BALANCE DE COMPROBACION\n");
+            parrafo.add("\n \n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+
+            documento.add(parrafo);
+            parrafo.clear();
+            
             PdfPTable tablaComprobacion = new PdfPTable(3);
             tablaComprobacion.addCell("Cuenta");
             tablaComprobacion.addCell("Deudor");
@@ -422,8 +434,6 @@ public class CRUD_BalanceComprobacion {
         
         documento.add(tablaComprobacion);
 
-        Paragraph parrafo = new Paragraph();
-            
         parrafo.setAlignment(Paragraph.ALIGN_CENTER);
         parrafo.add("\n \n");
         parrafo.add("Total Deudor: "+TotalDeudor+"   "+"Total Acreedor: "+TotalAcreedor+"\n");
@@ -433,7 +443,7 @@ public class CRUD_BalanceComprobacion {
         
         documento.close();
         
-        JOptionPane.showMessageDialog(null, "PDF CREADO");
+        JOptionPane.showMessageDialog(null, "PDF Balance de Comprobacion CREADO");
           
         }catch (FileNotFoundException ex) {
             Logger.getLogger(JFCrear_Partida.class.getName()).log(Level.SEVERE, null, ex);

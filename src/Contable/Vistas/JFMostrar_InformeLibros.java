@@ -4,6 +4,7 @@
  */
 package Contable.Vistas;
 
+import static Clinico.Controladores.Conexion.URL;
 import Contable.Controladores.Conexion;
 import Contable.Modulos.CRUD_LibroDiario;
 import static Contable.Modulos.CRUD_LibroDiario.listaLibroDiario;
@@ -463,11 +464,16 @@ public class JFMostrar_InformeLibros extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
 
+        ID_Libro = (String) TableLibroDiario.getValueAt(fila, 0).toString();
+        
+        System.err.println(""+URL);
+        
         libroDiario_BalanceGeneral.PDFLibroDiario(ID_Libro);
         CrLibroMayor.PDFLibroMayor(ID_Libro);
         balanceComprobacion.PDFComprobacion(ID_Libro);
         estadoResultado.PDFEstadoResultado(ID_Libro);
         libroDiario_BalanceGeneral.PDFBalanceGeneral(ID_Libro);
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
     public void Llenar(){

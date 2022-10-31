@@ -11,6 +11,7 @@ import Clinico.Modulos.CRUD_Examenes;
 import static Clinico.Modulos.CRUD_Examenes.listaExamenes;
 import Clinico.Modulos.CRUD_Recibo;
 import Clinico.Controladores.Conexion;
+import static Clinico.Controladores.Conexion.URL;
 import Clinico.Controladores.DatosExamenes;
 import Clinico.Controladores.ExamenClinico;
 import Clinico.Controladores.Recibo;
@@ -818,7 +819,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
         
         try{
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/Recibo_" 
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +URL+"Recibo_" 
                             +TxtNombCliente.getText().trim() + ".pdf"));
             
             documento.open();
@@ -883,7 +884,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
         try {
             
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/" 
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +URL 
                     +TxtNombCliente.getText().trim()+"_"
                     +listaExamenClinicos.get(posEx).getNombreExamen().trim()+ ".pdf"));
             
