@@ -5,6 +5,7 @@
 package Clinico.Vistas;
 
 import Clinico.Controladores.Conexion;
+import static Clinico.Controladores.Conexion.URL;
 import Clinico.Controladores.DatosExamenes;
 import Clinico.Controladores.ExamenClinico;
 import Clinico.Controladores.Recibo;
@@ -385,7 +386,7 @@ public class JFDetalles extends javax.swing.JFrame {
         try {
             //ruta +"/Desktop/"
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop"
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +URL
                     +listaRecibo.get(0).getNombre_Cliente()+"_"
                     +listaExClinico.get(posEx).getNombreExamen().trim()+ ".pdf"));
             

@@ -4,6 +4,7 @@
  */
 package Contable.Modulos;
 
+import static Clinico.Controladores.Conexion.URL;
 import static Contable.Modulos.CRUD_Cuenta.listaCuenta;
 import static Contable.Modulos.CRUD_EstadoResultado.listaEstadoResultado;
 import static Contable.Modulos.CRUD_LibroMayor.listaLibroMayor;
@@ -62,10 +63,21 @@ public class PDF_LibroDiario_BalanceGeneral {
         try {
             //ruta +"/Desktop/"
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/"
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +URL
                     +"LibroDiario"+".pdf"));
             
             documento.open();
+            
+            Paragraph parrafo = new Paragraph();
+
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.add("\n \n");
+            parrafo.add(" LIBRO DIARIO \n");
+            parrafo.add("\n \n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+
+            documento.add(parrafo);
+            parrafo.clear();
 
             PdfPTable tablaDiario = new PdfPTable(4);
             tablaDiario.addCell("Fecha");
@@ -76,7 +88,7 @@ public class PDF_LibroDiario_BalanceGeneral {
             //CICLO PARA LLENAR LA TABLA CON LOS VALORES DEL ARREGLO
             for(int PosPartida = 0; PosPartida < listaPartidas.size(); PosPartida++){
 
-                if(listaPartidas.get(PosPartida).getIDLibro() == Integer.valueOf(ID_Libro)){
+                if(listaPartidas.get(PosPartida).getIDLibro() == Integer.parseInt(ID_Libro)){
 
                     tablaDiario.addCell(listaPartidas.get(PosPartida).getFecha());
                     tablaDiario.addCell("Partida "+contador);
@@ -127,8 +139,6 @@ public class PDF_LibroDiario_BalanceGeneral {
 
             documento.add(tablaDiario);
 
-            Paragraph parrafo = new Paragraph();
-
             parrafo.setAlignment(Paragraph.ALIGN_CENTER);
             parrafo.add("\n \n");
             parrafo.add("Total Debe: "+TotalDebe+"   "+"Total Haber: "+TotalHaber+"\n");
@@ -138,7 +148,7 @@ public class PDF_LibroDiario_BalanceGeneral {
 
             documento.close();
 
-            JOptionPane.showMessageDialog(null, "PDF CREADO");
+            JOptionPane.showMessageDialog(null, "PDF Libro Diario CREADO");
           
         }catch (FileNotFoundException ex) {
             Logger.getLogger(JFMostrar_BalanceGeneral.class.getName()).log(Level.SEVERE, null, ex);
@@ -159,11 +169,22 @@ public class PDF_LibroDiario_BalanceGeneral {
         try {
             //ruta +"/Desktop/"
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/"
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +URL
                     +"BalanceGeneral"+".pdf"));
             
             documento.open();
 
+            Paragraph parrafo = new Paragraph();
+
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.add("\n \n");
+            parrafo.add(" BALANCE GENERAL \n");
+            parrafo.add("\n \n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+
+            documento.add(parrafo);
+            parrafo.clear();
+            
             PdfPTable tablaComprobacion = new PdfPTable(3);
             tablaComprobacion.addCell("Cuenta");
             tablaComprobacion.addCell("Deudor");
@@ -314,8 +335,6 @@ public class PDF_LibroDiario_BalanceGeneral {
 
             documento.add(tablaComprobacion);
 
-            Paragraph parrafo = new Paragraph();
-
             parrafo.setAlignment(Paragraph.ALIGN_CENTER);
             parrafo.add("\n \n");
             parrafo.add("Total Deudor: "+TotalDeudor+"   "+"Total Acreedor: "+TotalAcreedor+"\n");
@@ -325,7 +344,7 @@ public class PDF_LibroDiario_BalanceGeneral {
 
             documento.close();
 
-            JOptionPane.showMessageDialog(null, "PDF CREADO");
+            JOptionPane.showMessageDialog(null, "PDF Balance General CREADO");
           
         }catch (FileNotFoundException ex) {
             Logger.getLogger(JFMostrar_BalanceGeneral.class.getName()).log(Level.SEVERE, null, ex);

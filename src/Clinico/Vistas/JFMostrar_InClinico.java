@@ -7,6 +7,7 @@ package Clinico.Vistas;
 import Clinico.Modulos.CRUD_Recibo;
 import static Clinico.Modulos.CRUD_Recibo.listaTablaRecibo;
 import Clinico.Controladores.Conexion;
+import static Clinico.Controladores.Conexion.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -337,7 +338,7 @@ public class JFMostrar_InClinico extends javax.swing.JFrame {
             
             System.out.println(ruta);
             
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/InformeClinico.pdf"));
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +URL+"InformeClinico.pdf"));
             
             documento.open();
             

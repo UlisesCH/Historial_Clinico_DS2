@@ -4,15 +4,20 @@
  */
 package Contable.Modulos;
 
+import static Clinico.Controladores.Conexion.URL;
 import Contable.Controladores.Conexion;
 import Contable.Controladores.EstadoResultado;
 import static Contable.Modulos.CRUD_BalanceComprobacion.listaBalanceComprobacion;
 import Contable.Vistas.JFCrear_Partida;
 import Contable.Vistas.JFMostrar_EstadoResultado;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.PreparedStatement;
@@ -197,11 +202,22 @@ public class CRUD_EstadoResultado {
         try {
             //ruta +"/Desktop/"
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta +"/Desktop/"
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta +URL
                     +"EstadoResultado"+".pdf"));
             
             documento.open();
 
+            Paragraph parrafo = new Paragraph();
+
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.add("\n \n");
+            parrafo.add(" ESTADO DE RESULTADO \n");
+            parrafo.add("\n \n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+
+            documento.add(parrafo);
+            parrafo.clear();
+            
             PdfPTable tablaResultado = new PdfPTable(3);
             tablaResultado.addCell("Cuenta");
             tablaResultado.addCell("Deudor");
@@ -291,7 +307,7 @@ public class CRUD_EstadoResultado {
             
         documento.close();
         
-        JOptionPane.showMessageDialog(null, "PDF CREADO");
+        JOptionPane.showMessageDialog(null, "PDF Estado de Resultado CREADO");
           
         }catch (FileNotFoundException ex) {
             Logger.getLogger(JFMostrar_EstadoResultado.class.getName()).log(Level.SEVERE, null, ex);
