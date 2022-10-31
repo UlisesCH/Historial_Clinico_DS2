@@ -108,8 +108,8 @@ public class JFMostrar_LibroDiaro extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TxtTotalHaber)
@@ -122,7 +122,7 @@ public class JFMostrar_LibroDiaro extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("LIBRO DIARIO");
 
-        BtnMosLibrosDiarios.setText("MOSTRAR LIBROS DIARIOS");
+        BtnMosLibrosDiarios.setText("REGRESAR");
         BtnMosLibrosDiarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnMosLibrosDiariosActionPerformed(evt);
@@ -143,7 +143,7 @@ public class JFMostrar_LibroDiaro extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("PDF");
+        jButton1.setText("Generar PDF");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -155,20 +155,21 @@ public class JFMostrar_LibroDiaro extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(BtnMosLibrosDiarios, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
-                        .addComponent(BtnNuevaPartida))
+                        .addContainerGap(307, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(129, 129, 129))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(242, 242, 242)
-                        .addComponent(jLabel1)))
-                .addGap(44, 44, 44)
-                .addComponent(jButton1)
-                .addGap(34, 34, 34)
+                        .addGap(34, 34, 34)
+                        .addComponent(BtnMosLibrosDiarios)
+                        .addGap(77, 77, 77)
+                        .addComponent(BtnNuevaPartida)
+                        .addGap(83, 83, 83)
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addComponent(BtnEliminar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,10 +178,10 @@ public class JFMostrar_LibroDiaro extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnMosLibrosDiarios)
                     .addComponent(BtnNuevaPartida)
                     .addComponent(BtnEliminar)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(BtnMosLibrosDiarios))
                 .addGap(16, 16, 16))
         );
 
