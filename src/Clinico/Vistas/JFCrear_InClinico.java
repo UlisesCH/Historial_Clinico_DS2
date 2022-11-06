@@ -16,6 +16,7 @@ import Clinico.Controladores.DatosExamenes;
 import Clinico.Controladores.ExamenClinico;
 import Clinico.Controladores.Recibo;
 import Contable.Vistas.JFMostrar_InformeLibros;
+import Login.LoginContable;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -496,10 +497,9 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
 
     private void BtnInContableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInContableActionPerformed
         // TODO add your handling code here:
-        //OBJETO PARA INTERACTUAR CON EL JFCrear_Partida
-        JFMostrar_InformeLibros InContable = new JFMostrar_InformeLibros();
+        LoginContable Login = new LoginContable();
         //SE INDICA QUE SE MUESTRE LA VENTANA
-        InContable.setVisible(true);
+        Login.setVisible(true);
         //SE OCULTA LA VENTANA ACTUAL
         this.dispose();
     }//GEN-LAST:event_BtnInContableActionPerformed

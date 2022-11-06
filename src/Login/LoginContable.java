@@ -13,12 +13,12 @@ import javax.swing.JOptionPane;
  *
  * @author Sammy Guergachi <sguergachi at gmail.com>
  */
-public class Login extends javax.swing.JFrame {
+public class LoginContable extends javax.swing.JFrame {
 
     /**
      * Creates new form Login
      */
-    public Login() {
+    public LoginContable() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -44,7 +44,7 @@ public class Login extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("INICIO DE SESION");
+        setTitle("INICIO DE SESION SISTEMA CONTABLE");
         setBackground(java.awt.Color.white);
         setResizable(false);
 
@@ -174,31 +174,20 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        System.exit(0);
+        JFCrear_InClinico vistaClinico = new JFCrear_InClinico();
+        vistaClinico.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
                        
-        String Usuario = "Usuario";
-        String Password = "usuario";
-        
-        String UsuarioRoot = "Admin";
-        String PasswordRoot = "admin";
+        String Usuario = "Admin";
+        String Password = "admin";
         
         String Pass = new String(jPasswordField1.getPassword());
                 
         
         if(jFormattedTextField1.getText().equals(Usuario) && Pass.equals(Password)){
-            jPasswordField1.setText(null);
-            jFormattedTextField1.setText(null);
-            
-            JFCrear_InClinico vistaClinico = new JFCrear_InClinico();
-            vistaClinico.setVisible(true);
-            this.dispose();
-            
-        }
-        else if(jFormattedTextField1.getText().equals(UsuarioRoot) && Pass.equals(PasswordRoot)){
-            
             jPasswordField1.setText(null);
             jFormattedTextField1.setText(null);
             
@@ -208,7 +197,6 @@ public class Login extends javax.swing.JFrame {
             InContable.setVisible(true);
             //SE OCULTA LA VENTANA ACTUAL
             this.dispose();
-            
             
         }else{
             JOptionPane.showMessageDialog(null,"Datos de Inicio Invalidos", "Error de Inicio",JOptionPane.ERROR_MESSAGE);
@@ -234,20 +222,21 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginContable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginContable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginContable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginContable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new LoginContable().setVisible(true);
             }
         });
     }
