@@ -18,11 +18,16 @@ import javax.swing.JOptionPane;
  */
 public class CRUD_Examenes extends Conexion{
     
+    public static boolean Tess = false;
+    
     //LISTA PARA ALMACENAR LOS DATOS OBTENIDOS DE LA BASE DE DATOS
     public static List<Examenes> listaExamenes = new ArrayList<Examenes>();
     
     //LLENA LA TABLA CON LOS DATOS OBTENIDOS DE LA BASE DE DATOS
     public static void LlenarTabla(){
+        
+        Tess = false;
+        
         //SE VACIA LA LISTA
         listaExamenes.clear();
         CRUD_DatosExamenes CRDatosExamenes = new CRUD_DatosExamenes();
@@ -54,7 +59,11 @@ public class CRUD_Examenes extends Conexion{
             
             System.out.println("Se lleno el arreglo con los datos Combo");
             
+            Tess = true;
         }catch(Exception e){
+            
+            Tess = false;
+            
             System.out.println(e + " Error al llenar el arreglo");
         }
     }
@@ -63,6 +72,7 @@ public class CRUD_Examenes extends Conexion{
     public static void Insertar(String Nombre_Examen, String Rango_Muestra, Double Precio_Examen){
         int ID;
         
+        Tess = false;
         ID = (int)(Math.random()*9000+1);
         
         //OBJETO PARA TENER INTERACCION CON LA CLASE Conexion
@@ -77,7 +87,11 @@ public class CRUD_Examenes extends Conexion{
             //EJECUTA LA ACCION
             st.execute();
 
+            Tess = true;
+            
         }catch(Exception e){
+            Tess = false;
+            
             System.out.println(e + " ERROR AL INSERTAR LOS DATOS");
         }
     }
@@ -85,6 +99,7 @@ public class CRUD_Examenes extends Conexion{
     //ELIMINA LOS DATOS DEL REGISTRO SELECCIONADO
     public static void Eliminar(int ID){
         
+        Tess = false;
         //OBJETO PARA TENER INTERACCION CON LA CLASE Conexion
         Conexion conec = new Conexion();
         
@@ -94,9 +109,13 @@ public class CRUD_Examenes extends Conexion{
             //EJECUTA LA ACCION
             st.execute();
             
+            Tess = true;
+            
             JOptionPane.showMessageDialog(null, "DATOS ELIMINADOS");
             
         }catch(Exception e){
+            Tess = false;
+            
             JOptionPane.showMessageDialog(null, "ERROR AL ELIMINAR LOS DATOS " + e);
         }
     }
@@ -104,6 +123,7 @@ public class CRUD_Examenes extends Conexion{
     //MODIFICA DATOS A LA TABLA DE LA BASE DE DATOS
     public static void Modificar(int ID, String Nombre_Examen, String Rango_Muestra, Double Precio_Examen){
 
+        Tess = false;
         //OBJETO PARA TENER INTERACCION CON LA CLASE Conexion
         Conexion conec = new Conexion();
         
@@ -118,9 +138,13 @@ public class CRUD_Examenes extends Conexion{
             //EJECUTA LA ACCION
             st.execute();
             
+            Tess = true;
+            
             JOptionPane.showMessageDialog(null, "DATOS MODIFICADOS");
             
         }catch(Exception e){
+            Tess = false;
+            
             JOptionPane.showMessageDialog(null, "ERROR AL INSERTAR LOS DATOS " + e);
         }
     }

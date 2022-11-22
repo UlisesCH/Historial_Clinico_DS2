@@ -33,6 +33,9 @@ import javax.swing.JOptionPane;
  * @author ulise
  */
 public class CRUD_BalanceComprobacion {
+    
+    public static boolean Tess = false;
+    
     public static List<BalanceComprobacion> listaBalanceComprobacion = new ArrayList<BalanceComprobacion>();
     ArrayList<String> ListaCuentasRecoridas = new ArrayList<String>();
     
@@ -79,7 +82,10 @@ public class CRUD_BalanceComprobacion {
 
             }
             
+            Tess = true;
         }catch(Exception e){
+            
+            Tess = false;
             System.out.println(e + " Error al llenar la tabla");
         }
     }
@@ -104,7 +110,10 @@ public class CRUD_BalanceComprobacion {
             //EJECUTA LA ACCION
             st.execute();
             
+            Tess = true;
         }catch(Exception e){
+            
+            Tess = false;
             JOptionPane.showMessageDialog(null, "ERROR AL INSERTAR LOS DATOS " + e);
         }
         
@@ -130,7 +139,10 @@ public class CRUD_BalanceComprobacion {
             //EJECUTA LA ACCION
             st.execute();
             
+            Tess = true;
         }catch(Exception e){
+            
+            Tess = false;
             JOptionPane.showMessageDialog(null, "ERROR AL INSERTAR LOS DATOS " + e);
         }
     }
@@ -168,6 +180,9 @@ public class CRUD_BalanceComprobacion {
 
                                     //VERIFICA SI LAS CUENTA YA FUE RECORRIDA
                                     if(ListaCuentasRecoridas.get(PosLC).equals(listaLibroMayor.get(PosLibroMayor).getSubGrupo_Cuenta())){
+                                        
+                                        System.err.println(""+ListaCuentasRecoridas.get(PosLC));
+                                                
                                         ContAuxiliar = false;
                                         break;
                                     }
@@ -181,9 +196,17 @@ public class CRUD_BalanceComprobacion {
 
                                     }
 
+                                    System.err.println(ID_Libro);
+                                    System.err.println(""+listaLibroMayor.get(PosLibroMayor).getIDLibro());
+                                    System.err.println(""+listaLibroMayor.get(PosLibroMayor).getIDLibro());
+                                    System.err.println(""+listaLibroMayor.get(PosLibroMayor).getGrupo_Cuenta());
+                                    System.err.println(""+listaLibroMayor.get(PosLibroMayor).getMontoTotal());
+                                    
                                     if("INGRESO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
 
                                         TotalIngresos = TotalIngresos + listaLibroMayor.get(Pos2LibroMayor).getMontoTotal();
+                                        
+                                        System.err.println("/Ingreso "+TotalIngresos);
                                     }
                                     else if("COSTO".equals(listaLibroMayor.get(Pos2LibroMayor).getGrupo_Cuenta())){
 
@@ -240,6 +263,11 @@ public class CRUD_BalanceComprobacion {
 
         }
 
+        System.err.println("/////////////////////////////////");
+        System.err.println("Total Ingreso"+TotalIngresos2);
+        System.err.println("Total costo"+TotalCostos2);
+        System.err.println("Total gasto"+TotalGastos2);
+        
         if(VariableAuxiliar2){
 
             Insertar(Integer.parseInt(ID_Libro), 
@@ -444,10 +472,13 @@ public class CRUD_BalanceComprobacion {
         documento.close();
         
         JOptionPane.showMessageDialog(null, "PDF Balance de Comprobacion CREADO");
-          
+        
+        Tess = true;
         }catch (FileNotFoundException ex) {
+            Tess = false;
             Logger.getLogger(JFCrear_Partida.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
+            Tess = false;
             Logger.getLogger(JFCrear_Partida.class.getName()).log(Level.SEVERE, null, ex);
         }
         

@@ -32,6 +32,9 @@ import javax.swing.JOptionPane;
  * @author ulise
  */
 public class PDF_LibroDiario_BalanceGeneral {
+    
+    public static boolean Tess = false;
+    
     ArrayList<String> ListaCuentasRecoridas = new ArrayList<String>();
     
     CRUD_LibroMayor CrLibroMayor = new CRUD_LibroMayor();
@@ -150,9 +153,17 @@ public class PDF_LibroDiario_BalanceGeneral {
 
             JOptionPane.showMessageDialog(null, "PDF Libro Diario CREADO");
           
+            Tess = true;
+            
         }catch (FileNotFoundException ex) {
+            
+            Tess = false;
+            
             Logger.getLogger(JFMostrar_BalanceGeneral.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
+            
+            Tess = false;
+            
             Logger.getLogger(JFMostrar_BalanceGeneral.class.getName()).log(Level.SEVERE, null, ex);
         }    
         
@@ -346,9 +357,16 @@ public class PDF_LibroDiario_BalanceGeneral {
 
             JOptionPane.showMessageDialog(null, "PDF Balance General CREADO");
           
+            Tess = true;
+            
         }catch (FileNotFoundException ex) {
+            
+            Tess = false;
+            
             Logger.getLogger(JFMostrar_BalanceGeneral.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
+            
+            Tess = false;
             Logger.getLogger(JFMostrar_BalanceGeneral.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

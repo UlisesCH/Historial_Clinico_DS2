@@ -17,6 +17,9 @@ import javax.swing.JOptionPane;
  * @author ulise
  */
 public class CRUD_LibroDiario {
+    
+    public static boolean Tess = false;
+    
     //LISTA PARA ALMACENAR LOS DATOS OBTENIDOS DE LA BASE DE DATOS
     public static List<LibroDiario> listaLibroDiario = new ArrayList<LibroDiario>();
     
@@ -49,7 +52,11 @@ public class CRUD_LibroDiario {
 
             }
             
+        Tess = true;
+            
         }catch(Exception e){
+            
+            Tess = false;
             System.out.println(e + " Error al llenar la tabla");
         }
     }
@@ -72,7 +79,11 @@ public class CRUD_LibroDiario {
             //EJECUTA LA ACCION
             st.execute();
             
+        Tess = true;
+            
         }catch(Exception e){
+            
+            Tess = false;
             JOptionPane.showMessageDialog(null, "ERROR AL INSERTAR LOS DATOS " + e);
         }
         
@@ -92,7 +103,11 @@ public class CRUD_LibroDiario {
             
             CRUD_Partidas.EliminarPorLibro(id);
             
+        Tess = true;
+            
         }catch(Exception e){
+            
+            Tess = false;
             JOptionPane.showMessageDialog(null, "ERROR AL ELIMINAR LOS DATOS " + e);
         }
     }

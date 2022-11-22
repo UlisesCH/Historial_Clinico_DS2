@@ -21,6 +21,8 @@ import javax.swing.JOptionPane;
  */
 public class CRUD_ExamenClinico extends Conexion {
     
+    public static boolean Tess = false;
+    
     //LISTA PARA ALMACENAR LOS DATOS OBTENIDOS DE LA BASE DE DATOS
     public static List<ExamenClinico> listaExClinico = new ArrayList<ExamenClinico>();
     
@@ -53,8 +55,9 @@ public class CRUD_ExamenClinico extends Conexion {
             }
             
             System.out.println("Se lleno el arreglo con los datos");
-            
+            Tess = true;
         }catch(Exception e){
+            Tess = false;
             System.out.println(e + " Error al llenar el arreglo");
         }
     }
@@ -93,7 +96,9 @@ public class CRUD_ExamenClinico extends Conexion {
             
             System.out.println("Se lleno el arreglo con los datos");
             
+        Tess = true;
         }catch(Exception e){
+            Tess = false;
             System.out.println(e + " Error al llenar el arreglo");
         }
     }
@@ -135,7 +140,9 @@ public class CRUD_ExamenClinico extends Conexion {
                 
             }
 
+        Tess = true;
         }catch(Exception e){
+            Tess = false;
             System.out.println(e + " ERROR AL INSERTAR LOS DATOS");
         }
     }
@@ -162,7 +169,9 @@ public class CRUD_ExamenClinico extends Conexion {
                 }
             }
             
+        Tess = true;
         }catch(Exception e){
+            Tess = false;
             JOptionPane.showMessageDialog(null, "ERROR AL ELIMINAR LOS DATOS " + e);
         }
     }
@@ -186,7 +195,9 @@ public class CRUD_ExamenClinico extends Conexion {
             
             JOptionPane.showMessageDialog(null, "DATOS MODIFICADOS");
             
+        Tess = true;
         }catch(Exception e){
+            Tess = false;
             JOptionPane.showMessageDialog(null, "ERROR AL INSERTAR LOS DATOS " + e);
         }
     }

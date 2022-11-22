@@ -564,7 +564,7 @@ public class JFCrear_InClinico extends javax.swing.JFrame implements Printable{
 
             ID_Examen = result.getInt("ID");
             Nombre_Examen = result.getString("Nombre_Examen");
-            CantidadMuestra = result.getString("CantidadMuestra");
+            CantidadMuestra = result.getString("Rango_Muestra");
             Precio_Examen = result.getDouble("Precio_Examen");
             
             conec.conexion.close();

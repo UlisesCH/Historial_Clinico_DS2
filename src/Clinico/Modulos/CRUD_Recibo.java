@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
  */
 public class CRUD_Recibo extends Conexion {
     
+    public static boolean Tess = false;
+    
     //LISTA PARA ALMACENAR LOS DATOS OBTENIDOS DE LA BASE DE DATOS
     public static List<Recibo> listaTablaRecibo = new ArrayList<Recibo>();
     
@@ -52,10 +54,11 @@ public class CRUD_Recibo extends Conexion {
                 listaTablaRecibo.add(recibo);
                 
             }
-            
+            Tess = true;
             System.out.println("Se lleno el arreglo con los datos");
             
         }catch(Exception e){
+            Tess = false;
             System.out.println(e + " Error al llenar el arreglo");
         }
     }
@@ -91,10 +94,11 @@ public class CRUD_Recibo extends Conexion {
                 listaTablaRecibo.add(recibo);
 
             }
-            
+            Tess = true;
             System.out.println("Se lleno el arreglo con los datos");
             
         }catch(Exception e){
+            Tess = false;
             System.out.println(e + " Error al llenar el arreglo");
         }
     }
@@ -127,7 +131,9 @@ public class CRUD_Recibo extends Conexion {
 
             }
 
+            Tess = true;
         }catch(Exception e){
+            Tess = false;
             System.out.println(e + " ERROR AL INSERTAR LOS DATOS");
         }
     }
@@ -147,7 +153,11 @@ public class CRUD_Recibo extends Conexion {
             
             Cr_ExamenClinico.Eliminar(ID);
             
+            Tess = true;
         }catch(Exception e){
+            
+            Tess = false;
+            
             JOptionPane.showMessageDialog(null, "ERROR AL ELIMINAR LOS DATOS " + e);
         }
     }

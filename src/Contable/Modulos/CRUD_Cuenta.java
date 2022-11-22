@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
  */
 public class CRUD_Cuenta {
     
+    public static boolean Tess = false;
+    
     //LISTA PARA ALMACENAR LOS DATOS OBTENIDOS DE LA BASE DE DATOS
     public static List<Cuenta> listaCuenta = new ArrayList<Cuenta>();
     
@@ -54,7 +56,12 @@ public class CRUD_Cuenta {
 
             }
             
+            Tess = true;
+            
         }catch(Exception e){
+            
+            Tess = false;
+            
             System.out.println(e + " Error al llenar la tabla");
         }
     }
@@ -81,7 +88,11 @@ public class CRUD_Cuenta {
             //EJECUTA LA ACCION
             st.execute();
             
+            Tess = true;
+            
         }catch(Exception e){
+            
+            Tess = false;
             JOptionPane.showMessageDialog(null, "ERROR AL INSERTAR LOS DATOS " + e);
         }
         
@@ -100,7 +111,11 @@ public class CRUD_Cuenta {
             //EJECUTA LA ACCION
             st.execute();
             
+            Tess = true;
+            
         }catch(Exception e){
+            
+            Tess = false;
             JOptionPane.showMessageDialog(null, "ERROR AL ELIMINAR LOS DATOS " + e);
         }
     }
@@ -117,7 +132,11 @@ public class CRUD_Cuenta {
             //EJECUTA LA ACCION
             st.execute();
             
+            Tess = true;
+            
         }catch(Exception e){
+            
+            Tess = false;
             JOptionPane.showMessageDialog(null, "ERROR AL ELIMINAR LOS DATOS " + e);
         }
     }

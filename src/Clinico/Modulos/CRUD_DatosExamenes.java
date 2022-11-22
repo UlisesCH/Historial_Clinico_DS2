@@ -21,6 +21,8 @@ import javax.swing.JOptionPane;
  */
 public class CRUD_DatosExamenes extends Conexion{
     
+    public static boolean Tess = false;
+    
     //LISTA PARA ALMACENAR LOS DATOS OBTENIDOS DE LA BASE DE DATOS
     public static List<Datos> listaDatos = new ArrayList<Datos>();
     
@@ -69,7 +71,9 @@ public class CRUD_DatosExamenes extends Conexion{
             
             System.out.println("Se lleno el arreglo con los datos");
             
+            Tess = true;
         }catch(Exception e){
+            Tess = false;
             System.out.println(e + " Error al llenar el arreglo");
         }
     }
@@ -106,7 +110,9 @@ public class CRUD_DatosExamenes extends Conexion{
             
             System.out.println("Se lleno el arreglo con los datos");
             
+        Tess = true;
         }catch(Exception e){
+            Tess = false;
             System.out.println(e + " Error al llenar el arreglo");
         }
     }
@@ -130,7 +136,9 @@ public class CRUD_DatosExamenes extends Conexion{
             st.execute();
             System.out.println(" se inserto");
 
+        Tess = true;
         }catch(Exception e){
+            Tess = false;
             System.out.println(e + " ERROR AL INSERTAR LOS DATOS");
         }
     }
@@ -155,7 +163,9 @@ public class CRUD_DatosExamenes extends Conexion{
             //EJECUTA LA ACCION
             st.execute();
             
+       Tess = true;
         }catch(Exception e){
+            Tess = false;
             System.out.println(e + " ERROR AL INSERTAR LOS DATOS");
         }
     }
@@ -174,7 +184,9 @@ public class CRUD_DatosExamenes extends Conexion{
             
             JOptionPane.showMessageDialog(null, "DATOS ELIMINADOS");
             
+        Tess = true;
         }catch(Exception e){
+            Tess = false;
             JOptionPane.showMessageDialog(null, "ERROR AL ELIMINAR LOS DATOS " + e);
         }
     }
@@ -193,7 +205,9 @@ public class CRUD_DatosExamenes extends Conexion{
             
             JOptionPane.showMessageDialog(null, "DATOS ELIMINADOS");
             
+        Tess = true;
         }catch(Exception e){
+            Tess = false;
             JOptionPane.showMessageDialog(null, "ERROR AL ELIMINAR LOS DATOS " + e);
         }
     }
@@ -216,7 +230,9 @@ public class CRUD_DatosExamenes extends Conexion{
             
             JOptionPane.showMessageDialog(null, "DATOS MODIFICADOS");
             
+        Tess = true;
         }catch(Exception e){
+            Tess = false;
             JOptionPane.showMessageDialog(null, "ERROR AL INSERTAR LOS DATOS " + e);
         }
     }

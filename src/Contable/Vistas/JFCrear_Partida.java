@@ -62,6 +62,8 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
         ID_LibroDato = ID_Libro;
         model = (DefaultTableModel) this.TableInClRecibo.getModel();
         listaInCuenta.clear();
+        
+        CrLibroMayor.LibroMayor(ID_LibroDato);
     }
 
     /**
@@ -487,7 +489,11 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
 
         //SE OBTIENES LOS DATOS DE LOS INPUTS
         String GrupoCuenta = CombxGrupoCuentaPartida.getSelectedItem().toString();
+        
+        
         String TipoCuenta = CombxTipoCuentaPartida.getSelectedItem().toString();
+        
+        
         String SubGrupoCuenta = CombxSubGrupoCuentaPartida.getSelectedItem().toString();
         String NombreCuenta = CombxNombreCuenta.getSelectedItem().toString();
         Double Monto = Double.valueOf(TxtMonto.getText());
@@ -694,7 +700,9 @@ public class JFCrear_Partida extends javax.swing.JFrame implements Printable{
         Fecha = dia+"/"+mes+"/"+anio;
         
         CrPartidas.Insertar(Integer.parseInt(ID_LibroDato),TxtConcepto.getText().toString(), Fecha);
+        
         CrLibroMayor.LibroMayor(ID_LibroDato);
+        
         JOptionPane.showMessageDialog(null, "DATOS GUARDADOS");
 
         TxtMonto.setText("");

@@ -178,6 +178,9 @@ public class CRUD_EstadoResultado {
             }
 
         }
+        
+        System.err.println("/////////////////////////////////");
+        System.err.println("Reservalegal "+ReservaLegar);
 
         if(VariableAuxiliar){
 

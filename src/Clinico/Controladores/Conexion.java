@@ -15,8 +15,9 @@ import java.sql.Statement;
  */
 public class Conexion {
     
-    public static String URL = "/Desktop/";
-//    public static String URL = "/OneDrive/Escritorio/";
+    public static boolean Tess = false;
+//    public static String URL = "/Desktop/";
+    public static String URL = "/OneDrive/Escritorio/";
     
     //OBJETO PARA LA CONEXION CON LA BASE DE DATOS
     public static Connection conexion;
@@ -87,8 +88,13 @@ public class Conexion {
             stmt.executeUpdate(TBL_PruebasExamen);
             stmt.close();
             conexion.close();
-            return true;
+            
+            Tess = true;
+            
         }catch (Exception e){
+            
+            Tess = false;
+            
             System.out.println(e + " Error al crear Tabla");
         }
         return false;

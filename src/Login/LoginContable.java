@@ -7,7 +7,9 @@ package Login;
 import Clinico.Vistas.JFCrear_InClinico;
 import Contable.Vistas.JFMostrar_InformeLibros;
 import java.awt.event.WindowEvent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 
 /**
  *
@@ -253,7 +255,7 @@ public class LoginContable extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPasswordField jPasswordField1;
     // End of variables declaration//GEN-END:variables
-   
+
 }
 
 

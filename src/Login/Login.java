@@ -14,6 +14,11 @@ import javax.swing.JOptionPane;
  * @author Sammy Guergachi <sguergachi at gmail.com>
  */
 public class Login extends javax.swing.JFrame {
+    
+    public static boolean Tess = false;
+    
+    String User;
+    String Pass;
 
     /**
      * Creates new form Login
@@ -179,22 +184,29 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
                        
+        Login();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public void Login(){
+        
         String Usuario = "Usuario";
         String Password = "usuario";
         
         String UsuarioRoot = "Admin";
         String PasswordRoot = "admin";
         
-        String Pass = new String(jPasswordField1.getPassword());
+        User = jFormattedTextField1.getText();
+        Pass = new String(jPasswordField1.getPassword());
                 
-        
-        if(jFormattedTextField1.getText().equals(Usuario) && Pass.equals(Password)){
+        if(Usuario.equals(Usuario) && Pass.equals(Password)){
             jPasswordField1.setText(null);
             jFormattedTextField1.setText(null);
             
             JFCrear_InClinico vistaClinico = new JFCrear_InClinico();
             vistaClinico.setVisible(true);
             this.dispose();
+            
+            Tess = true;
             
         }
         else if(jFormattedTextField1.getText().equals(UsuarioRoot) && Pass.equals(PasswordRoot)){
@@ -209,14 +221,17 @@ public class Login extends javax.swing.JFrame {
             //SE OCULTA LA VENTANA ACTUAL
             this.dispose();
             
-            
+            Tess = true;
         }else{
             JOptionPane.showMessageDialog(null,"Datos de Inicio Invalidos", "Error de Inicio",JOptionPane.ERROR_MESSAGE);
             jPasswordField1.setText(null);
             jFormattedTextField1.setText(null);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
+            Tess = false;
+        }
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -255,14 +270,14 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    public javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPasswordField jPasswordField1;
+    public javax.swing.JPasswordField jPasswordField1;
     // End of variables declaration//GEN-END:variables
    
 }

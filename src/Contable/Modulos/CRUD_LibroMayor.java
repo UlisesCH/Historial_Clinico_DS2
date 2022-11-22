@@ -33,6 +33,8 @@ import javax.swing.JOptionPane;
  */
 public class CRUD_LibroMayor {
     
+    public static boolean Tess = false;
+    
       //LISTA PARA ALMACENAR LOS DATOS OBTENIDOS DE LA BASE DE DATOS
     public static List<LibroMayor> listaLibroMayor = new ArrayList<LibroMayor>();
     ArrayList<String> ListaCuentasRecoridas = new ArrayList<String>();
@@ -77,7 +79,11 @@ public class CRUD_LibroMayor {
 
             }
             
+        Tess = true;
+            
         }catch(Exception e){
+            
+            Tess = false;
             System.out.println(e + " Error al llenar la tabla");
         }
     }
@@ -105,7 +111,11 @@ public class CRUD_LibroMayor {
             //EJECUTA LA ACCION
             st.execute();
             
+       Tess = true;
+            
         }catch(Exception e){
+            
+            Tess = false;
             JOptionPane.showMessageDialog(null, "ERROR AL INSERTAR LOS DATOS " + e);
         }
         
@@ -133,7 +143,11 @@ public class CRUD_LibroMayor {
             //EJECUTA LA ACCION
             st.execute();
             
+        Tess = true;
+            
         }catch(Exception e){
+            
+            Tess = false;
             JOptionPane.showMessageDialog(null, "ERROR AL INSERTAR LOS DATOS " + e);
         }
     }
@@ -221,18 +235,17 @@ public class CRUD_LibroMayor {
                             
                             TotalMayor = TotalDebeMayor-TotalHaberMayor;
                             
+                            System.err.println(listaCuenta.get(PosC).getNombreCuenta());
+                            System.err.println("total Mayor "+TotalMayor);
+                            
                             if(VariableAuxiliar2){
-                   
+
                                 Insertar(Integer.parseInt(ID_LibroDato), 
                                         listaCuenta.get(PosC).getGrupoCuenta(), 
                                         listaCuenta.get(PosC).getSubGrupoCuenta(), 
                                         listaCuenta.get(PosC).getNombreCuenta(), 
                                         TotalMayor);
                             }else{
-
-                                System.err.println("Dinero "+TotalMayor);
-                                System.err.println("ID "+listaLibroMayor.get(PosicionLibroMayor).getID());
-                                System.err.println("Cuenta "+listaLibroMayor.get(PosicionLibroMayor).getNombre_Cuenta());
 
                                 Modificar(listaLibroMayor.get(PosicionLibroMayor).getID(),
                                         Integer.parseInt(ID_LibroDato), 
@@ -396,9 +409,13 @@ public class CRUD_LibroMayor {
             
             JOptionPane.showMessageDialog(null, "PDF Libro Mayor CREADO");
           
+            Tess = true;
+            
         }catch (FileNotFoundException ex) {
+            Tess = false;
             Logger.getLogger(JFCrear_Partida.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
+            Tess = false;
             Logger.getLogger(JFCrear_Partida.class.getName()).log(Level.SEVERE, null, ex);
         }
         
